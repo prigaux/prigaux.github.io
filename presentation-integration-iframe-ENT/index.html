@@ -220,7 +220,7 @@ il faut augmenter le temps de session de CAS pour qu'il soit comparable à celui
 <section><h2>Ascenseur horizontal</h2>
 
 Pour supprimer l'ascenseur horizontal : responsive web design !
-<p>Ici le tableau force une largeur importante, explosons le :
+<p class="vspace">Ici le tableau force une largeur importante, explosons le :
 <pre><code data-trim class="css">
 @media screen and (max-width: 600px)  {
   td { display: block; }
@@ -257,7 +257,7 @@ window.addEventListener("message", function (e) {
 });
 </code></pre>
 
-<small>Pour la fonction <code>getDocumentHeight</code>, apache shindig fournit du code compliqué mais marchant bien sur tous les navigateurs.</small>
+<small>Pour la fonction <code>getDocumentHeight</code>, apache shindig fournit du <a href="https://svn.apache.org/repos/asf/shindig/trunk/features/src/main/javascript/features/dynamic-size.util/dynamic-size-util.js">code compliqué</a> mais marchant bien sur tous les navigateurs.</small>
 
 
 </section>
@@ -379,19 +379,6 @@ Comment gérer les modifications qui interviennent après l'évènement <code>on
 </section>
 
 <!----------------------------------------------------->
-<section><h2>Liens concernant les iframes</h2>
-
-Sur la liste esup-utilisateurs :
-<ul>
-  <li><a href="https://listes.esup-portail.org/sympa/arc/esup-utilisateurs/2012-04/msg00000.html">annonce de postMessage-resize-iframe-in-parent.js</a>
-  <li><a href="https://listes.esup-portail.org/sympa/arc/esup-utilisateurs/2013-05/msg00005.html">techniques iframe utilisées à Paris1</a>
-  <li><a href="https://listes.esup-portail.org/sympa/arc/esup-utilisateurs/2013-08/msg00012.html">Lille3 utilise postMessage-resize-iframe-in-parent.js</a>
-  <li><a href="https://listes.esup-portail.org/sympa/arc/esup-utilisateurs/2012-12/msg00026.html">lien direct vers iframe</a>
-</ul>
-
-</section>
-
-<!----------------------------------------------------->
 <section><h2>Conclusion</h2>
 
 L'intégration iframe offre plusieurs avantages : 
@@ -410,6 +397,25 @@ l'application en iframe prévient le portail via postMessage quand elle se redim
 <p class="vspace">
 En pratique pour des applications avec peu de javascript, l'insertion d'une simple ligne &lt;script&gt; dans l'application suffit...
 sans modifier le comportement de l'application hors iframe !
+
+</section>
+
+<!----------------------------------------------------->
+<section><h2>Liens concernant les iframes</h2>
+
+<ul>
+  <li><a href="https://developers.google.com/gadgets/docs/ui#Dyn_Height">gadgets.* dynamic-height</a>
+  <li><a href="https://gist.github.com/oleics/5627526">exemple complet MutationObserver + postMessage</a>
+  <li><a href="http://benvinegar.github.io/seamless-talk/">seamless iframes</a>
+</ul>
+<p class="vspace">
+Sur la liste esup-utilisateurs :
+<ul>
+  <li><a href="https://listes.esup-portail.org/sympa/arc/esup-utilisateurs/2012-04/msg00000.html">annonce de postMessage-resize-iframe-in-parent.js</a>
+  <li><a href="https://listes.esup-portail.org/sympa/arc/esup-utilisateurs/2013-05/msg00005.html">techniques iframe utilisées à Paris1</a>
+  <li><a href="https://listes.esup-portail.org/sympa/arc/esup-utilisateurs/2013-08/msg00012.html">Lille3 utilise postMessage-resize-iframe-in-parent.js</a>
+  <li><a href="https://listes.esup-portail.org/sympa/arc/esup-utilisateurs/2012-12/msg00026.html">lien direct vers iframe</a>
+</ul>
 
 </section>
 
