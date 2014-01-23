@@ -257,6 +257,7 @@ window.addEventListener("message", function (e) {
 });
 </code></pre>
 
+<small>Pour la fonction <code>getDocumentHeight</code>, apache shindig fournit du code compliqué mais marchant bien sur tous les navigateurs.</small>
 
 
 </section>
@@ -390,6 +391,27 @@ Sur la liste esup-utilisateurs :
 
 </section>
 
+<!----------------------------------------------------->
+<section><h2>Conclusion</h2>
+
+L'intégration iframe offre plusieurs avantages : 
+<br>
+<ul>
+<li>intégration d'applications existantes
+<li>bootstrap compatible
+<li>pas de conflits CSS
+<li>moins de charge sur uportal.
+</ul>
+
+<p class="vspace">
+Pour les problèmes de double-ascenseur, une solution existe dans google gadgets.* API 
+(et donc dans OpenSocial gadgets) : 
+l'application en iframe prévient le portail via postMessage quand elle se redimensionne.
+<p class="vspace">
+En pratique pour des applications avec peu de javascript, l'insertion d'une simple ligne &lt;script&gt; dans l'application suffit...
+sans modifier le comportement de l'application hors iframe !
+
+</section>
 
 <!----------------------------------------------------->
 
