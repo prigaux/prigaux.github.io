@@ -1,13 +1,15 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 
 	<head>
 		<meta charset="utf-8">
 
-		<title>reveal.js - Barebones</title>
+		<title>Intégration iframe dans l'ENT</title>
 
 		<link rel="stylesheet" href="css/reveal.min.css">
 		<link rel="stylesheet" href="css/theme/simple.css" id="theme"/> 
+
+		<link rel="stylesheet" href="plugin/highlight/default.min.css">
 
 <style> 
 body {
@@ -89,6 +91,21 @@ body {
   height: 1em;
 }
 
+.iframeDiv {
+  border: 1px solid #bbb !important;
+}
+.iframeDiv iframe {
+  width: 100%;
+}
+
+.resizableHoriz {
+  resize: horizontal;
+  overflow: hidden;
+}
+
+.vspace {
+  padding-top: 0.4em !important;
+}
 </style>
 	</head>
 
@@ -100,27 +117,293 @@ body {
 
 <section>
 
-<h2>Main title</h2>
+<h2>Intégration iframe dans l'ENT</h2>
 
-<h3>details</h3>
+<script>
+(function () {
+    var receiveIframeHeight = function(frameWindow, height) {
+        height = height / Reveal.getScale(); // reveal.js scale factor is not applied inside iframe, so the height we receive must corrected
+        var iframes = document.querySelectorAll('iframe');
+        for (var i = 0; i < iframes.length; i++) {
+	   if (iframes[i].contentWindow === frameWindow) {
+              iframes[i].height = height + 20;
+              iframes[i].parentElement.style.height = (height + 40) + "px";
+           }
+        };
+    };
+    var onmessage = function(e) {
+        if (typeof e.data === "string") {
+            var m = e.data.match(/^iframeHeight (\d+)$/);
+            if (m) receiveIframeHeight(e.source, parseInt(m[1]));
+        }
+    };
+
+    if (window.addEventListener) {  
+        window.addEventListener("message", onmessage, false);  
+    } else {  
+        window.attachEvent("onmessage", onmessage); // for IE
+    }
+})();
+</script>
+
+<h3></h3>
 
 <p class="h1em">
 <h4>Pascal.Rigaux @ univ-paris1.fr</h4>
 </section>
 
-<section>
-<h2>slide title</h2>
-<h4>foo</h4>
-<p>foo
-<h4>bar</h4>
-<p>bar
-<p>boo
+
+<!----------------------------------------------------->
+<section><h2>Beurk, des iframes...</h2>
+
+Plein de problèmes !
+<br>
+<ul>
+<li> mixed content (https/http)
+<li> third party cookies
+<li> login CAS dans l'iframe
+<li> ascenseurs en pagaille ou contenu tronqué (sur mobile)
+  <div class="iframeDiv" style="width: 400px">
+    <iframe src="app1.html"></iframe>
+  </div>
+</li>
+<li> double habillage
+</ul>
+<p class="vspace">
+<b>Tous ces problèmes ont des solutions... </b>
+</p>
 </section>
 
-<div class="footer footer-left">where - Paris XX xxx 2014</div>
+<!----------------------------------------------------->
+<section><h2>Mixed content (https/http)</h2>
+
+<p>Vous avez des applications en http ? </p>
+  <p><small>Sachez que firefox (par défaut) conserve tous les cookies non-"secure" sur le disque, même après avoir quitté.</small></p>
+<p>
+Les principaux navigateurs refusent les "active" http dans les pages https.
+</p>
+<p>
+&rArr; Mettez un reverse proxy !
+</p>
+</section>
+
+<!----------------------------------------------------->
+<section><h2>Third party cookies</h2>
+
+<p>
+Safari a ouvert le bal en acceptant uniquement les cookies « des sites visités ».
+Firefox devrait bientôt faire pareil&nbsp;:
+</p>
+<blockquote>cookies acceptés pour le même domaine que l'url affichée dans le navigateur.</blockquote>
+
+<p class="vspace">
+2 solutions pour application externe à l'université&nbsp;:
+<ul>
+<li> https://ailleur.com/login?then-go=https://ent.univ.fr/force-canal-ailleur-com
+<li> mettre un reverse-proxy
+  <br><small>(nb : très difficile pour shibboleth car les assertions sont signées avec la clé du SP)</small>
+</ul>
+</p>
+
+</section>
+
+<!----------------------------------------------------->
+<section><h2>login CAS dans l'iframe</h2>
+
+Pour éviter que les applications ne demandent l'authentification dans l'iframe,
+il faut augmenter le temps de session de CAS pour qu'il soit comparable à celui de l'ENT.
+
+<p class="vspace">
+TODO Problème similaire avec les proxy CAS ???
+</p>
+</section>
+
+
+<!----------------------------------------------------->
+<section><h2>Ascenseur horizontal</h2>
+
+Pour supprimer l'ascenseur horizontal : responsive web design&nbsp;!
+<p>Ici le tableau force une largeur importante, explosons le :
+<pre><code data-trim class="css">
+@media screen and (max-width: 600px)  {
+  td { display: block; }
+}
+</code></pre>
+
+<div class="iframeDiv" style="width: 400px; margin-top: 1em;">
+<iframe src="app2.html"></iframe>
+</div>
+
+</section>
+
+<!----------------------------------------------------->
+<section><h2>Ascenseur vertical</h2>
+
+Sur l'évènement <code>onload</code>, l'application informe le portail de sa taille via <code>postMessage</code> :
+
+<pre><code data-trim class="javascript">
+window.addEventListener("load", function() {
+    parent.postMessage(getDocumentHeight(), "*");
+});
+</code></pre>
+
+le portail reçoit la taille :
+
+<pre><code data-trim class="javascript">
+function receiveIframeHeight(frameWindow, height) {
+    $("iframe").each(function () {
+        if (this.contentWindow === frameWindow) this.height = height;
+    });
+};
+window.addEventListener("message", function (e) {
+    receiveIframeHeight(e.source, e.data);
+});
+</code></pre>
+
+
+
+</section>
+
+<!----------------------------------------------------->
+<section data-state="reload-iframes"><h2>Ça marche !</h2>
+
+<div class="iframeDiv resizableHoriz" style="width: 400px; height: 400px">
+<iframe src="app3.html"></iframe>
+</div>
+
+problème : si on élargit l'iframe, l'application est moins haute mais pas l'iframe.
+
+</section>
+
+<!----------------------------------------------------->
+<section><h2>Gérer l'évènement <code>resize</code></h2>
+
+<div class="iframeDiv resizableHoriz" style="width: 550px; height: 350px">
+<iframe src="app4.html"></iframe>
+</div>
+
+<pre><code data-trim class="javascript">
+window.addEventListener("resize", function() {
+    parent.postMessage(getDocumentHeight(), "*");
+});
+</code></pre>
+
+</section>
+
+
+<!----------------------------------------------------->
+<section><h2>Gérer l'évènement <code>resize</code></h2>
+
+Attention aux boucles infinies :
+<br>
+quand le code change la taille de l'iframe, cela génère un évènement <code>resize</code>.
+</p>
+&rArr; variable <a href="https://subversion.cru.fr/esup-tools/iframe-autoheight-using-postMessage/trunk/postMessage-resize-iframe-in-parent.js">resizedByUs</a> pour ignorer cet évènement.
+<br>
+
+
+</section>
+
+
+<!----------------------------------------------------->
+<section><h2>Retour d'expérience</h2>
+
+A l'université Paris 1, nous insérons la ligne suivante dans toutes les applications en iframe :
+
+<pre><code data-trim class="html">
+&lt;script src="https://xxx.univ.fr/zzz/postMessage-resize-iframe-in-parent.js"&gt;&lt;/script&gt;
+</code></pre>
+
+Si besoin nous utilisons mod-substitute d'apache&nbsp;:
+
+<pre><code data-trim class="apache">
+FilterDeclare replace
+FilterProvider replace SUBSTITUTE Content-Type $text/html
+FilterChain replace
+Substitute "s|&lt;body&gt;|&lt;body&gt;&lt;script src=\"https://xxx.univ.fr/zzz/postMessage-resize-iframe-in-parent.js\"&gt;&lt;/script&gt;|"
+</code></pre>
+
+</section>
+
+
+<!----------------------------------------------------->
+<section><h2>Retour d'expérience</h2>
+
+Une fonctionnalité supplémentaire utilisée : avoir du CSS spécifique quand l'application est intégrée en iframe
+
+<pre><code data-trim class="html">
+&lt;script&gt;
+window.cssToLoadIfInsideIframe = "https://xxx.univ-paris1.fr/zzz/FNAME.css";
+&lt;/script&gt;
+</code></pre>
+
+<p class="vspace">
+Cela permet de cacher le bandeau de l'application, le bouton de déconnection, de supprimer des width/padding excessif...
+
+</section>
+
+
+<!----------------------------------------------------->
+<section><h2>Retour d'expérience</h2>
+
+<p>Cette solution est utilisée avec succès depuis 2 ans à l'université Paris 1 sur de nombreuses applications.
+</p>
+
+Problèmes avec certaines applications (nuxeo, glpi, compilatio 2013-09) :
+<br>
+<ul>
+  <li>appels ajax pour charger du contenu</li>
+  <li>ouvertures de popups en javascript</li>
+</ul>
+
+</section>
+
+
+<!----------------------------------------------------->
+<section><h2>Web 2.0</h2>
+
+<p>
+Comment gérer les modifications qui interviennent après l'évènement <code>onload</code>&nbsp;?
+</p>
+
+<a href="http://caniuse.com/mutationobserver">Mutation Observers&nbsp;!</a>
+
+<div class="iframeDiv" style="width: 550px; height: 300px">
+<iframe src="app5.html"></iframe>
+</div>
+
+<ul>
+<li> testé avec succès sur une application AngularJS.
+<li> problème sur compilatio qui change le DOM tout le temps
+</ul>
+<br>&rArr; à tester sur plus d'applications.
+
+</section>
+
+<!----------------------------------------------------->
+<section><h2>Liens concernant les iframes</h2>
+
+Sur la liste esup-utilisateurs :
+<ul>
+  <li><a href="https://listes.esup-portail.org/sympa/arc/esup-utilisateurs/2012-04/msg00000.html">annonce de postMessage-resize-iframe-in-parent.js</a>
+  <li><a href="https://listes.esup-portail.org/sympa/arc/esup-utilisateurs/2013-05/msg00005.html">techniques iframe utilisées à Paris1</a>
+  <li><a href="https://listes.esup-portail.org/sympa/arc/esup-utilisateurs/2013-08/msg00012.html">Lille3 utilise postMessage-resize-iframe-in-parent.js</a>
+  <li><a href="https://listes.esup-portail.org/sympa/arc/esup-utilisateurs/2012-12/msg00026.html">lien direct vers iframe</a>
+</ul>
+
+</section>
+
+
+<!----------------------------------------------------->
+
+			</div>
+
+		</div>
+
+<div class="footer footer-left">Atelier "Développement" - 2014</div>
 
 <div class="footer footer-right">
-Copyright 2013 ©
+Copyright 2014 ©
 <img src="https://www.esup-portail.org/download/attachments/131089/logo-esup.png">
 </div>
 
@@ -189,6 +472,16 @@ function setSlideNb(event) {
 Reveal.addEventListener('slidechanged', setSlideNb);
 Reveal.addEventListener('ready', setSlideNb);
 
+Reveal.addEventListener( 'reload-iframes', function() {
+  if (Reveal.isOverview()) return;
+
+  setTimeout(function () {
+    var iframes = document.querySelectorAll('iframe');
+    for (var i = 0; i < iframes.length; i++) {
+       iframes[i].src = iframes[i].src;
+    }
+  }, 100);
+});
 		</script>
 
 	</body>
