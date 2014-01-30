@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 
 	<head>
 		<meta charset="utf-8">
@@ -7,7 +7,7 @@
 		<title>ESUP atelier Développement</title>
 
 		<link rel="stylesheet" href="css/reveal.min.css">
-		<link rel="stylesheet" href="css/theme/simple.css" id="theme"/> 
+		<link rel="stylesheet" href="css/theme/simple.css" id="theme"> 
 
 <style> 
 body {
@@ -75,11 +75,18 @@ body {
   background-color: #003366;
   display: block;
   padding: 0.3em;
+  Xtop: 0px;
 }
 .reveal h4 {
   color: #ff6600;
   font-weight: bold;
 }
+
+.reveal ul li,.reveal ol li {
+  margin: 0.1em 0;
+  padding-left: 0.15em; 
+}
+
 .reveal .progress {
   background: rgba(255, 102, 0, 0.1);
 }
@@ -93,6 +100,9 @@ body {
 }
 .h1em {
   height: 1em;
+}
+.vspace {
+  padding-top: 0.4em !important;
 }
 
 </style>
@@ -151,6 +161,7 @@ ESUP-Commons :
 
 <h4>ESUP-Commons v1</h4>
 <ul>
+  <li>2006-2009-
   <li>mixte servlet/portlet
   <li>ant, spring, hibernate, JSF
   <li>très structurant
@@ -168,13 +179,14 @@ Retours : trop contraignant
 <h4>ESUP-Commons v2</h4>
 
 <ul>
+  <li><a href="https://listes.esup-portail.org/sympa/arc/commons-devel/2010-03/msg00004.html">2010-</a>2012-
   <li>plus modulaire avec compatibilité v1
   <li>maven, archétypes, spring, JPA, spring-mvc / JSF
   <li>documentation + formations
 </ul>
 
 <p class="vspace"></p>
-Décision technique : 
+Décision coordination ESUP (09/2012) : 
 <ul>
  <li>spring-mvc pour les portlets (accroches)
  <li>servlet pour applis métier/gestion
@@ -188,6 +200,44 @@ Avenir ? maven + archétypes + petites libs esup pour aider ?
 <!-------------------------------------------------->
 <section>
 <h2>Présentation de l'atelier « Développement »</h2>
+
+&rArr; harmoniser/faciliter/mutualiser le développement des applications autour de l'ENT
+
+<h4 style="padding-top: 1em">Comment ?</h4>
+
+<table width="100%">
+  <tr>
+    <td>
+      <ul>
+	<li>recenser les pratiques
+	<li>produire des exemples
+	<li>conseiller
+      </ul>
+    </td>
+    <td>
+      <ul class="fragment">
+	<li>veille technologique
+	<li>retours d'expériences
+	<li>discussion techniques
+      </ul>
+    </td>
+  </tr>
+</table>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>PHP, Javascript...</h2>
+
+Ouverture sur des technologies non-java
+<br>
+<ul>
+ <li>PHP : Symfony, Doctrine ?
+ <li>Javascript client : jquery-ui, AngularJS ?
+</ul>
+
+
 </section>
 
 <!-------------------------------------------------------------------------->
