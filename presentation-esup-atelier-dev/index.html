@@ -149,7 +149,7 @@ ESUP-Commons :
 <ul>
   <li>Formations et auto-formations : utiles
   <li>v2 plus utilisée que la v1
-  <li>v2 plébiscitée : plus facile, plus flexible
+  <li>v2 appréciée : plus facile, plus flexible
   <li>OK pour encore plus de flexibilité
   </ul>
 
@@ -222,6 +222,94 @@ Avenir ? maven + archétypes + petites libs esup pour aider ?
       </ul>
     </td>
   </tr>
+</table>
+
+</section>
+
+
+<!-------------------------------------------------->
+<section>
+<h2>Veille technologique</h2>
+
+Pourquoi ?
+Suivre les évolutions !
+<p>
+<ul>
+  <li>Langages de programmation
+  <li>Web
+  <li>Outils
+  <li>XML
+</ul>
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Les langages de programmation évoluent</h2>
+
+<h4>Fonctions anonymes</h4>
+
+<table width="100%">
+<tr>
+  <td>C#<br>2007</td>
+  <td>PHP<br>2009</td>
+  <td>Objective C<br>2009</td>
+  <td>C++<br>2011</td>
+  <td>Java<br>2014!</td>
+</tr>
+</table>
+
+<p class="vspace">
+<h4>Programmation asynchrone</h4>
+
+<table width="100%">
+<tr>
+  <td>XmlHttpRequest<br>2004</td>
+  <td>Jquery promises<br>2011</td>
+  <td>Play/Netty<br>2010</td>
+  <td>node.js<br>2010</td>
+</tr>
+</table>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Les langages de programmation évoluent</h2>
+
+<h4>Modèle mémoire</h4>
+
+<style>
+table.with-border td { border: 1px solid; }
+</style>
+
+<table class="with-border" style="font-size: 80%; line-height: 1.1em">
+<tr>
+  <th></th><th>concurrency</th><th>partage</th><th>sessions</th>
+</tr>
+<tr>
+  <td>PHP</td>
+  <td>processus</td>
+  <td>non<br><small>memcache<br>redis</small></td>
+  <td>fichier<br><small>memcache<br>mongodb<br>DB</small></td>
+</tr>
+<tr>
+  <td>Java</td>
+  <td>threads, preemptive</td>
+  <td>oui<br>synchronisation (!)</td>
+  <td>mémoire<br>si serializable (!) :<br><small>fichier<br>DB</small></td>
+</tr>
+<tr>
+  <td>Javascript</td>
+  <td>événements, asynchrone</td>
+  <td>oui<br>cooperative</td>
+  <td>client<br>mémoire<br>redis<br>mongo</td>
+</tr>
+<tr>
+  <td>Javascript <br>Web Workers</td>
+  <td>threads</td>
+  <td>message passing</td>
+  <td></td>
+</tr>
 </table>
 
 </section>
