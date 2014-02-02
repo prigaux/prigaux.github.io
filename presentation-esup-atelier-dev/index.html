@@ -278,7 +278,7 @@ Pour finir cette présentation, une analyse de certaines évolutions de la progr
 	<tr>
 		<td>iframe</td>
 		<td>&#10145;</td>
-		<td>iframe<br><small>third party cookies pb</small></td>
+		<td>iframe<br><small>⚠ cookies « des sites visités »</small></td>
 	</tr>
 	<tr>
 		<td>applets<br>flash</td>
@@ -302,12 +302,10 @@ single page app
 	</tr>
 </table>
 
-<div style="float: right; text-align: right; line-height: 1em;">
+<div style="float: right; text-align: right; line-height: 1em; margin-top: -0.4em;">
 CSP
 <br><small>Shadow DOM<br>Web Components<br>...</small>
 </div>
-
-<div style="text-align: right; width: 70%">oauth2</div>
 
 </section>
 
@@ -335,7 +333,7 @@ table.left-to-right td:last-child {
 	<tr>
 		<td>beans XML</td>
 		<td>&#10145;</td>
-		<td>annotations, code</td>
+		<td>annotations java</td>
 	</tr>
 	<tr>
 		<td>ant, maven<br><small>build.xml, pom.xml</small></td>
@@ -386,12 +384,12 @@ table.align-middle td { vertical-align: middle; line-height: 1em !important; }
 <p class="vspace">
 <h4>Programmation asynchrone</h4>
 
-<table width="100%">
+<table class="align-center">
 <tr>
-  <td>XmlHttpRequest<br>2004</td>
+  <td>XHR<br>2004</td>
+  <td>node.js<br>2010</td>
   <td>Jquery promises<br>2011</td>
   <td>Play/Netty<br>2010</td>
-  <td>node.js<br>2010</td>
 </tr>
 </table>
 
@@ -426,8 +424,8 @@ table.with-border td.light-border-left { border-left-color: #ccc; border-left-st
   <td class="light-border-left">threads</td>
 </tr>
 <tr>
-  <td>partage</td>
-  <td>non<br><small>memcached, redis</small></td>
+  <td>partage<br>données</td>
+  <td>non<br><small>DB, memcached...</small></td>
   <td>oui<br><small>⚠ synchronisation</small></td>
   <td class="light-border-right">oui</td>
   <td class="light-border-left">message<br>passing</td>
@@ -436,7 +434,7 @@ table.with-border td.light-border-left { border-left-color: #ccc; border-left-st
   <td>sessions</td>
   <td>fichier<br><small>memcached, mongodb, DB</small></td>
   <td>mémoire<br><small>⚠ si serializable : fichier, DB</small></td>
-  <td colspan="2">mémoire, client,<br>redis, mongodb</td>
+  <td colspan="2">mémoire, cookies,<br>redis, mongodb</td>
 </tr>
 </table>
 
