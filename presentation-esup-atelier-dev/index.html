@@ -108,6 +108,10 @@ body {
   padding-top: 0.4em !important;
 }
 
+.as-if-no-link {
+  color: black !important;
+}
+
 </style>
 	</head>
 
@@ -139,34 +143,13 @@ body {
 
 <!-------------------------------------------------->
 <section>
-<h2>Résultat enquête ESUP-Commons</h2>
-
-<ul>
-  <li>33 réponses
-  <li>85% d'universités
-  <li>65% de développeur-intégrateur
-</ul>
-<p class="vspace"></p>
-ESUP-Commons :
-<br>
-<ul>
-  <li>Formations et auto-formations : utiles
-  <li>v2 plus utilisée que la v1
-  <li>v2 appréciée : plus facile, plus flexible
-  <li>OK pour encore plus de flexibilité
-  </ul>
-
-</section>
-
-<!-------------------------------------------------->
-<section>
 <h2>Historique ESUP-Commons</h2>
 
 <h4>ESUP-Commons v1</h4>
 <ul>
   <li>2006-2009-
-  <li>mixte servlet/portlet
   <li>ant, spring, hibernate, JSF
+  <li>mixte servlet/portlet
   <li>très structurant
   <li>documentation + formations
 </ul>
@@ -182,21 +165,43 @@ Retours : trop contraignant
 <h4>ESUP-Commons v2</h4>
 
 <ul>
-  <li><a href="https://listes.esup-portail.org/sympa/arc/commons-devel/2010-03/msg00004.html">2010-</a>2012-
+  <li><a class="as-if-no-link" href="https://listes.esup-portail.org/sympa/arc/commons-devel/2010-03/msg00004.html">2010-</a>2012-
   <li>plus modulaire avec compatibilité v1
-  <li>maven, archétypes, spring, JPA, spring-mvc / JSF
+  <li>maven, archétypes, spring, JPA, Spring-MVC / JSF
   <li>documentation + formations
 </ul>
 
 <p class="vspace"></p>
 Décision coordination ESUP (09/2012) : 
 <ul>
- <li>spring-mvc pour les portlets (accroches)
+ <li>Spring-MVC pour les portlets (accroches)
  <li>servlet pour applis métier/gestion
 </ul>
 
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Résultat enquête ESUP-Commons</h2>
+
+<ul>
+  <li>33 réponses
+  <li>85% d'universités
+  <li>65% de développeur-intégrateur
+</ul>
+<p class="vspace"></p>
+ESUP-Commons :
+<br>
+<ul>
+  <li>Formations et auto-formations : utiles
+  <li>v2 plus utilisée que la v1
+  <li>v2 appréciée : plus facile, plus flexible
+  <li>OK pour encore plus de flexibilité
+</ul>
+  
 <p class="vspace"></p>
 Avenir ? maven + archétypes + petites libs esup pour aider ?
+
 
 </section>
 
@@ -233,7 +238,6 @@ Avenir ? maven + archétypes + petites libs esup pour aider ?
 ouverture sur les technologies Javascript client et PHP
 </div>
 
-
 </section>
 
 
@@ -244,9 +248,9 @@ ouverture sur les technologies Javascript client et PHP
 Sujets des prochaines réunions :
 <p>
 <ul>
-  <li>intégration iframe
+  <li><a class="as-if-no-link" href="http://prigaux.github.io/presentation-integration-iframe-ENT/">intégration iframe</a>
   <li>avenir de ESUP-Commons
-  <li>Spring Data, Spring Roo
+  <li><a class="as-if-no-link" href="http://llevague.github.io/presentations/spring-data/index.html">Spring Data</a>, Spring Roo
   <li>AngularJS
   <li>Symfony Doctrine
 </ul>
