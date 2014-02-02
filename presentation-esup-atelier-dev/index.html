@@ -81,6 +81,9 @@ body {
   color: #ff6600;
   font-weight: bold;
 }
+.reveal small {
+  vertical-align: middle;
+}
 
 .reveal ul li,.reveal ol li {
   margin: 0.1em 0;
@@ -224,22 +227,134 @@ Avenir ? maven + archétypes + petites libs esup pour aider ?
   </tr>
 </table>
 
+<div class="fragment">
+<h4 style="padding-top: 1em">Premières décisions</h4>
+
+ouverture sur les technologies Javascript client et PHP
+</div>
+
+
 </section>
 
 
 <!-------------------------------------------------->
 <section>
-<h2>Veille technologique</h2>
+<h2>Un peu de promotion</h2>
 
-Pourquoi ?
-Suivre les évolutions !
+Sujets des prochaines réunions :
 <p>
 <ul>
-  <li>Langages de programmation
-  <li>Web
-  <li>Outils
-  <li>XML
+  <li>intégration iframe
+  <li>avenir de ESUP-Commons
+  <li>Spring Data, Spring Roo
+  <li>AngularJS
+  <li>Symfony Doctrine
 </ul>
+
+<p class="vspace fragment">
+Pour finir cette présentation, une analyse de certaines évolutions de la programmation Web...
+</section>
+</p>
+
+<!-------------------------------------------------->
+<section>
+<h2>Le Web évolue</h2>
+
+<table class="left-to-right align-middle">
+	<tr>
+		<td>vue desktop</td>
+		<td>&#10145;</td>
+		<td>vue desktop,<br>vue mobile</td>
+		<td>&#10145;</td>
+		<td>responsive<br>web design</td>
+	</tr>
+</table>
+
+<table class="left-to-right align-middle">
+	<tr>
+		<td>iframe</td>
+		<td>&#10145;</td>
+		<td>iframe<br><small>third party cookies pb</small></td>
+	</tr>
+	<tr>
+		<td>applets<br>flash</td>
+		<td>&#10145;</td>
+		<td>HTML5<br><small>canvas, SVG</small></td>
+	</tr>
+</table>
+
+<div style="float: right; text-align: right; line-height: 1em; margin-top: -2em;">
+single page app
+<br><small>backbone.js, AngularJS<br>reveal.js</small>
+</div>
+
+<table class="left-to-right">
+	<tr>
+		<td>XHR</td>
+		<td></td>
+		<td>JSONP</td>
+		<td></td>
+		<td>CORS</td>
+	</tr>
+</table>
+
+<div style="float: right; text-align: right; line-height: 1em;">
+CSP
+<br><small>Shadow DOM<br>Web Components<br>...</small>
+</div>
+
+<div style="text-align: right; width: 70%">oauth2</div>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>XML : le reflux ?</h2>
+
+<style>
+table.left-to-right {
+  line-height: 1em;
+  width: 100%;
+}
+table.left-to-right td {
+  padding: 0.4em !important;
+  text-align: center;
+}
+table.left-to-right td:first-child {
+  text-align: right;
+}
+table.left-to-right td:last-child {
+   text-align: left;
+}
+</style>
+<table class="left-to-right">
+	<tr>
+		<td>beans XML</td>
+		<td>&#10145;</td>
+		<td>annotations, code</td>
+	</tr>
+	<tr>
+		<td>ant, maven<br><small>build.xml, pom.xml</small></td>
+		<td>&#10145;</td>
+		<td>gradle<br><small>(groovy DSL)</small></td>
+	</tr>
+	<tr>
+		<td>SOAP<br><small>JAX-WS</small></td>
+		<td>&#10145;</td>
+		<td>REST/JSON<br><small>JAX-RS, Jackson</small></td>
+	</tr>
+	<tr>
+		<td>SAML</td>
+		<td>&#10145;</td>
+		<td>oauth2</td>
+	</tr>
+	<tr>
+		<td>XHTML</td>
+		<td>&#10145;</td>
+		<td>HTML5<br><small>XHTML5/polyglot peu utilisé</small></td>
+	</tr>
+</table>
+
 </section>
 
 <!-------------------------------------------------->
@@ -248,7 +363,13 @@ Suivre les évolutions !
 
 <h4>Fonctions anonymes</h4>
 
-<table width="100%">
+<style>
+table.align-center { width: 100%; }
+table.align-center td { text-align: center; }
+
+table.align-middle td { vertical-align: middle; line-height: 1em !important; }
+</style>
+<table class="align-center">
 <tr>
   <td>C#<br>2007</td>
   <td>PHP<br>2009</td>
@@ -278,37 +399,40 @@ Suivre les évolutions !
 
 <h4>Modèle mémoire</h4>
 
+<p class="vspace"></p>
 <style>
-table.with-border td { border: 1px solid; }
+table.with-border { border-collapse: collapse; width: 100%; }
+table.with-border th { text-align: center; padding-bottom: 0.2em; }
+table.with-border td { border: 1px solid; border-bottom-color: #ccc; padding: 0.4em !important; }
+table.with-border tr td:first-child { border-left: none; border-top: none; border-bottom: none; vertical-align: middle; text-align: right; padding-right: 0.7em !important; }
+table.with-border tr:last-child td { border-bottom-color: #000; }
+table.with-border td.light-border-right { border-right-color: #ccc; border-right-style: dashed; }
+table.with-border td.light-border-left { border-left-color: #ccc; border-left-style: dashed; }
 </style>
 
 <table class="with-border" style="font-size: 80%; line-height: 1.1em">
 <tr>
-  <th></th><th>concurrency</th><th>partage</th><th>sessions</th>
+  <th></th><th>PHP</th><th>Java</th><th>Javascript</th><th><small>Web Workers</small></th>
 </tr>
 <tr>
-  <td>PHP</td>
-  <td>processus</td>
-  <td>non<br><small>memcache<br>redis</small></td>
-  <td>fichier<br><small>memcache<br>mongodb<br>DB</small></td>
+  <td>concurrency</td>
+  <td>processus<br><small>+ pthreads</small></td>
+  <td>threads<br><small>preemptive</small></td>
+  <td class="light-border-right">1 processus<br><small>⚠ async IO + CPS</small></td>
+  <td class="light-border-left">threads</td>
 </tr>
 <tr>
-  <td>Java</td>
-  <td>threads, preemptive</td>
-  <td>oui<br>synchronisation (!)</td>
-  <td>mémoire<br>si serializable (!) :<br><small>fichier<br>DB</small></td>
+  <td>partage</td>
+  <td>non<br><small>memcached, redis</small></td>
+  <td>oui<br><small>⚠ synchronisation</small></td>
+  <td class="light-border-right">oui</td>
+  <td class="light-border-left">message<br>passing</td>
 </tr>
 <tr>
-  <td>Javascript</td>
-  <td>événements, asynchrone</td>
-  <td>oui<br>cooperative</td>
-  <td>client<br>mémoire<br>redis<br>mongo</td>
-</tr>
-<tr>
-  <td>Javascript <br>Web Workers</td>
-  <td>threads</td>
-  <td>message passing</td>
-  <td></td>
+  <td>sessions</td>
+  <td>fichier<br><small>memcached, mongodb, DB</small></td>
+  <td>mémoire<br><small>⚠ si serializable : fichier, DB</small></td>
+  <td colspan="2">mémoire, client,<br>redis, mongodb</td>
 </tr>
 </table>
 
@@ -316,17 +440,7 @@ table.with-border td { border: 1px solid; }
 
 <!-------------------------------------------------->
 <section>
-<h2>PHP, Javascript...</h2>
-
-Ouverture sur des technologies non-java
-<br>
-<ul>
- <li>PHP : Symfony, Doctrine ?
- <li>Javascript client : jquery-ui, AngularJS ?
-</ul>
-
-
-</section>
+<h2>Questions ?</h2>
 
 <!-------------------------------------------------------------------------->
 			</div>
