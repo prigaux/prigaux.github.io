@@ -143,14 +143,13 @@ body {
 
 <!-------------------------------------------------->
 <section>
-<h2>Historique ESUP-Commons</h2>
+<h2>Historique<br>ESUP-Commons v1</h2>
 
-<h4>ESUP-Commons v1</h4>
 <ul>
   <li>2006-2009-
   <li>ant, spring, hibernate, JSF
   <li>mixte servlet/portlet
-  <li>très structurant
+  <li>très structurant : application vide complète 
   <li>documentation + formations
 </ul>
 
@@ -161,13 +160,13 @@ Retours : trop contraignant
 
 <!-------------------------------------------------->
 <section>
-<h2>Historique ESUP-Commons</h2>
-<h4>ESUP-Commons v2</h4>
+<h2>Historique<br>ESUP-Commons v2</h2>
 
 <ul>
   <li><a class="as-if-no-link" href="https://listes.esup-portail.org/sympa/arc/commons-devel/2010-03/msg00004.html">2010-</a>2012-
-  <li>plus modulaire avec compatibilité v1
-  <li>maven, archétypes, spring, JPA, Spring-MVC / JSF
+  <li>compatibilité v1
+  <li>plus modulaire : libraries + archétypes
+  <li>maven, spring, JPA, Spring-MVC / JSF
   <li>documentation + formations
 </ul>
 
@@ -351,7 +350,7 @@ table.left-to-right td:last-child {
 <section>
 <h2>Les langages de programmation évoluent</h2>
 
-<h4>Modèle mémoire</h4>
+<!--h4>Modèle mémoire</h4-->
 
 <p class="vspace"></p>
 <style>
@@ -366,13 +365,13 @@ table.with-border td.light-border-left { border-left-color: #ccc; border-left-st
 
 <table class="with-border" style="font-size: 80%; line-height: 1.1em">
 <tr>
-  <th></th><th>PHP</th><th>Java</th><th>Javascript</th><th><small>Web Workers</small></th>
+  <th></th><th>PHP</th><th>Java servlet</th><th>Javascript</th><th><small>Web Workers</small></th>
 </tr>
 <tr>
   <td>concurrency</td>
   <td>processus<br><small>+ pthreads</small></td>
   <td>threads<br><small>preemptive</small></td>
-  <td class="light-border-right">1 processus<br><small>⚠ async IO + CPS</small></td>
+  <td class="light-border-right">1 seul thread<br><small>⚠ async IO + CPS</small></td>
   <td class="light-border-left">threads</td>
 </tr>
 <tr>
@@ -387,6 +386,12 @@ table.with-border td.light-border-left { border-left-color: #ccc; border-left-st
   <td>fichier<br><small>memcached, mongodb, DB</small></td>
   <td>mémoire<br><small>⚠ si serializable : fichier, DB</small></td>
   <td colspan="2">mémoire, cookies,<br>redis, mongodb</td>
+</tr>
+<tr>
+  <td>choix</td>
+  <td>simplicité</td>
+  <td>performance</td>
+  <td colspan="2">léger, C10K</td>
 </tr>
 </table>
 
