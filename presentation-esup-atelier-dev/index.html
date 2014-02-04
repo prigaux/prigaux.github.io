@@ -9,6 +9,8 @@
 		<link rel="stylesheet" href="css/reveal.min.css">
 		<link rel="stylesheet" href="css/theme/simple.css" id="theme"> 
 
+		<link rel="stylesheet" href="plugin/highlight/default.min.css">
+
 <style> 
 body {
   font-family: Arial;
@@ -112,6 +114,9 @@ body {
   color: black !important;
 }
 
+.reveal pre {
+  width: 100%;
+}
 </style>
 	</head>
 
@@ -132,14 +137,15 @@ body {
 </section>
 
 <!-------------------------------------------------->
-<!--section>
+<section>
 <h2>Plan</h2>
 <ul>
-  <li>Résultat enquête ESUP-Commons
-  <li>Historique ESUP-Commons
-  <li>Présentation de l'atelier « Développement »
+  <li>ESUP-Commons
+  <li>Présentation de l'atelier
+  <li>Petite veille technologique
+  <li>Programme alléchant des prochaines réunions
 </ul>
-</section-->
+</section>
 
 <!-------------------------------------------------->
 <section>
@@ -404,7 +410,22 @@ table.with-border td.light-border-left { border-left-color: #ccc; border-left-st
 <section>
 <h2>Les langages de programmation évoluent</h2>
 
-<h4>Fonctions anonymes</h4>
+<h4>Programmation asynchrone</h4>
+
+<table class="align-center">
+<tr>
+  <td>XHR<br>2004</td>
+  <td>Jquery promises<br>2011</td>
+  <td>node.js<br>2010</td>
+  <td>Play/Netty<br>2010</td>
+</tr>
+</table>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Fonctions anonymes</h2>
 
 <style>
 table.align-center { width: 100%; }
@@ -412,6 +433,33 @@ table.align-center td { text-align: center; }
 
 table.align-middle td { vertical-align: middle; line-height: 1em !important; }
 </style>
+
+<table class="align-center">
+  <tr><td>Java 5 <small>+ Guava</small></td>
+      <td>Java 8 <small>+ Guava</small></td>
+  </tr>
+  <tr><td>
+<pre><code data-trim class="java">
+Iterables.filter(persons,
+  new Predicate&lt;Person&gt;() {
+    @Override
+    public boolean apply(Person p) {
+      return p.getAge() &gt;= 18;
+    }
+  });
+</code></pre>
+  </td><td>
+<pre><code data-trim class="java">
+Iterables.filter(persons,
+    p -> p.getAge() &gt;= 18);
+</code></pre>
+  </td></tr>
+</table>
+
+&rArr; parallélisme, programmation asynchrone
+
+<p class="vspace">
+
 <table class="align-center">
 <tr>
   <td>C#<br>2007</td>
@@ -419,18 +467,6 @@ table.align-middle td { vertical-align: middle; line-height: 1em !important; }
   <td>Objective C<br>2009</td>
   <td>C++<br>2011</td>
   <td>Java<br>2014!</td>
-</tr>
-</table>
-
-<p class="vspace">
-<h4>Programmation asynchrone</h4>
-
-<table class="align-center">
-<tr>
-  <td>XHR<br>2004</td>
-  <td>node.js<br>2010</td>
-  <td>Jquery promises<br>2011</td>
-  <td>Play/Netty<br>2010</td>
 </tr>
 </table>
 
