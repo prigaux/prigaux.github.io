@@ -357,6 +357,88 @@ table.left-to-right td:last-child {
 
 <!-------------------------------------------------->
 <section>
+<h2>Fonctions anonymes</h2>
+
+<style>
+table.align-center { width: 100%; }
+table.align-center td { text-align: center; }
+
+table.align-middle td { vertical-align: middle; line-height: 1em !important; }
+</style>
+
+<table class="align-center">
+  <tr><td>Java 5 <small>+ Guava</small></td>
+      <td>Java 8 <small>+ Guava</small></td>
+  </tr>
+  <tr><td>
+<pre><code data-trim class="java">
+Iterables.filter(persons,
+  new Predicate&lt;Person&gt;() {
+    @Override
+    public boolean apply(Person p) {
+      return p.getAge() &gt;= 18;
+    }
+  });
+</code></pre>
+  </td><td>
+<pre><code data-trim class="java">
+Iterables.filter(persons,
+    p -> p.getAge() &gt;= 18);
+</code></pre>
+  </td></tr>
+</table>
+
+&rArr; parallélisme, callbacks
+
+<p class="vspace">
+
+<table class="align-center">
+<tr>
+  <td>C#<br>2007</td>
+  <td>PHP<br>2009</td>
+  <td>Objective C<br>2009</td>
+  <td>C++<br>2011</td>
+  <td>Java<br>2014!</td>
+</tr>
+</table>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Programmation événementielle</h2>
+
+<h4>les débuts</h4>
+
+<table class="align-center">
+<tr>
+  <td>signaux sous unix<br>1970</td>
+  <td>GUI libraries<br>1980</td>
+  <td>Javascript<br>1995</td>
+</tr>
+</table>
+
+<p class="vspace">
+
+<h4>async IO</h4>
+
+<table class="align-center">
+<tr>
+  <td>XHR<br>2004</td>
+  <td>nginx<br>2004</td>
+  <td>node.js<br>2010</td>
+  <td>Play/Netty<br>2010</td>
+</tr>
+</table>
+
+<p class="vspace">
+
+<!--Jquery promises 2011 -->
+
+</section>
+
+<!-------------------------------------------------->
+<section>
 <h2>Les langages de programmation évoluent</h2>
 
 <!--h4>Modèle mémoire</h4-->
@@ -401,72 +483,6 @@ table.with-border td.light-border-left { border-left-color: #ccc; border-left-st
   <td>simplicité</td>
   <td>performance</td>
   <td colspan="2">léger, C10K</td>
-</tr>
-</table>
-
-</section>
-
-<!-------------------------------------------------->
-<section>
-<h2>Les langages de programmation évoluent</h2>
-
-<h4>Programmation asynchrone</h4>
-
-<table class="align-center">
-<tr>
-  <td>XHR<br>2004</td>
-  <td>Jquery promises<br>2011</td>
-  <td>node.js<br>2010</td>
-  <td>Play/Netty<br>2010</td>
-</tr>
-</table>
-
-</section>
-
-<!-------------------------------------------------->
-<section>
-<h2>Fonctions anonymes</h2>
-
-<style>
-table.align-center { width: 100%; }
-table.align-center td { text-align: center; }
-
-table.align-middle td { vertical-align: middle; line-height: 1em !important; }
-</style>
-
-<table class="align-center">
-  <tr><td>Java 5 <small>+ Guava</small></td>
-      <td>Java 8 <small>+ Guava</small></td>
-  </tr>
-  <tr><td>
-<pre><code data-trim class="java">
-Iterables.filter(persons,
-  new Predicate&lt;Person&gt;() {
-    @Override
-    public boolean apply(Person p) {
-      return p.getAge() &gt;= 18;
-    }
-  });
-</code></pre>
-  </td><td>
-<pre><code data-trim class="java">
-Iterables.filter(persons,
-    p -> p.getAge() &gt;= 18);
-</code></pre>
-  </td></tr>
-</table>
-
-&rArr; parallélisme, programmation asynchrone
-
-<p class="vspace">
-
-<table class="align-center">
-<tr>
-  <td>C#<br>2007</td>
-  <td>PHP<br>2009</td>
-  <td>Objective C<br>2009</td>
-  <td>C++<br>2011</td>
-  <td>Java<br>2014!</td>
 </tr>
 </table>
 
