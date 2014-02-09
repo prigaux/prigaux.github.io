@@ -91,6 +91,11 @@ body {
   padding-left: 0.15em; 
 }
 
+.reveal small ul li {
+  margin-left: 0.35em;
+  padding-left: 0.65em;
+}
+
 .reveal .progress {
   background: rgba(255, 102, 0, 0.1);
 }
@@ -126,7 +131,6 @@ body {
 			<div class="slides">
 
 <section>
-
 <h2>Web Widgets !</h2>
 
 <h3>avec WS, CAS, JSONP</h3>
@@ -137,12 +141,313 @@ body {
 
 <!-------------------------------------------------->
 <section>
-<h2>slide title</h2>
-<h4>foo</h4>
-<p>foo
-<h4>bar</h4>
-<p>bar
-<p>boo
+<h2>Réutilisation de code</h2>
+
+Les classiques :
+<p>
+<ul>
+ <li>bibliothèques de code
+ <li>frameworks
+ <li>web services
+ <li>jquery widgets 
+</ul>
+
+<p class="vspace">
+Combinaison intéressante :
+<p class="vspace">
+
+<h4>Web Widgets s'appuyant sur des web-services</h4>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Exemple : chercher une personne</h2>
+
+<style>
+table.image-on-left {
+  width: 100%;
+}
+table.image-on-left td {
+  vertical-align: top;
+}
+</style>
+
+<table class="image-on-left">
+<tr><td>
+<img src="https://github-camo.global.ssl.fastly.net/9f51c360b2731d256fb28c64b9691aeb7ab7f37b/687474703a2f2f777367726f7570732e756e69762d7061726973312e66722f646f632f746573742d7365617263682d737570616e6e506572736f6e2e706e67">
+  </td>
+  <td>
+
+    Idée : transformer un bête &lt;input&gt; en autocomplétion
+
+    <p class="vspace">
+      Utilisé à Paris1 :
+   <ul>
+     <li><a target="_blank" href="http://annuaire.univ-paris1.fr">annuaire</a>
+     <li>sympa
+     <li>grouper lite
+     <li>uportal3 <small>"user switch"</small>
+     <li>g2t
+   </ul>
+</ul>
+  </td>
+</tr>
+</table>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Exemple : chercher une personne</h2>
+
+<style>
+table.two-parts {
+  width: 100%;
+}
+table.two-parts td:first-child {
+  width: 55%;
+  border-right: 1px solid;
+}
+table.two-parts td:last-child {
+  padding-left: 1em;
+}
+</style>
+
+<table class="two-parts">
+<tr><td><h4>Web Service</h4>
+
+<ul>
+<li>en PHP s'appuyant sur LDAP
+<li>limite le nombre de réponses
+<li>accès anonyme ou CASifié<br><small>(pour les personnes en liste rouge)</small>
+<li>jsonp compatible
+</ul>
+</td>
+
+<td><h4>Javascript</h4>
+
+jquery-ui autocomplete
+
+</td></tr>
+</table>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Exemple : bandeau-ENT</h2>
+
+Idée :
+<p>
+<ul>
+  <li>alternative à l'intégration iframe,
+  <li>l'application intègre le web widget "bandeau-ENT"
+</ul>
+
+<p class="vspace">
+Facile à intégrer :
+
+<pre><code data-trim class="html">
+&lt;script&gt;  
+  window.bandeau_ENT = { current: "nuxeo" };  
+&lt;/script&gt;  
+&lt;script src="https://bandeau-ENT.univ-paris1.fr/bandeau-ENT-loader.js"&gt;&lt;/script&gt;
+</code></pre>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>bandeau-ENT : comparaison uportal</h2>
+
+<h4>Avantages</h4>
+<ul>
+  <li>asynchrone, donc pas de SPOF
+  <li>n'interfère pas avec la mise en onglet
+  <li>fonctionne en http, en cross-domain
+</ul>
+<small><ul>
+  <li>les applis restent maitre de leur viewport (mobile)
+  <li>pour les applications javascript, moins d'inconvénients que l'iframe
+</ul></small>
+
+<p class="vspace">
+<h4>Inconvénients</h4>
+<p>
+<ul>
+  <li>une seul application par page (pas de dashboard)
+  <li>nécessite parfois des ajustements CSS pour les applications full-page
+</ul>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>bandeau-ENT : technologie</h2>
+
+<ul>
+  <li>JSONP avec auth CAS + authorisation sur attrs LDAP
+  <br><small>ou JSONP avec auth shib avec proxy dans l'application</small>
+  <li>cache dans localStorage pour fonctionner sans cookie
+</ul>
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>XHR, CORS, JSONP</h2>
+
+<style>
+table.with-border { border-collapse: collapse; width: 100%; }
+table.with-border th { text-align: center; padding-bottom: 0.2em; min-width: 3em; }
+table.with-border td { border: 1px solid; border-bottom-color: #ccc; padding: 0.4em !important; }
+table.with-border tr td:first-child { border-left: none; border-top: none; border-bottom: none; vertical-align: middle; text-align: right; padding-right: 0.7em !important; }
+table.with-border tr:last-child td { border-bottom-color: #000; }
+table.with-border td.light-border-right { border-right-color: #ccc; border-right-style: dashed; }
+table.with-border td.light-border-left { border-left-color: #ccc; border-left-style: dashed; }
+
+table.title-on-left {
+  width: 100%;
+}
+table.title-on-left th {
+  text-align: center;
+  vertical-align: bottom;
+  font-size: 90%;
+}
+table.title-on-left td {
+  text-align: center;
+}
+</style>
+<table class="title-on-left with-border">
+  <tr>
+    <th></th>
+    <th>GET</th>
+    <th>POST</th>
+    <th><small>DELETE,</small><br>PUT</th>
+    <th>Cross domain</th>
+    <th>Cookies</th>
+    <th>Error handling</th>
+    <th>HTTP header</th>
+  </tr>
+  <tr>
+    <td>XHR</td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+    <td></td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+  </tr>
+  <tr>
+    <td>CORS</td>
+    <td>X</td>
+    <td>X</td>
+    <td>X</td>
+    <td>controlé</td>
+    <td>limité</td>
+    <td>X</td>
+    <td>X</td>
+  </tr>
+  <tr>
+    <td>JSONP</td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+    <td>X</td>
+    <td>X</td>
+    <td>partiel</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><small>&lt;form&gt;<small> + hidden iframe</small></small></td>
+    <td><small>oui,<br>aveugle</small></td>
+    <td><small>oui,<br>aveugle</small></td>
+    <td><small></small></td>
+    <td><small>X</small></td>
+    <td><small>X</small></td>
+    <td><small>?</small></td>
+    <td></td>
+  </tr>
+</table>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>XHR, CORS, JSONP</h2>
+<h4>Précisions</h4>
+
+CORS
+<br>
+<ul>
+  <li>bien répandu (<a href="http://caniuse.com/cors">IE &gt;= 8</a>)
+  <li>limité : impossible d'avoir cookies + redirect
+</ul>
+
+<p class="vspace">
+
+JSONP
+<br>
+<ul>
+  <li>possibilité de contrôler partiellement le cross-domain en vérifiant le <a href="http://en.wikipedia.org/wiki/HTTP_referer">referer</a>
+</ul>
+
+<p class="vspace">
+
+&lt;form&gt; + hidden iframe
+<br>
+<ul>
+  <li>impossible de lire le résultat des requêtes GET/POST
+</ul>
+
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>JSONP</h2>
+
+Avec un web-service compatible JSONP, on peut l'utiliser de la même manière
+que XHR tout en étant cross-domain.
+
+<p class="vspace">
+⚠ Autoriser JSONP ouvre le web-service à des vols de données par XSS.
+
+<p class="vspace">
+  ⚠ Pour éviter les attaques CSRF, le web-service doit respecter la <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.1.1">norme HTTP</a> : GET ne doit pas faire d'effet de bord.
+
+<p class="vspace">
+Safari refuse les cookies des sites non visités. Cela concerne uniquement les sites externes.
+Si besoin, le web-service peut contourner le problème en utilisant <a href="http://caniuse.com/sessionStorage">sessionStorage</a>.
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>JSONP &amp; CAS</h2>
+
+Si cookie CAS dans le navigateur,
+<br>possibilité d'autolog requête JSONP :
+
+<img src="automatic-login.png" class="stretch">
+
+<small>NB : CAS <a href="http://www.jasig.org/cas/client-integration/gateway">gateway</a> est recommandée pour la gestion d'erreur</small>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Web-service cross-domain sécurisé</h2>
+
+<ul>
+ <li>pour /login : utiliser JSONP / window.open+postMessage
+ <li>pour les autres urls: utiliser CORS pour limiter les sites utilisateurs du web-widget
+ <li>respecter la <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.1.1">norme HTTP</a> : GET ne doit pas faire d'effet de bord.
+ <li>protéger POST avec un token passé en header HTTP :
+     si le token manque, le WS renvoie un nouveau token, il suffit de rejouer la requête.
+</ul>
+
 </section>
 
 <!-------------------------------------------------------------------------->
