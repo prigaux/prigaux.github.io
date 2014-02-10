@@ -76,6 +76,14 @@ body {
   color: #ff6600;
   font-weight: bold;
 }
+.reveal small {
+  vertical-align: middle;
+}
+
+.reveal ul li,.reveal ol li {
+  margin: 0.1em 0;
+  padding-left: 0.15em; 
+}
 .reveal .progress {
   background: rgba(255, 102, 0, 0.1);
 }
@@ -177,8 +185,8 @@ Plein de problèmes !
 <!----------------------------------------------------->
 <section><h2>Mixed content (https/http)</h2>
 
-<p>Vous avez des applications en http ? </p>
-  <p><small>Sachez que firefox (par défaut) conserve tous les cookies non-"secure" sur le disque, même après avoir quitté.</small></p>
+<p>Vous avez des applications en http ?
+<p><small>Sachez que firefox (par défaut) conserve tous les cookies non-"secure" sur le disque, même après avoir quitté.</small></p>
 <p>
 Les principaux navigateurs refusent les "active" http dans les pages https.
 </p>
@@ -381,6 +389,7 @@ Comment gérer les modifications qui interviennent après l'évènement <code>on
 <!----------------------------------------------------->
 <section><h2>Conclusion</h2>
 
+<div style="font-size: 95%">
 L'intégration iframe offre plusieurs avantages : 
 <br>
 <ul>
@@ -397,7 +406,7 @@ l'application en iframe prévient le portail via postMessage quand elle se redim
 <p class="vspace">
 En pratique pour des applications avec peu de javascript, l'insertion d'une simple ligne &lt;script&gt; dans l'application suffit...
 sans modifier le comportement de l'application hors iframe !
-
+</div>
 </section>
 
 <!----------------------------------------------------->
@@ -417,6 +426,15 @@ Sur la liste esup-utilisateurs :
   <li><a href="https://listes.esup-portail.org/sympa/arc/esup-utilisateurs/2012-12/msg00026.html">lien direct vers iframe</a>
 </ul>
 
+</section>
+
+<!----------------------------------------------------->
+<section><h2>Proposition</h2>
+
+<ol>
+  <li>esup-uportal : ajouter receiveIframeHeight <small>(20 lignes de javascript)</small>
+  <li>applications : faire une page recensant comment rendre l'appli "compatible ENT en iframe sans double-ascenseurs"
+</ol>
 </section>
 
 <!----------------------------------------------------->
