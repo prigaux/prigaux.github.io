@@ -415,6 +415,41 @@ JSONP
 
 <!-------------------------------------------------->
 <section>
+<h2>JSONP vs Ajax</h2>
+
+<h4>REST/JSON</h4>
+
+Requête Ajax <tt>http://foo.fr/bar</tt> qui renvoie
+
+<pre><code data-trim class="js">
+{ "Name": "Foo", "Id": 1234 }
+</code></pre>
+
+<h4>JSONP</h4>
+
+Balise <tt>script src=http://foo.fr/bar?callback=f</tt> qui renvoie
+
+<pre><code data-trim class="js">
+f({ "Name": "Foo", "Id": 1234 })
+</code></pre>
+
+<p class="vspace"></p>
+Pour faire du JSONP en PHP, on remplace
+
+<pre><code data-trim class="php">
+echo $data
+</code></pre>
+
+par
+
+<pre><code data-trim class="php">
+echo $_GET['callback'] . '(' . $data . ');';
+</code></pre>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
 <h2>JSONP</h2>
 
 Avec un web-service compatible JSONP, on peut l'utiliser de la même manière
