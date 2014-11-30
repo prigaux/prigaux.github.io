@@ -352,14 +352,59 @@ app.controller('TodoController', function($scope) {
 
 <!-------------------------------------------------->
 <section>
-<h2>Un autocomplete server side</h2>
+<h2>Un service</h2>
 
-<p class="vspace">
-<a href="http://jsfiddle.net/79oo3r0n/2/" target="_blank">Testez avec fiddle</a>
+<pre><code data-trim class="html">
+&lt;input type=&quot;text&quot; ng-class=&quot;{loading: searching}&quot; ng-model=&quot;leNom&quot;&gt;
+
+&lt;ul ng-repeat=&quot;e in suggestions&quot;&gt;
+    &lt;li&gt;{{e.displayName}}&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div ng-if=&quot;partialResults&quot;&gt;Votre recherche est limitée. Pour les autres résultats, veuillez affiner la recherche.&lt;/div&gt;
+</code></pre>
+
+<pre><code data-trim class="js">
+app.controller(&#39;MyCtrl&#39;, function ($scope, searchUser) {
+
+    $scope.$watch(&#39;leNom&#39;, suggest);
+    
+    function suggest(token) {
+        var maxRows = 10;
+        
+        $scope.searching = true;
+        searchUser(token, maxRows).success(function (l) {
+            $scope.suggestions = l;
+            $scope.partialResults = $scope.leNom.length &lt; 4 || l.length == maxRows;
+        }).finally(function () {
+            $scope.searching = false
+        });
+    };
+});
+</code></pre>
 
 </section>
 
 
+<!-------------------------------------------------->
+<section>
+<h2>Un service (suite)</h2>
+
+<pre><code data-trim class="js">
+app.factory(&#39;searchUser&#39;, function ($http) {
+    var searchUserURL = &#39;http://wsgroups.univ-paris1.fr/searchUser&#39;;
+
+    return function(token, maxRows) {
+        return $http.jsonp(searchUserURL +
+         &quot;?callback=JSON_CALLBACK&amp;maxRows=&quot; + maxRows +
+         &quot;&amp;token=&quot; + encodeURIComponent(token));
+    }
+});
+</code></pre>
+
+<p class="vspace">
+<a href="http://jsfiddle.net/y7efn04c/" target="_blank">Testez avec fiddle</a>
+
+</section>
 
 <!-------------------------------------------------->
 <section>
