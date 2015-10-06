@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="fr">
+
+<!-- version 1.0 -->
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>ESUP GT dév</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/simple.css" id="theme"> 
+    <link rel="stylesheet" href="css/esup-theme.css">
+
+    <link rel="stylesheet" href="plugin/highlight/default.min.css">
+<style>
+.reveal .slides > section, .reveal .slides > section > section {
+    padding-top: 0;
+}
+</style>
+
+  </head>
+
+  <body>
+
+    <div class="header header-left"><span>ESUP-Days #20</span><span>(23.09.2015 @Paris)</span></div>
+
+    <div class="reveal esup">
+
+      <div class="slides">
+
+	<section>
+          <header>
+            <h2>GT Dev - Bilan</h2>
+            <h3 class="shadow">Chiffres sur 18 mois</h3>
+          </header>
+          <div class="slide-content">
+	    12 réunions :<br>
+	    <ul>
+	      <li>8 présentations (technos web, java, PHP)
+		<ul>
+		  <li>avec ~11 participants</li>
+		  <li>de 7-8 établissements différents</li>
+		</ul>
+	      </li>
+	      <li>3 réunions de travail (maintenance des applis, java, uportal...)
+		<ul>
+		  <li>avec ~5 participants</li>
+		  <li>de 4-5 établissements différents</li>
+		</ul>
+	      </li>
+	    </ul>
+          </div>
+        </section>
+
+        <!--///////////////////////////////////////////-->
+
+	<section>
+          <header>
+            <h2 class="shadow">Projets</h2>
+          </header>
+          <div class="slide-content">
+	    <h4>Web widgets</h4>
+	    Rennes 1 et Lorraine intéressés par le widget de recherche de personnes présenté en <a href="http://prigaux.github.io/presentation-web-widgets-cas-jsonp/index.html#/2">GT dév 2014/10</a>.
+<p class="vspace">
+            <h4>ProlongationENT</h4>	    
+	    Outils d'intégration d'applications renater/nationales ?
+<p>
+	    <a href="https://bandeau-ent.univ-paris1.fr/uportal4/fake-cru/">Démonstration</a> et <a href="http://esupportail.github.io/presentations/esup-days-20-ProlongationENT/#/15">explications</a>.
+          </div>
+        </section>
+
+        <!--///////////////////////////////////////////-->
+
+	<section>
+          <header>
+            <h2>GT Dev - Futur</h2>
+            <h3 class="shadow">On continue comme avant ?</h3>
+          </header>
+          <div class="slide-content">
+	    Un mix de<br>
+	    <ul>
+	      <li>de présentations ?</li>
+	      <li>de réunions de travail ?</li>
+	      <ul>
+		<li>soutien pour github-ifier</li>
+		<li>intégration de moodle</li>
+		<li>...</li>
+	    </ul>
+          </div>
+        </section>
+
+        <!--///////////////////////////////////////////-->
+
+      </div>
+    </div>
+
+    <div class="footer footer-left"><img src="img/logo-esup--NEW.png"><span>Copyright 2015 &copy;</span></div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+
+      Reveal.initialize({
+        margin: 0,
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        theme: 'simple', // available themes are in /css/theme
+        transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
+        dependencies: [ 
+            // Cross-browser element.classList (esp needed on safari 4.0.5)
+            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+
+            // Syntax highlight for <pre> elements
+                  { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+
+            ],
+        });
+
+        function createSingletonNode( container, tagname, classname, innerHTML ) {
+
+          var node = container.querySelector( '.' + classname );
+          if( !node ) {
+              node = document.createElement( tagname );
+              node.classList.add( classname );
+              if( innerHTML !== null ) {
+                  node.innerHTML = innerHTML;
+              }
+              container.appendChild( node );
+          }
+          return node;
+
+        }
+
+      // From https://github.com/hakimel/reveal.js/pull/56
+      function slidenumber(event){
+        var current_slide = 0;
+
+        var horizontal_slides = document.querySelectorAll( '.reveal .slides>section' );
+        for (var i = 0; i < event.indexh; i++) {
+          // get subslides
+          var subslides = horizontal_slides[i].querySelectorAll('section');
+
+          // if subslides.length is 0, add 1 for horizontal slide, else add subslides.length
+          current_slide += (subslides.length === 0) ? 1 : subslides.length;
+        }
+
+        current_slide += event.indexv+1;
+        return current_slide.toString();
+      }
+
+      function setSlideNb(event) {
+        var dom = createSingletonNode(document.querySelector(".controls"), "div", "slideNb");
+        dom.innerHTML = event.indexh ? event.indexh : '';
+      }
+
+      Reveal.addEventListener('slidechanged', setSlideNb);
+      Reveal.addEventListener('ready', setSlideNb);
+
+    </script>
+
+  </body>
+</html>
