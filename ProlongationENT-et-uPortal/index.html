@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="fr">
+
+<!-- version 1.0 -->
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>ProlongationENT et le futur de uPortal</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/simple.css" id="theme"> 
+    <link rel="stylesheet" href="css/esup-theme.css">
+
+    <link rel="stylesheet" href="plugin/highlight/default.min.css">
+<style>
+.reveal .slides > section, .reveal .slides > section > section {
+    padding-top: 0;
+}
+</style>
+
+  </head>
+
+  <body>
+
+    <div class="header header-left"><span>Coord tech ESUP</span><span>(24.11.2016 @Paris)</span></div>
+
+    <div class="reveal esup">
+
+      <div class="slides">
+
+        <section class="main-title">
+          <header>
+            <h1><img src="./img/logo-esup--NEW.png" alt="ESUP-Portail" class="logo-img"></h1>
+            <h5 class="event shadow">
+              <span class="event-name">Coord tech ESUP</span>
+              <span class="event-date">24.11.2016</span>
+              <span class="event-location">Paris</span>
+            </h5>
+          </header>
+          <div class="presentation-title shadow">
+            <h3>ProlongationENT et<br>le futur de uPortal</h3>
+            <ul class="presenters">
+	      <li><span class="author">Pascal RIGAUX</span>
+	      </li>
+	    </ul><br>
+            <ul class="presenters">
+              <li><span class="logo"><img class="logo-img" src="img/logo-up1.png" alt="" style="background-color: #FFF;"></span></li>
+
+              <li><span class="logo"><img class="logo-img" src="./img/logo-esup--NEW.png" alt="" style="background-color: #FFF;"></span></li>
+            </ul>
+          </div>
+          <footer>
+            <img src="./img/communaute.png" alt="">
+          </footer>
+        </section>
+
+        <!--///////////////////////////////////////////-->
+
+	<section>
+          <header>
+            <h2>Introduction</h2>
+            <h3 class="shadow">&gt; que font les géants du Web ?</h3>
+          </header>
+          <div class="slide-content">
+Le même bandeau dans toutes les applications :
+<p class="vspace" />
+	    <div class="gallery-item" style="width: 70%">
+              <img src="img/microsoft.png">
+	      <span>Microsoft</span>
+	    </div>
+	    <div class="gallery-item" style="width: 30%">
+              <img src="img/google.png">
+	      <span>Google</span>
+	    </div>
+          </div>
+        </section>
+
+        <!--///////////////////////////////////////////-->
+
+	<section>
+          <header>
+            <h2>Introduction</h2>
+            <h3 class="shadow">&gt; et dans le monde uPortal ?</h3>
+          </header>
+          <div class="slide-content">
+	    Que font les principaux contributeurs :
+	    <ul>
+	      <li><a href="https://www.unicon.net/">Unicon</a> : propose <a href="https://wiki.jasig.org/x/NABZB">Soffit</a></li>
+	      <li>Wisconsin-Madison fait des <a href="https://docs.google.com/presentation/d/1970_4e2xKXKJoAzjneiZRf6QdQHz-MjJIS2DRrHAfiI/present#slide=id.g9ddca09c7_0_299">Frame Apps</a> : 
+		<ul>
+		  <li>une application AngularJS</li>
+		  <li>utilisant un maven war overlay pour ajouter un header/sidebar/search AngularJS</li>
+		</ul>
+	      </li>
+	    </ul>
+	    &#10145; technologies intégrées
+	    <p class="vspace">
+	    Solution découplée comparable aux iframes : ProlongationENT
+          </div>
+        </section>
+
+        <!--///////////////////////////////////////////-->
+
+	<section>
+          <header>
+            <h2>Présentation ProlongationENT</h2>
+	    <h3 class="shadow">&gt; identiques ?</h3>
+          </header>
+          <div class="slide-content">
+	    <div class="gallery-item" style="width: 50%">
+              <img src="img/filex-iframe.png">
+	      <span>iframe</span>
+	    </div>
+	    <div class="gallery-item" style="width: 50%">
+              <img src="img/filex-ProlongationENT.png">
+	      <span>ProlongationENT</span>
+	    </div>
+          </div>
+        </section>
+
+        <!--///////////////////////////////////////////-->
+
+	<section data-background-position="top" data-background-size="contain" data-background-image="img/filex-iframe.png"
+		 style="padding: 0">
+        </section>
+
+	<section data-background-position="top" data-background-size="contain" data-background-image="img/filex-ProlongationENT.png"
+		 style="padding: 0">
+        </section>
+
+        <!--///////////////////////////////////////////-->
+
+	<section>
+          <header>
+            <h2>Présentation ProlongationENT</h2>
+	    <h3 class="shadow">&gt; différences</h3>
+          </header>
+          <div class="slide-content">
+	    <div class="gallery-item" style="width: 50%">
+              <img src="img/iframe.png">
+	      <span>iframe</span>
+	    </div>
+	    <div class="gallery-item" style="width: 50%">
+              <img src="img/ProlongationENT.png">
+	      <span>ProlongationENT</span>
+	    </div>
+          </div>
+        </section>
+
+        <!--///////////////////////////////////////////-->
+
+        <section>
+          <header>
+            <h2>Technologies</h2>
+            <h3 class="shadow">&gt; Javascript !</h3>
+          </header>
+          <div class="slide-content">
+	    <ul>
+	      <li>ajout d'un <code>&lt;div&gt;</code> en entête des pages
+		<small>(et un <code>&lt;div&gt;</code> de pied de page pour les liens mentions légales)</small></li>
+	      <li>JSONP ou AJAX</li>
+	      <li>cache navigateur ou sessionStorage pour éviter les clignotements</li>
+	    </ul>
+    
+	  </div>
+	</section>
+	
+        <!--///////////////////////////////////////////-->
+
+        <section>
+          <header>
+	    <h2 class="shadow">Comparaison iframe</h2>
+	  </header>
+
+<style>
+table.two-parts {
+  width: 100%;
+}
+table.two-parts td:first-child {
+  width: 50%;
+  border-right: 1px solid;
+}
+table.two-parts td:last-child {
+  padding-left: 1em;
+}
+</style>
+
+
+          <div class="slide-content">
+	    <table class="two-parts">
+	      <tr><td>
+		<h4>Avantages</h4>
+		<ul>
+		  <li>asynchrone =&gt; presque pas de SPOF</li>
+		  <li>n'interfère pas avec la mise en signet</li>
+		  <li>fonctionne en http, en cross-domain</li>
+		</ul>
+		<small><ul>
+		  <li>plus léger (pas de fluid, jquery...)
+		  <li>les applications restent maître de leur viewport (mobile)</li>
+		  <li>pour les applications javascript, pas de problème de double ascenseur</li>
+                  <li>logs compatibles Agimus
+		</ul></small>
+	      </td><td>
+
+		<h4>Inconvénients</h4>
+		<p>
+		  <ul>
+		    <li>une seule application par page <small>(pas de dashboard)</small></li>
+		    <li>parfois des ajustements CSS pour les applications full-page</li>
+		  </ul>
+		  <small><ul>
+		    <li>les URLs sont visibles (gênant pour les applications multi-auth comme compilatio ou lemonde.fr)</li>
+		    <li>interférences du CSS des applications avec celui du bandeau (nécessite beaucoup de <code>!important</code>)</li>
+		    <li>bypass les stats esup-uportal (plus un pb avec Agimus)</li>
+		  </ul></small>
+	      </tr></td>
+	    </table>
+	  </div>
+	</section>
+
+        <!--///////////////////////////////////////////-->
+
+        <section>
+          <header>
+            <h2 class="shadow">Utilisation</h2>
+          </header>
+          <div class="slide-content">
+	      <h4>À l'Université Paris 1</h4>
+		  Utilisation dans les applications difficiles à mettre en iframe, puis généralisation progressive.
+		  <ul>
+		    <li>2013 : Aleph et Metalib (ExLibris), GLPI, Nuxeo, DokuWiki, Grouper Lite UI</li>
+		    <li>2014 : Moodle, Intranet Typo3, Sifac</li>
+		    <li>2015 : Hyperplanning, IPweb, IAweb, Horde 5...
+		    <li>2016 : ecandidat, esup-activ, SIHAM, Amadeus...
+		  </ul>
+<p class="vspace">
+	      <h4>Ailleurs</h4>
+	      <ul>
+                <li>Utilisé à l'université de Saint-Etienne
+                <li>Expérimentations à l'<a href="img/rennes1.png">Université de Rennes 1</a>, l'Université de Lorraine.
+                  </ul>
+          </div>
+        </section>
+
+        <!--///////////////////////////////////////////-->
+
+        <section>
+          <header>
+	    <h2>Comment intégrer une application ?</h2>
+            <h3 class="shadow">&gt; basique</h3>
+	  </header>
+          <div class="slide-content">
+
+Ajouter les lignes suivantes :
+<pre><code data-trim class="html">
+&lt;script&gt;  
+  window.prolongation_ENT_args = { current: "moodle" };
+&lt;/script&gt;  
+&lt;script src="https://ent.univ.fr/ProlongationENT/loader.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<ul>
+  <li>le fname <small>("moodle" dans l'exemple)</small> permet d'afficher le nom de l'application et l'onglet actif
+</ul>
+
+	  </div>
+	</section>
+
+        <!--///////////////////////////////////////////-->
+
+        <section>
+          <header>
+	    <h2>Comment intégrer une application ?</h2>
+            <h3 class="shadow">&gt; via reverse proxy apache</h3>
+	  </header>
+          <div class="slide-content">
+
+Il est possible d'utiliser apache pour ajouter la prolongation ENT :
+	    <pre><code data-trim>
+RequestHeader unset  Accept-Encoding
+AddOutputFilterByType SUBSTITUTE text/html
+Substitute "s|&lt;/head&gt;| &lt;script type=\"text/javascript\"&gt;window.prolongation_ENT_args = { current: \"moodle\"}; &lt;/script&gt;&lt;script src=\"https://ent.univ.fr/ProlongationENT/loader.js\"&gt;&lt;/script&gt; &lt;/head&gt;|"
+	    </code></pre>
+
+Nous utilisons cette technique pour nuxeo par exemple.
+	    
+	  </div>
+	</section>
+
+        <!--///////////////////////////////////////////-->
+
+        <section>
+          <header>
+	    <h2>Comment intégrer une application ?</h2>
+            <h3 class="shadow">&gt; avec bouton logout</h3>
+	  </header>
+          <div class="slide-content">
+Le bandeau a un bouton déconnexion.
+<br>
+Pour que le bouton déconnecte l'application, il suffit de donner un sélecteur CSS :
+	    <pre><code data-trim class="javascript">
+&lt;script&gt;  
+  window.prolongation_ENT_args = { current: "moodle", logout: ".logoutButton" };
+&lt;/script&gt;  
+&lt;script src="https://ent.univ.fr/ProlongationENT/loader.js"&gt;&lt;/script&gt;
+</code></pre>
+
+	  </div>
+	</section>
+
+        <!--///////////////////////////////////////////-->
+
+        <section>
+          <header>
+	    <h2>Comment intégrer une application ?</h2>
+            <h3 class="shadow">&gt; avec déshabillage</h3>
+	  </header>
+          <div class="slide-content">
+
+Pour cacher le bandeau ou le bouton déconnexion dans l'application, utilisez une feuille de style :
+	    <pre><code data-trim class="javascript">
+&lt;script&gt;  
+  window.prolongation_ENT_args = {
+    current: "moodle", extra_css: "https://.../xxx.css"
+  };
+&lt;/script&gt;  
+&lt;script src="https://ent.univ.fr/ProlongationENT/loader.js"&gt;&lt;/script&gt;
+</code></pre>
+
+	  </div>
+	</section>
+	
+        <!--///////////////////////////////////////////-->
+
+        <section>
+          <header>
+	    <h2>Comment intégrer une application ?</h2>
+            <h3 class="shadow">&gt; shibbolethisée</h3>
+	  </header>
+          <div class="slide-content">
+	    <ul>
+	      <li>Pour une application d'établissement, la prolongation ENT casifiée apparaît pour les utilisateurs de l'établissement.</li>
+	      <li>Il est aussi possible de charger la prolongation ENT casifiée de l'établissement.
+		<br>&#10145; parfait pour des applications nationales.
+		<small>Exemple : notre <a href="https://filex.univ-paris1.fr/upload">Filex</a> utilise <a href="https://github.com/prigaux/bandeau-ENT/blob/master/proxy-shib-js.php">un proxy shib</a> pour charger la prolongation de l'établissement ou utiliser l'API uPortal4 de l'établissement (nécessite l'ajout d'une <a href="https://github.com/EsupPortail/ProlongationENT/blob/master/utils/uportal4/layout.jsp">jsp</a>). <a href="https://bandeau-ent.univ-paris1.fr/uportal4/fake-cru/">prototype avec compte CRU</a>.</small></li>
+	      <li>Il est possible d'avoir une prolongation shibbolethisée.
+	    </ul>
+	  </div>
+	</section>
+
+        <!--///////////////////////////////////////////-->
+
+        <section>
+          <header>
+            <h2>Mettre en place une ProlongationENT</h2>
+            <h3 class="shadow">&gt; avec uPortal 4</h2>
+          </header>
+          <div class="slide-content">
+	    <ul>
+	      <li>ajouter <a href="https://github.com/EsupPortail/ProlongationENT/blob/master/utils/uportal4/layout.jsp">layout.jsp</a> dans votre uPortal
+		<small>(simple wrapper atour de <code>layout.json</code> permettant JSONP + l'authentification transparente sur CAS)</small>
+	      </li>
+              <li>installer et configurer <a href="https://github.com/EsupPortail/ProlongationENT">ProlongationENT</a>
+	      </li>
+	    </ul>
+	    <p class="vspace" />
+	      Limitations :
+	      <ul>
+		<li><code>layout.json</code> ne renvoit pas les applications cachées dans la "vue" mobile</li>
+	      </ul>
+	  </div>
+	</section>
+
+        <!--///////////////////////////////////////////-->
+
+        <section>
+          <header>
+            <h2>Mettre en place une ProlongationENT</h2>
+            <h3 class="shadow">&gt; sans uPortal</h2>
+          </header>
+          <div class="slide-content">
+	    <ul>
+	      <li><a href="https://github.com/EsupPortail/ProlongationENT">ProlongationENT</a> peut aussi fournir un <code>layout.json</code></li>
+	      <li>il utilise un <a href="https://github.com/EsupPortail/ProlongationENT/blob/master/src/main/webapp/WEB-INF/config-apps-example.json">fichier de configuration pour configurer le menu</a></li>
+	    </ul>
+	  </div>
+	</section>
+
+        <!--///////////////////////////////////////////-->
+
+        <!-- section>
+          <header>
+            <h2>Historique</h2>
+            <h3 class="shadow">&gt; différentes implémentations</h2>
+          </header>
+          <div class="slide-content">
+	    <ul>
+	      <li>2012 : création de <a href="https://github.com/prigaux/bandeau-ENT">bandeau-ENT</a> et passage en production à Paris 1</li>
+	      <li>2014 : prototype <a href="http://bandeau-ENT.univ-paris1.fr/uportal4/prolongation-ENT.js">utilisant l'API de uPortal 4</a></li>
+	      <li>2015 : portage de bandeau-ENT dans uPortal 3 et passage en production à Paris 1</li>
+	    </ul>
+	  </div>
+	</section -->
+
+        <!--///////////////////////////////////////////-->
+
+        <!-- section>
+          <header>
+            <h2>Implémentation pour uPortal</h2>
+            <h3 class="shadow">&gt; fonctionnalités</h3>
+          </header>
+          <div class="slide-content">
+	    <ul>
+	      <li>authentification transparente sur CAS
+		<small>(avec CAS gateway pour gérer les utilisateurs non authentifiés ou plus authentifiés)</small></li>
+	      <li>échange d'identité avec <a href="https://github.com/prigaux/impersonate-cas-apache-wrapper">impersonate-cas-apache-wrapper</a></li>
+	      <li>statistiques compatibles Agimus
+		<small>(gère notamment les applications shibbolethisées et les pages non authentifiées)</small>
+	      </li>
+	    </ul>
+    
+	  </div>
+	</section -->
+
+
+        <!--///////////////////////////////////////////-->
+
+        <!-- section>
+          <header>
+            <h2>Implémentation pour uPortal</h2>
+            <h3 class="shadow">&gt; limitations</h3>
+          </header>
+          <div class="slide-content">
+	    <ul>
+	      <li>droits des DLMs non gérés (droits gérés par canaux)</li>
+	      <li>onglets non modifiables par l'utilisateur</li>
+	      <li>réfléchir aux parties mutualisables et aux parties adaptables (via des plugins ?)</li>
+	    </ul>
+	  </div>
+	</section -->
+	
+        <!--///////////////////////////////////////////-->
+
+	<section data-transition="fade">
+          <header>
+            <h2>Contexte</h2>
+            <h3 class="shadow">&gt; uPortal faisait tout !</h3>
+          </header>
+          <div class="slide-content">
+	    <div class="gallery-item" style="width: 100%; background: white">
+              <img src="img/uportal.svg">
+	    </div>
+          </div>
+        </section>
+
+	<section data-transition="fade">
+          <header>
+            <h2>Contexte</h2>
+            <h3 class="shadow">&gt; proposition de micro services</h3>
+          </header>
+          <div class="slide-content">
+	    <div class="gallery-item" style="width: 100%; background: white">
+              <img src="img/pE-grouper-accueil-jwt.svg">
+	    </div>
+          </div>
+        </section>
+
+	<section data-transition="fade">
+          <header>
+            <h2>Contexte</h2>
+            <h3 class="shadow">&gt; actuellement à Paris 1</h3>
+          </header>
+          <div class="slide-content">
+	    <div class="gallery-item" style="width: 100%; background: white">
+              <img src="img/up1_.svg">
+	    </div>
+          </div>
+        </section>
+	
+        <!--///////////////////////////////////////////-->
+
+        <section>
+          <header>
+            <h2 class="shadow">Conclusion</h2>
+          </header>
+          <div class="slide-content">
+            N'hésitez pas à me contacter ou à en discuter sur la liste <a href="https://listes.esup-portail.org/sympa/info/esup-utilisateurs">esup-utilisateurs</a>.
+	    <p class="vspace" />
+	    Je remercie Aymar Anli pour ses conseils et sa disponibilité.
+	    <p class="vspace" />
+	    <h4>Questions ?</h4>
+	  </div>
+	</section>
+
+        <!--///////////////////////////////////////////-->
+
+      </div>
+    </div>
+
+    <div class="footer footer-left"><img src="img/logo-esup--NEW.png"><span>Copyright 2016 &copy;</span></div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+
+      Reveal.initialize({
+        margin: 0,
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        theme: 'simple', // available themes are in /css/theme
+        transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
+        dependencies: [ 
+            // Cross-browser element.classList (esp needed on safari 4.0.5)
+            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+
+            // Syntax highlight for <pre> elements
+                  { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+
+            ],
+        });
+
+        function createSingletonNode( container, tagname, classname, innerHTML ) {
+
+          var node = container.querySelector( '.' + classname );
+          if( !node ) {
+              node = document.createElement( tagname );
+              node.classList.add( classname );
+              if( innerHTML !== null ) {
+                  node.innerHTML = innerHTML;
+              }
+              container.appendChild( node );
+          }
+          return node;
+
+        }
+
+      // From https://github.com/hakimel/reveal.js/pull/56
+      function slidenumber(event){
+        var current_slide = 0;
+
+        var horizontal_slides = document.querySelectorAll( '.reveal .slides>section' );
+        for (var i = 0; i < event.indexh; i++) {
+          // get subslides
+          var subslides = horizontal_slides[i].querySelectorAll('section');
+
+          // if subslides.length is 0, add 1 for horizontal slide, else add subslides.length
+          current_slide += (subslides.length === 0) ? 1 : subslides.length;
+        }
+
+        current_slide += event.indexv+1;
+        return current_slide.toString();
+      }
+
+      function setSlideNb(event) {
+        var dom = createSingletonNode(document.querySelector(".controls"), "div", "slideNb");
+        dom.innerHTML = event.indexh ? event.indexh : '';
+      }
+
+      Reveal.addEventListener('slidechanged', setSlideNb);
+      Reveal.addEventListener('ready', setSlideNb);
+
+    </script>
+
+  </body>
+</html>
