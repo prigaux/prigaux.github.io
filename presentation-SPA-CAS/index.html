@@ -161,19 +161,22 @@ table.title-on-left td {
 <!-------------------------------------------------->   
 <section>
     <h2>Solution simple</h2>
-    <h4>web-service dédié SPA</h4>
+    <h4>web-service sur le même vhost</h4>
 
         Une solution simple est de faire comme les applications non-SPA : exiger une session valide pour toutes pages html.
-        <p></p>Exemple :
+        <p></p>
+        Le web-service peut alors utiliser la session.
+
+        <p class="vspace"></p>Exemple :
 
             <ul>        
             <li><a href="https://framagit.org/prigaux/cas-angular-example/commit/ea77d91d31c8cc5cc9cad1f454e906910f78bfc1">casification de la page html</a>
             <li><a href="https://framagit.org/prigaux/cas-angular-example/commit/7ef23e080a1889014fd216584a0772a6c8820626">gestion de la fin de session</a> : propose le rechargement de la page en cas de fin de session</li>
             </ul>
         <p class="vspace">
-        <small>NB : app/index.html est accessible, mais l'appli est sensée démarrer sur la page app/index.php</small>
+        <small>NB : dans l'exemple app/index.html est accessible, mais il faut utiliser app/index.php</small>
 
-        <small>NB2 : if your first page is static AND CAS protected, you must ensure it is not browser cached</small>
+        <small>NB2 : if your first page is static and CAS protected, you must ensure it is not browser cached</small>
         
         </section>
 
@@ -216,8 +219,8 @@ table.title-on-left td {
 
     <img src="https://prigaux.frama.io/cas-spa-docs/dist/spa-cas-login_then-cookies-window_open.svg" style="float: left; margin-right: 2rem; width: 45%">
     
-    Permet de gérer finement le relog en fin de session :
-    <br>
+    Permet de gérer finement le relog en fin de session.
+    <p></p>
     <ul>
         <li>prompt the user to relog</li>
         <li>window.open la mire CAS</li>
@@ -396,7 +399,7 @@ Si besoin, le web-service peut contourner le problème en utilisant <a href="htt
 
 <!-------------------------------------------------->
 <section>
-    <h2>JSONP et Shibboleth</h2>
+    <h2>JSONP &amp; Shibboleth</h2>
     
     La fédération Éducation-Recherche utilise le binding « HTTP Post ».
     Cela rend difficile l'authentification :
@@ -406,7 +409,7 @@ Si besoin, le web-service peut contourner le problème en utilisant <a href="htt
     <li>iframe cachée : possible mais impossible de savoir si l'authentification a échoué ou est en cours
     </ul>
     <p class="vspace">
-    Solution : 
+    Solution pour un Web Component : 
     <ul>
     <li>tester un login automatique dans une iframe cachée
     <li>tout en proposant un login explicite avec window.open
@@ -454,7 +457,7 @@ Si besoin, le web-service peut contourner le problème en utilisant <a href="htt
     <p></p>
     Beaucoup d'applications utilisent cette technique  <small>(spring-security, shibboleth-SP...)</small>
     <p></p>
-    Cette technique est utilisable <a href="https://prigaux.frama.io/cas-spa-docs/dist/spa-cas-login_then-cookies.svg">avec</a> ou <a href="https://prigaux.frama.io/cas-spa-docs/dist/spa-cas-login_then-bearer.svg">sans cookies</a> <small>(pour le web-service)</small>
+    Cette technique est utilisable <a href="https://prigaux.frama.io/cas-spa-docs/dist/spa-cas-login_then-cookies.svg">avec</a> ou <a href="https://prigaux.frama.io/cas-spa-docs/dist/spa-cas-login_then-bearer.svg">sans cookies</a> <small>pour le web-service.</small>
 
     <p></p>
     Exemple d'implémentation :
