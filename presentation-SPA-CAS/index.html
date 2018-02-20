@@ -77,6 +77,7 @@ body {
   background-color: #003366;
   display: block;
   padding: 0.3em;
+  font-size: 1.6em;
 }
 .reveal h4 {
   color: #ff6600;
@@ -152,7 +153,7 @@ table.title-on-left td {
 			<div class="slides">
 
 <section>
-<h2>Single Page Application et web-services CASifiés</h2>
+<h2>Web-services CASifiés</h2>
 
 <p class="h1em">
 <h4>Pascal.Rigaux @ univ-paris1.fr</h4>
@@ -160,8 +161,8 @@ table.title-on-left td {
 
 <!-------------------------------------------------->   
 <section>
-    <h2>Solution simple</h2>
-    <h4>web-service sur le même vhost</h4>
+    <h2>Single Page Application</h2>
+    <h4>web-service dédié sur le même vhost</h4>
 
         Une solution simple est de faire comme les applications non-SPA : exiger une session valide pour toutes pages html.
         <p></p>
@@ -189,13 +190,28 @@ table.title-on-left td {
     Pourquoi faire plus compliqué ?
     <p class="vspace"></p>
     <ul>
-        <li>mieux gérer la fin de session</li>
         <li>Web Services séparés de la SPA</li>
+        <li>Mieux gérer la fin de session</li>
         <li>Web Components <small>(ie Web Widgets)</small></li>
     </ul>
 
 </section>
-            
+
+<!-------------------------------------------------->   
+<section>
+    <h2>Web Services séparés de la SPA</h2>
+    
+    Plusieurs solutions sont possibles, sans CASifier ces Web Services :
+    <ul>
+        <li>le Web Service dédié fait les requêtes vers le Web Service séparé, en trusted <small>(IP ou Basic auth, OAuth Client Credentials)</small></li>
+        <li>le Web Service fournit un JWT utilisé pour accéder au Web Service séparé. Exemple :
+            <img src="WSO2-oauth2-client-credentials-and-uportal.svg">            
+        </li>
+        <li>proxy ticket CAS</li>
+    </ul>
+    
+</section>
+
 <!-------------------------------------------------->   
 <section>
     <h2>Authentification</h2>
@@ -215,10 +231,12 @@ table.title-on-left td {
 
     <!-------------------------------------------------->
     <section>
-    <h2>window.open + postMessage</h2>
+    <h2>Mieux gérer la fin de session</h2>
 
     <img src="https://prigaux.frama.io/cas-spa-docs/dist/spa-cas-login_then-cookies-window_open.svg" style="float: left; margin-right: 2rem; width: 45%">
     
+    <h4>window.open + <br>postMessage</h4>
+
     Permet de gérer finement le relog en fin de session.
     <p></p>
     <ul>
