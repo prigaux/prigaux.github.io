@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<script src="js/vue.js"></script>
+
+<div id="app">
+    <button @click="visible = !visible">{{visible ? 'Cacher' : 'Afficher'}}</button>
+    <div v-if="visible">Long texte...</div>
+</div>
+
+<script>
+new Vue({
+    el: '#app',
+    data: { visible: false }
+});
+</script>
+
+</html>
