@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" >
+<style>
+    html { font-family: Arial, sans-serif; }
+</style>
+
+Web Components initialement définis par 4 fonctionnalités : Custom Elements, Shadow DOM, HTML templates et HTML imports.
+
+<h1>HTML imports</h1>
+
+Pas de consensus, <a href="https://hacks.mozilla.org/2015/06/the-state-of-web-components/">pas d'implémentation prévu dans Firefox</a>, sera supprimé de Chrome en 2019.
+
+<h1>HTML templates</h1>
+
+Disponible dans les navigateurs mais peu utile sans HTML imports
+
+<p>
+<a href="https://www.polymer-project.org/blog/2018-05-02-roadmap-faq">Polymer 3 abandonne HTML imports et HTML templates</a> (remplacés par des "template literals" en Javascript) 
+
+
+<h1>Shadow DOM</h1>
+
+Permet d'avoir un arbre DOM isolé du reste :
+<ul>
+  <li><code>document.querySelector()</code> ignore le shadow DOM</li>
+  <li>remplace <code>&lt;style scoped&gt;</code></li> 
+</ul>
+
+Remarques :
+<ul>
+  <li>spécification assez invasive (touche à beaucoup de choses), d'où un polyfill partiel et gros (17K min+gzip)</li>
+  <li>sera bientôt disponible dans Firefox</li>
+  <li>isolation CSS complète : rend les composants plus difficile à thèmer (<a href="https://meowni.ca/posts/part-theme-explainer/">solution envisagée</a>)</li>
+  <li>tous les frameworks JS proposent des solutions alternatives :
+      <ul>
+          <li><a href="https://github.com/css-modules/css-modules">CSS modules</a> : <code>&lt;style scoped&gt;</code> maison, mais plus coûteux (<a href="https://vue-loader.vuejs.org/guide/scoped-css.html">Vue.js</a>, <a href="https://angular.io/guide/component-styles#view-encapsulation">Angular</a>)</li>
+          <li>inline style, CSS in JS...</li>
+        </ul>
+  </li>
+</ul>
+      
+<h1>Custom Elements</h1>
+
+Permet de définir des nouveaux tags HTML.
+<ul>
+  <li>ça ressemble aux composants Bootstrap Javascript</li>
+  <li>ça ressemble aussi aux composants React/Angular/Vue.js/...</li>
+  <li>dans les cas simples, c'est plus joli que des plugins jQuery</li>
+  <li>sera bientôt disponible dans Firefox</li>
+  <li>polyfill assez simple (5K min+gzip)</li>
+  <li>ne fournit pas de système de templating : ne remplace pas <a href="https://facebook.github.io/jsx/">JSX</a>(React) / <a href="https://polymer.github.io/lit-html/">lit-html</a> / Angular / Vue.js</li>
+</ul>
+
+<h2>Exemple</h2>
+
+Sans Custom Elements :
+
+<pre><code>&lt;hello-world&gt;...&lt;/hello-world&gt;
+
+&lt;script&gt;
+function hello_world_render(elt) {
+     elt.innerHTML = "&lt;b&gt;Bonjour&lt;/b&gt;"
+}
+for (const elt of document.querySelectorAll('foo-bar')) {
+   foo_bar_render(elt);
+}
+&lt;/script&gt;
+</code></pre>
+
+Avec Custom Elements :
+
+<pre><code>&lt;hello-world&gt;...&lt;/hello-world&gt;
+
+&lt;script&gt;
+customElements.define('hello-world', class extends HTMLElement {
+  connectedCallback() {
+     this.innerHTML = "&lt;b&gt;Bonjour&lt;/b&gt;"
+  }
+});
+&lt;/script&gt;
+</code></pre>
+
+<h2>Avantages</h2>
+
+<ul>
+    <li>le composant est initialisé dès qu'il est attaché au DOM : pas besoin de le faire sur <code>onload</code>, évite les doubles initialisations</li>
+    <li>normalise les noms des méthodes du cycle de vie du componsant</li>
+</ul>
+
+<h2>Inconvénients</h2>
+
+<ul>
+  <li>attributes vs properties : les attributs <a href="https://julienrenaux.fr/talks-src/2018/make_web_components_great_again_with_stencil/#/4/6">n'acceptent que des strings</a>, pour les valeurs plus compliquées (objects, arrays), <a href="https://developers.google.com/web/fundamentals/web-components/best-practices#aim-to-only-accept-rich-data-objects-arrays-as-properties">utilisation des properties</a> ou des méthodes</li>
+  <li><a href="https://github.com/w3c/webcomponents/issues/716">espace de nommage global</a> (contrairement aux frameworks React/Angular/Vue)</li>
+  <li>pour les évts "custom", il faut utiliser <code>addEventListener</code> plutôt que <code>onclick="xxx"</code>
+</ul>
+
+
+
+    <h2>Frameworks permettant de créer des Custom Elements</h2>
+<ul>
+  <li>frameworks dédiés aux Custom Elements : <a href="http://skatejs.netlify.com/">SkateJS</a> (avec preact ou lit-html), <a href="https://github.com/Polymer/lit-element">LitElement</a> (<a href="https://www.polymer-project.org/blog/2018-05-02-roadmap-faq">remplace Polymer</a>), <a href="https://stenciljs.com/">Stencil</a> (TSX, reactive), <a href="http://slimjs.com/">Slim.js</a></li>
+  <li>frameworks JS : <a href="https://github.com/vuejs/vue-web-component-wrapper">simple et léger en Vue.js</a>, <a href="https://angular.io/guide/elements">Angular Elements</a>, <a href="https://github.com/reactjs/rfcs/pull/15">React n'a pas encore décidé comment faire</a></li>
+  <li>exemples : <a href="https://github.com/shprink/web-components-todo">en Angular, Vue, Stencil, Skatejs</a>, <a href="https://43081j.com/2018/08/future-of-polymer">en Polymer et Lit</a></li>
+</ul>
+
+<h2>Divers</h2>
+<ul>
+    <li><a href="https://custom-elements-everywhere.com/">compatibilité des frameworks pour l'utilisation des Custom Elements</a></li>
+    <li><a href="https://reactjs.org/docs/web-components.html">React et les Web Components</a></li>
+    <li>libraries : <a href="https://github.com/elix/elix">Elix</a></li>
+    <li>présentations : <a href="https://julienrenaux.fr/talks-src/2018/make_web_components_great_again_with_stencil/#/">Angular Elements & Stencil</a>
+</ul>
+
+<h1>Modules ES6</h1>
+
+Les modules ES6 sont une grande avancée pour le Javascript côté navigateur : 
+ils permettent d'éviter de charger les librairies dans un espace de nommage global.
+
+<p>
+Jusqu'ici des outils comme webpack étaient nécessaire pour gérer ces modules.
+<br>Ce n'est plus le cas (<a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/import#Compatibilit%C3%A9_des_navigateurs">sauf MSIE</a>), 
+néanmoins <a href="https://slides.com/vogloblinsky/modules-es6-http2-va-t-on-arreter-de-packager-notre-code-javascript">webpack semble toujours nécessaire</a> pour :
+  <ul>    
+    <li>la concaténation (<a href="http://engineering.khanacademy.org/posts/js-packaging-http2.htm">même avec HTTP/2</a>)
+    <li>le cache busting</li>
+    <li>la minification</li>
+    <li>l'élimination du code non utilisé</li>
+  </ul>
+
+
+<h1>Conseils</h1>
+
+<ul>
+    <li>si vous faites des composants simples</li>
+    <ul><li>les écrire en suivant la spécification Custom Elements</li>
+        <li>ne pas utiliser de framework pour conserver ces components légers</li>
+        <li>ne pas forcément les enregistrer avec <code>customElements.define</code>, plutôt les utiliser à la main (permet d'éviter de charger des polyfills, notamment Firefox ESR)</li>
+    </ul>
+    <li>pour une application, continuer à utiliser des frameworks Javascript</li>
+</ul>
+
+<ul>
+    <li>actuellement la grande majorité des librairies de composants n'utilisent pas les Custom Elements</li>
+    <li>il y a bien plus de components disponibles pour les frameworks JS que des Custom Elements (agnostiques).</li>
+</ul>
+
+<h1>Liens divers</h1>
+
+<ul>
+  <li><a href="https://sylvainpv.developpez.com/publications/web-components-debat/">critique Web Components</a> (2014)</li>
+  <li><a href="https://dmitriid.com/blog/2017/03/the-broken-promise-of-web-components/">The broken promise of Web Components</a>, <a href="https://robdodson.me/regarding-the-broken-promise-of-web-components/">une réponse</a> et <a href="https://medium.com/dev-channel/custom-elements-that-work-anywhere-898e1dd2bc48">Custom Elements That Work Anywhere</a></li>
+</ul>
+
+<link rel="stylesheet" href="highlight/styles/default.css">
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+</html>
