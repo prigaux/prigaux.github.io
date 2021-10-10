@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<script src="js/jquery.js"></script>
+
+<div>
+    <button id="button">Afficher</button>
+    <div id="content">Long texte...</div>
+</div>
+
+<script>
+$('#content').hide();
+$('#button').click(function() {
+    $('#content').toggle();
+    $('#button').text($('#content').is(":visible") ? 'Cacher' : 'Afficher');
+});    
+</script>
+
+</html>

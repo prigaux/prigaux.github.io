@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="fr">
+
+<!-- version 1.0 -->
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Vue.js en 2021</title>
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/simple.css" id="theme"> 
+
+		<link rel="stylesheet" href="plugin/highlight/default.min.css">
+
+<style> 
+body {
+  font-family: Arial;
+}
+.footer {
+   height: 1.7em;
+   position: fixed;
+   bottom: 0;
+}
+.footer-left {
+   left: 0.3em;
+}
+.footer-right {
+   right: 0.3em;
+   vertical-align: top;
+}
+.footer-right img {
+  height: 2em;
+  margin-top: -0.3em;
+}
+
+.reveal .controls div.navigate-up,
+.reveal .controls div.navigate-down { display: none; }
+ 
+.reveal .progress { height: 0.3em; }
+
+.reveal .controls .slideNb {
+  position: relative;
+  opacity: 1;
+  z-index: -1;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 110px;
+  height: 110px !important;
+  width: 110px;
+  text-align: center;
+  border: 0;
+  font-size: 20px;
+  color: #ff6600;
+}
+
+@media (max-width: 767px) { 
+  .footer-left {
+    top: 0.3em;
+    bottom: auto;
+  }
+}
+
+.reveal .slides {
+  text-align: left;
+}
+/* override reveal.js settings */
+.reveal h2, .reveal h3 { 
+	-webkit-hyphens: manual;
+	   -moz-hyphens: manual;
+	        hyphens: manual;
+}
+.reveal h2, .reveal h3, .reveal h4, .reveal .center {
+  text-align: center;
+}
+
+.reveal h2 {
+  color: #fff;
+  background-color: #003366;
+  display: block;
+  padding: 0.3em;
+  Xtop: 0px;
+}
+.reveal h4 {
+  color: #ff6600;
+  font-weight: bold;
+}
+.reveal small {
+  vertical-align: middle;
+}
+
+.blue {
+    color: #003366;
+}
+
+.reveal ul li,.reveal ol li {
+  margin: 0.1em 0;
+  padding-left: 0.15em; 
+}
+
+.reveal .progress {
+  background: rgba(255, 102, 0, 0.1);
+}
+.reveal .progress span {
+  background: rgba(255, 102, 0, 0.8);
+}
+
+.reveal .slides>section,
+.reveal .slides>section>section {
+  padding: 0 0 110px 0;
+}
+.h1em {
+  height: 1em;
+}
+.vspace {
+  padding-top: 0.4em !important;
+}
+
+.as-if-no-link {
+  color: black !important;
+}
+
+.reveal pre {
+  width: 100%;
+}
+
+table.valign-middle td { vertical-align: middle; }
+table.with-border { border-collapse: collapse; width: 100%; }
+table.with-border th { text-align: center; padding-bottom: 0.1em; min-width: 3em; }
+table.with-border td { border: 1px solid; border-bottom-color: #ccc; padding: 0.2em !important; }
+table.with-border.title-on-left tr td:first-child { border-left: none; border-top: none; border-bottom: none; vertical-align: middle; text-align: right; padding-right: 0.7em !important; }
+table.with-border tr:last-child td { border-bottom-color: #000; }
+table.with-border td.light-border-right { border-right-color: #ccc; border-right-style: dashed; }
+table.with-border td.light-border-left { border-left-color: #ccc; border-left-style: dashed; }
+
+table.title-on-left {
+  width: 100%;
+}
+table.title-on-left th {
+  text-align: center;
+  vertical-align: bottom;
+  font-size: 90%;
+}
+table.title-on-left td {
+  text-align: center;
+}
+</style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+
+<section>
+
+<h2>Vue.js en 2021</h2>
+
+<p class="h1em">
+<h4>pascal @ rigaux.org</h4>
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+    <h2>Plan</h2>
+    <ul>
+        <li>Mes expériences</li>
+        <li>Contexte</li>
+        <ul>
+            <li>Single Page Application ?</li>
+            <li>Javascript récent</li>
+            <li>Typescript</li>
+            <li>npm</li>
+        </ul>
+        <li>Vue.js</li>
+        <ul>
+            <li>comparé à jQuery</li>
+            <li>comparé à React & Angular</li>
+            <li>Vue3</li>
+            <li>outils & librairies</li>
+        </ul>
+    </ul>
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+    <h2>Mes expériences</h2>
+    <ul>
+        <li>2000-2009 : Perl, OCaml...</li>
+        <li>2010 : arrivée à la DSI de l'université Paris 1 <small>(Panthéon Sorbonne)</small><br>➡ débuts en dev web (PHP, Java, Perl, Javascript)</li>
+        <li>2013 : un projet migré de JSF vers AngularJS</li>
+        <li>2015 : un projet créé en Node.js & AngularJS</li>
+        <li>2017 : plusieurs projets migrés de AngularJS à Vue.js</li>
+        <li>2021 : petits projets migrés de Vue 2 en Vue 3</li>
+    </ul>
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+<h2>Single Page Application ?</h2>
+<h3>Page web classique</h3>
+<div class="center">
+  <img src="img/page.png">
+</div>
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+<h2>Single Page Application ?</h2>
+<h3>Page web classique</h3>
+<div class="center">
+  <img src="img/page-with-simple-js.png">
+</div>
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+<h2>Single Page Application ?</h2>
+<h3>Partial updates</h3>
+<div class="center">
+  <img src="img/partial-html.png">
+</div>
+Exemple : grouper lite UI
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+<h2>Single Page Application ?</h2>
+<h3>Mixte</h3>
+<div class="center">
+  <img src="img/mixte.png">
+</div>
+Exemple : esup-filemanager
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+<h2>Single Page Application ?</h2>
+<h3>Single Page Application</h3>
+<div class="center">
+  <img src="img/SPA.png">
+</div>
+Exemple : esup-smsu
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Single Page Application</h2>
+
+<ul>
+
+<li>toute la navigation est faite en Ajax
+<li>toutes les actions sont faites en Ajax :
+<br> &#10145; on s'abstrait des contraintes des &lt;form&gt; HTML
+<br> &#10145; les données client-&gt;serveur peuvent être complexes
+
+<li>templates transformés en javascript exécuté dans le navigateur &#10145; cache
+
+<li>routage avec URLs 
+
+<li>les données de navigation sont conservées en mémoire dans le navigateur
+<li>la session java ne stocke que le login ! re-log transparent
+<li>debug facile dans le navigateur
+
+</ul>
+
+⚠ programmation asynchrone !
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+    <h2>Javascript récent</h2>
+    <h3>Tendances Javascript dév</h3>
+    <ul>
+        <li>utilisation de Typescript</li>
+        <li>utilisation de babel/esbuild/tsc pour écrire du Javascript récent qui tourne sur des vieux navigateurs</li>
+        <ul>
+            <li>permet d'utiliser dès maintenant des trucs super : 
+                <a href="http://es6-features.org/#ExpressionBodies">arrow functions</a>,
+                <a href="http://es6-features.org/#StringInterpolation">template literals</a>,
+                <a href="http://es6-features.org/#ObjectMatchingShorthandNotation">destructuring</a>,
+                <a href="http://es6-features.org/#MethodProperties">method properties</a>,
+                <a href="http://es6-features.org/#ValueExportImport">modules import/export</a>,
+                <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/async_function">async/await</a>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">rest/spread properties</a>,
+                <small><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining">optional chaining</a> (récent)</small>
+                <br><small>NB : standard sur la grande majorité des navigateurs (presque plus de Safari 9 ou de IE)</small>
+                </li>
+            </li>
+        </ul>
+        <li>utilisation de Webpack/Rollup/esbuild pour bundle/minify/cache-buster
+    </ul>
+    ➡ mais on peut faire sans, notamment pour des petits projets</li>
+</section>
+        
+<!-------------------------------------------------->
+<section>
+    <h2>jQuery</h2>
+
+    <h5>Surcouche aplanissant les différences entre les navigateurs
+    <span class="fragment blue">: moins utile depuis que les vieux IE sont morts</span>
+    </h5>
+    <p></p>
+    <ul>
+    <li>sélecteurs à la CSS, manipulation DOM
+        <span class="fragment blue"><br>à la main ou moteur de template</span>
+    </li>
+    <li>requêtes Ajax
+        <span class="fragment blue"><br>à la main ou librairie « axios »</span>
+    </li>
+    <li>utilitaires (each, map, extend...)
+        <span class="fragment blue">
+            <br>ES5 pour les Array
+            <br>pour le reste librairie « lodash » et/ou ES2018
+        </span>
+    </li>
+</ul>
+</section>
+
+<!-------------------------------------------------------------------------->
+<section>
+    <h2>jQuery - Vue.js</h2>
+    <div>
+        <span style="vertical-align: top; margin-right: 1em;">Exemple</span>
+        <iframe style="border: 1px solid black; height: 2em;" src="show-onclick.html"></iframe>
+    </div>
+    <table class="fragment"><tr>
+<td><pre><code data-trim class="html">
+<div>
+  <button id="button">Afficher</button>
+  <div id="content">Long texte...</div>
+</div>
+
+&lt;script&gt;  
+$('#content').hide();
+$('#button').click(function() {
+  $('#content').show();
+});
+&lt;/script&gt;
+</code></pre></td>
+
+<td><pre><code data-trim class="html">
+<div id="app">
+  <button @click="visible = true">Afficher</button>
+  <div v-if="visible">Long texte...</div>
+</div>
+        
+&lt;script&gt;  
+new Vue({
+  el: '#app',
+  data: { visible: false }
+});
+&lt;/script&gt;
+</code></pre>
+</td>
+</tr></table>        
+<span class="fragment">
+    Vue.js assure la mise à jour du DOM,
+    <br>à partir d'un état conservé en mémoire (<code>data</code> + <code>props</code>)
+</span>
+</section>
+
+<!-------------------------------------------------------------------------->
+<section>
+    <h2>jQuery - Vue.js</h2>
+    <div>
+        <span style="vertical-align: top; margin-right: 1em;">Exemple 2</span>
+        <iframe style="border: 1px solid black; height: 2em;" src="toggle.html"></iframe>
+    </div>
+    <table class="fragment"><tr>
+<td><pre><code data-trim class="html">
+<div>
+  <button id="button">Afficher</button>
+  <div id="content">Long texte...</div>
+</div>
+
+&lt;script&gt;  
+$('#content').hide();
+$('#button').click(function() {
+  $('#content').toggle();
+  $('#button').text(
+    $('#content').is(":visible") ? 'Cacher' : 'Afficher'
+  );
+});    
+&lt;/script&gt;
+</code></pre></td>
+
+<td><pre><code data-trim class="html">
+<div id="app">
+    <button @click="visible = !visible">
+        {{visible ? 'Cacher' : 'Afficher'}}
+    </button>
+    <div v-if="visible">Long texte...</div>
+</div>
+        
+&lt;script&gt;  
+new Vue({
+  el: '#app',
+  data: { visible: false }
+});
+&lt;/script&gt;
+</code></pre></td>
+</tr></table>        
+<span class="fragment">
+    Vue.js assure la mise à jour du DOM de façon <i>réactive</i>
+</span>
+</section>
+
+<!-------------------------------------------------------------------------->
+<section>
+        <h2>A la découverte de Vue.js</h2>
+
+        Pour découvrir Vue.js, nous allons continuer avec 
+        <br>
+        <a target="_blank" href="https://fr.slideshare.net/BrunoBonnin/a-la-dcouverte-de-vuejs">une présentation de Bruno Bonnin</a>.
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Vue.js vs JSF</h2>
+
+<h4>inconvénients de Vue.js</h4>
+<ul>
+<li>le code serveur doit être plus fiable, le spoofing des paramètres d'entrée étant facile
+<li>validateurs souvent dupliqués côté client
+<li>rôles vérifiés côté client et côté serveur
+<li>traductions côté client et un peu côté serveur <small>(pour l'envoi de mails par exemple)</small>
+</ul>
+<p>
+<h4>avantages de Vue.js</h4>
+<ul>
+<li>réactivité de l'interface
+<li>facile, léger
+<li>bonne intégration avec le javascript :)
+<li>simple de faire des composants UI réutilisables
+</ul>
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Inconvénients</h2>
+<ul>
+<li>plus gourmand qu'une page web sans JS
+<li>indexation plus compliquée (pour les moteurs de recherche)
+<li>nécessite navigateur récent (pas de MSIE avec Vue 3)
+<li>prévenir les clics doublés pendant l'attente
+</ul>
+
+</section>
+
+<!-------------------------------------------------------------------------->
+<section>
+    <h2>Éléments de choix</h2>
+<table style="font-size: 70%" class="title-on-left with-border">
+	<tr>
+		<th></th>
+		<th>React</th>
+		<th>Vue.js</th>
+		<th>Angular</th>
+	</tr>
+	<tr>
+		<td>documentation</td>
+		<td></td>
+		<td><a href="https://v3.vuejs.org/guide/">superbe</a></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>apprentissage</td>
+		<td>court</td>
+		<td>court</td>
+		<td>long</td>
+	</tr>
+	<tr>
+		<td>flexibilité, nombreux choix à faire</td>
+		<td>oui</td>
+		<td>moyen</td>
+		<td>framework complet</td>
+	</tr>
+	<tr>
+		<td>écosystème</td>
+		<td>grand</td>
+		<td></td>
+		<td></td>
+    </tr>
+	<tr>
+		<td>compatilibité ES5</td>
+		<td>moyen</td>
+		<td>oui</td>
+		<td>non</td>
+	</tr>
+	<tr>
+		<td>compilation</td>
+		<td>pour ES6 &amp; JSX</td>
+		<td>non, sauf pour single file component</td>
+		<td>pour Typescript</td>
+	</tr>
+	<tr>
+		<td>vérification de types</td>
+		<td>possibilité d’utiliser Typescript</td>
+		<td>possibilité d’utiliser Typescript, mais moyen</td>
+		<td>Typescript</td>
+	</tr>
+</table>
+</section>
+
+<!-------------------------------------------------------------------------->
+<section>
+    <h2>Éléments de choix</h2>
+
+A prendre avec des pincettes !
+<p></p>
+<table style="font-size: 70%" class="title-on-left with-border">
+	<tr>
+		<th></th>
+		<th>React</th>
+		<th>Vue.js</th>
+		<th>Angular</th>
+	</tr>
+	<tr>
+		<td>taille équipe</td>
+		<td></td>
+		<td>petite</td>
+		<td>grande</td>
+	</tr>
+	<tr>
+		<td>taille application</td>
+		<td>moyenne ou grande avec Redux/MobX</td>
+		<td>petite</td>
+		<td>grande</td>
+	</tr>
+	<tr>
+		<td>travail avec designers en HTML</td>
+		<td>difficile à cause de JSX</td>
+		<td>possible</td>
+		<td>possible</td>
+	</tr>
+	<tr>
+		<td>utilisé par</td>
+		<td>Airbnb, Dropbox, eBay, Facebook, Netflix...</td>
+		<td>Adobe, Alibaba, Baidu, Expedia, GitLab, Laravel, Xiaomi</td>
+		<td>Google, Microsoft, Deutsche Bank, Forbes, PayPal, Samsung</td>
+	</tr>
+</table>
+</section>
+
+<!-------------------------------------------------->
+<section>
+    <h2>Outils</h2>
+    <ul>
+    <li><a href='https://vitejs.dev/guide/'>vite</a> de preference
+    </ul>
+    
+    </section>
+    
+<!-------------------------------------------------------------------------->
+			</div>
+		</div>
+
+<div class="footer footer-left"></div>
+
+<div class="footer footer-right"></div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			Reveal.initialize({
+	margin: 0,
+	controls: true,
+	progress: true,
+	history: true,
+	center: true,
+
+	theme: 'simple', // available themes are in /css/theme
+	transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+	dependencies: [ 
+			// Cross-browser element.classList (esp needed on safari 4.0.5)
+			{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+
+			// Syntax highlight for <code> elements
+		        { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+
+			],
+});
+
+       function createSingletonNode( container, tagname, classname, innerHTML ) {
+
+                var node = container.querySelector( '.' + classname );
+                if( !node ) {
+                        node = document.createElement( tagname );
+                        node.classList.add( classname );
+                        if( innerHTML !== null ) {
+                                node.innerHTML = innerHTML;
+                        }
+                        container.appendChild( node );
+                }
+                return node;
+
+        }
+
+// From https://github.com/hakimel/reveal.js/pull/56
+function slidenumber(event){
+  var current_slide = 0;
+
+  var horizontal_slides = document.querySelectorAll( '.reveal .slides>section' );
+  for (var i = 0; i < event.indexh; i++) {
+    // get subslides
+    var subslides = horizontal_slides[i].querySelectorAll('section');
+
+    // if subslides.length is 0, add 1 for horizontal slide, else add subslides.length
+    current_slide += (subslides.length === 0) ? 1 : subslides.length;
+  }
+
+  current_slide += event.indexv+1;
+  return current_slide.toString();
+}
+
+function setSlideNb(event) {
+  var dom = createSingletonNode(document.querySelector(".controls"), "div", "slideNb");
+  dom.innerHTML = event.indexh ? event.indexh : '';
+}
+
+Reveal.addEventListener('slidechanged', setSlideNb);
+Reveal.addEventListener('ready', setSlideNb);
+
+		</script>
+
+	</body>
+</html>

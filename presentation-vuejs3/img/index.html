@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="fr">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>AngularJS</title>
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/simple.css" id="theme"> 
+
+		<link rel="stylesheet" href="plugin/highlight/default.min.css">
+
+<style> 
+body {
+  font-family: Arial;
+}
+.footer {
+   height: 1.7em;
+   position: fixed;
+   bottom: 0;
+}
+.footer-left {
+   left: 0.3em;
+}
+.footer-right {
+   right: 0.3em;
+   vertical-align: top;
+}
+.footer-right img {
+  height: 2em;
+  margin-top: -0.3em;
+}
+
+.reveal .controls div.navigate-up,
+.reveal .controls div.navigate-down { display: none; }
+ 
+.reveal .progress { height: 0.3em; }
+
+.reveal .controls .slideNb {
+  position: relative;
+  opacity: 1;
+  z-index: -1;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 110px;
+  height: 110px !important;
+  width: 110px;
+  text-align: center;
+  border: 0;
+  font-size: 20px;
+  color: #ff6600;
+}
+
+@media (max-width: 767px) { 
+  .footer-left {
+    top: 0.3em;
+    bottom: auto;
+  }
+}
+
+.reveal .slides {
+  text-align: left;
+}
+/* override reveal.js settings */
+.reveal h2, .reveal h3 { 
+	-webkit-hyphens: manual;
+	   -moz-hyphens: manual;
+	        hyphens: manual;
+}
+.reveal h2, .reveal h3, .reveal h4, .reveal .center {
+  text-align: center;
+}
+
+.reveal h2 {
+  color: #fff;
+  background-color: #003366;
+  display: block;
+  padding: 0.3em;
+}
+.reveal h2.legende { 
+  font-size: 1.3em;
+}
+.reveal h4 {
+  color: #ff6600;
+  font-weight: bold;
+}
+.reveal small {
+  vertical-align: middle;
+}
+
+.reveal ul li,.reveal ol li {
+  margin: 0.1em 0;
+  padding-left: 0.15em; 
+}
+
+.reveal small ul li {
+  margin-left: 0.35em;
+  padding-left: 0.65em;
+}
+
+.reveal .progress {
+  background: rgba(255, 102, 0, 0.1);
+}
+.reveal .progress span {
+  background: rgba(255, 102, 0, 0.8);
+}
+
+.reveal .slides>section,
+.reveal .slides>section>section {
+  padding: 0 0 110px 0;
+}
+.h1em {
+  height: 1em;
+}
+.vspace {
+  padding-top: 0.4em !important;
+}
+
+.as-if-no-link {
+  color: black !important;
+}
+
+.reveal pre {
+  width: 100%;
+}
+
+table.valign-middle td { vertical-align: middle; }
+table.with-border { border-collapse: collapse; width: 100%; }
+table.with-border th { text-align: center; padding-bottom: 0.2em; min-width: 3em; }
+table.with-border td { border: 1px solid; border-bottom-color: #ccc; padding: 0.4em !important; }
+table.with-border.title-on-left tr td:first-child { border-left: none; border-top: none; border-bottom: none; vertical-align: middle; text-align: right; padding-right: 0.7em !important; }
+table.with-border tr:last-child td { border-bottom-color: #000; }
+table.with-border td.light-border-right { border-right-color: #ccc; border-right-style: dashed; }
+table.with-border td.light-border-left { border-left-color: #ccc; border-left-style: dashed; }
+
+table.title-on-left {
+  width: 100%;
+}
+table.title-on-left th {
+  text-align: center;
+  vertical-align: bottom;
+  font-size: 90%;
+}
+table.title-on-left td {
+  text-align: center;
+}
+</style>
+
+</style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+
+<section>
+
+<h2>AngularJS</h2>
+
+<p class="h1em">
+<h4>Pascal.Rigaux @ univ-paris1.fr</h4>
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+<h2>Page web classique</h2>
+<div class="center">
+  <img src="img/page.png">
+</div>
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+<h2>Page web classique</h2>
+<div class="center">
+  <img src="img/page-with-simple-js.png">
+</div>
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+<h2>Partial updates</h2>
+<div class="center">
+  <img src="img/partial-html.png">
+</div>
+Exemple : grouper lite UI
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+<h2>Mixte</h2>
+<div class="center">
+  <img src="img/mixte.png">
+</div>
+Exemple : esup-filemanager
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+<h2>Single Page Application</h2>
+<div class="center">
+  <img src="img/SPA.png">
+</div>
+Exemple : esup-smsu
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Single Page Application</h2>
+
+<ul>
+
+<li>toute la navigation est faite en Ajax
+<li>toutes les actions sont faites en Ajax :
+<br> &#10145; on s'abstrait des contraintes des &lt;form&gt; HTML
+<br> &#10145; les données client-&gt;serveur peuvent être complexes
+
+<li>templates manipulés dans le navigateur &#10145; cache
+
+<li>routage avec URLs ...#/send
+  <br><small>(NB : HTML5 permet de faire plus transparent avec pushState)</small>
+
+<li>les données de navigation sont conservées en mémoire dans le navigateur
+<li>la session java ne stocke que le login ! re-log transparent
+<li>debug facile dans le navigateur
+
+</ul>
+
+⚠ programmation asynchrone !
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+  <h2>AngularJS</h2>
+<div class="center">
+  <img src="img/angularjs.png">
+</div>
+Exemple : esup-smsu
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>AngularJS</h2>
+
+<h4>fantastique framework javascript</h4>
+<ul>
+<li>MVC
+<li>liaison bidirectionnelle des données comme dans JSF
+<br> &#10145; pas de manipulation du DOM, sauf dans les <a href="http://docs.angularjs.org/guide/directive">directives</a>
+<li>injection de dépendances comme dans Spring
+<li>documentation, exemples éditables <small>(jsfiddle, plunk)</small>
+<li>sécurité <small>(avec porte de sortie : <a href="https://docs.angularjs.org/api/ng/service/$sce">Strict Contextual Escaping</a>)</small>, routage, validateurs de formulaires, framework de tests
+<li><small>intégration en cours dans les navigateurs (web components : <a href="https://mail.mozilla.org/pipermail/es-discuss/2012-September/024978.html">object.observe</a>, <a href="http://julienvey.com/2013/02/18/web-components/">templates</a>)</small>
+</ul>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Hello world</h2>
+
+<pre><code data-trim class="html">
+&lt;div ng-app&gt;
+    &lt;input type="text" ng-model="leNom"&gt;    
+    &lt;h1&gt;Bonjour {{leNom}}!&lt;/h1&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p class="vspace">
+<a href="http://jsfiddle.net/u3kvh576/embedded/result/" target="_blank">Testez avec fiddle</a>
+
+</section>
+
+
+<!-------------------------------------------------->
+<section>
+<h2>Un filtre</h2>
+
+Utilisation dans un template :
+<pre><code data-trim class="html">
+    &lt;h1&gt;Bonjour {{leNom | capitalize}}!&lt;/h1&gt;
+</code></pre>
+
+<p class="vspace">
+La définition du filtre :
+
+<pre><code data-trim class="js">
+app.filter('capitalize', function() {
+  return function(s) {
+      return s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
+  };
+});
+</code></pre>
+
+<p class="vspace">
+<a href="http://jsfiddle.net/ugs5avdv/" target="_blank">Testez avec fiddle</a>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Un controlleur</h2>
+
+<pre><code data-trim class="js">
+app.controller('TodoController', function($scope) {
+  $scope.todos = [
+    {text:'apprendre angular', done:true},
+    {text:'faire une appli angular', done:false}];
+
+  $scope.addTodo = function() {
+    $scope.todos.push({text: $scope.todoText, done: false});
+    $scope.todoText = '';
+  };
+});
+</code></pre>
+
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Un controlleur (suite)</h2>
+
+<pre><code data-trim class="html">
+&lt;div ng-app="todoApp"&gt;
+  &lt;h2&gt;Todo&lt;/h2&gt;
+  &lt;div ng-controller="TodoController"&gt;
+    &lt;ul&gt;
+      &lt;li ng-repeat="todo in todos"&gt;
+        &lt;input type="checkbox" ng-model="todo.done"&gt;
+        &lt;span class="done-{{todo.done}}"&gt;{{todo.text}}&lt;/span&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;form ng-submit="addTodo()"&gt;
+      &lt;input type="text" ng-model="todoText"&gt;
+      &lt;input type="submit" value="add"&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p class="vspace">
+<a href="http://jsfiddle.net/zaeqcc4e/2/" target="_blank">Testez avec fiddle</a>
+
+
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Un service</h2>
+
+<pre><code data-trim class="html">
+&lt;input type=&quot;text&quot; ng-class=&quot;{loading: searching}&quot; ng-model=&quot;leNom&quot;&gt;
+
+&lt;ul ng-repeat=&quot;e in suggestions&quot;&gt;
+    &lt;li&gt;{{e.displayName}}&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div ng-if=&quot;partialResults&quot;&gt;Votre recherche est limitée. Pour les autres résultats, veuillez affiner la recherche.&lt;/div&gt;
+</code></pre>
+
+<pre><code data-trim class="js">
+app.controller(&#39;MyCtrl&#39;, function ($scope, searchUser) {
+
+    $scope.$watch(&#39;leNom&#39;, suggest);
+    
+    function suggest(token) {
+        var maxRows = 10;
+        
+        $scope.searching = true;
+        searchUser(token, maxRows).success(function (l) {
+            $scope.suggestions = l;
+            $scope.partialResults = $scope.leNom.length &lt; 4 || l.length == maxRows;
+        }).finally(function () {
+            $scope.searching = false
+        });
+    };
+});
+</code></pre>
+
+</section>
+
+
+<!-------------------------------------------------->
+<section>
+<h2>Un service (suite)</h2>
+
+<pre><code data-trim class="js">
+app.factory(&#39;searchUser&#39;, function ($http) {
+    var searchUserURL = &#39;http://wsgroups.univ-paris1.fr/searchUser&#39;;
+
+    return function(token, maxRows) {
+        return $http.jsonp(searchUserURL +
+         &quot;?callback=JSON_CALLBACK&amp;maxRows=&quot; + maxRows +
+         &quot;&amp;token=&quot; + encodeURIComponent(token));
+    }
+});
+</code></pre>
+
+<p class="vspace">
+<a href="http://jsfiddle.net/y7efn04c/" target="_blank">Testez avec fiddle</a>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>AngularJS vs JSF</h2>
+
+<h4>inconvénients d'AngularJS</h4>
+<ul>
+<li>le code serveur doit être plus fiable, le spoofing des paramètres d'entrée étant facile
+<li>validateurs souvent dupliqués côté client
+<li>rôles vérifiés côté client et côté serveur
+<!--<li>traductions côté client et un peu côté serveur <small>(pour l'envoi de mails par exemple)</small>-->
+</ul>
+<p>
+<h4>avantages d'AngularJS</h4>
+<ul>
+<li>réactivité de l'interface
+<li>facile, léger
+<li>bonne intégration avec le javascript :)
+  <li>simple de faire des composants UI réutilisables (les "directives")
+</ul>
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Inconvénients</h2>
+<ul>
+<li>plus gourmand qu'une page web sans JS
+<li>indexation difficile (pour les moteurs de recherche)
+<li>nécessite navigateur récent <br>(IE8 non supporté par AngularJS 1.3)
+<li>les « directives » sont difficiles à manipuler en dehors des cas documentés
+<li>prévenir les clics doublés pendant l'attente
+<li>danger du ng-model si pas de "."
+</ul>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Outils CSS &amp; js</h2>
+
+<small>
+<table class="title-on-left with-border">
+  <tr><th></th><th>Java</th><th>node.js</th></tr>
+  <tr><td>concaténation</td><td>yuicompressor</td><td>grunt-concat</td></tr>
+  <tr><td>minification</td><td>yuicompressor</td><td>grunt-usemin</td></tr>
+  <tr><td>vérification de code</td><td>jshint-maven-plugin <small>(lent)</small></td><td>grunt-contrib-jshint</td></tr>
+  <tr><td>cache buster</td><td>jasig resource-server <small>(wro4j namingStrategy?)</small> </td><td>grunt-rev</td></tr>
+  <tr><td>download libs</td><td>webjars</td><td>bower</td></tr>
+  <tr><td>custom jquery</td><td>?</td><td>grunt-jquery-builder</td></tr>
+  <tr><td>angular templates</td><td>?</td><td>grunt-angular-templates</td></tr>
+</table>
+
+<p class="vspace">
+NB : les webjars ne fournissent pas de liste ordonnée pour concaténation, par contre possibilité d'utiliser require.js
+
+</small>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Conclusion</h2>
+
+<ul>
+<li>applications réactives
+<li>AngularJS très bien
+</ul>
+
+<p class="vspace"></p>
+<p class="vspace"></p>
+
+<h2>Questions ?</h2>
+</section>
+
+<!-------------------------------------------------------------------------->
+			</div>
+		</div>
+
+<div class="footer footer-left">Atelier "Développement" - 2014</div>
+
+<div class="footer footer-right">
+Copyright 2014 ©
+<img src="img/logo-esup--NEW.png">
+</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			Reveal.initialize({
+	margin: 0,
+	controls: true,
+	progress: true,
+	history: true,
+	center: true,
+
+	theme: 'simple', // available themes are in /css/theme
+	transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+	dependencies: [ 
+			// Cross-browser element.classList (esp needed on safari 4.0.5)
+			{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+
+			// Syntax highlight for <code> elements
+		        { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+
+			],
+});
+
+       function createSingletonNode( container, tagname, classname, innerHTML ) {
+
+                var node = container.querySelector( '.' + classname );
+                if( !node ) {
+                        node = document.createElement( tagname );
+                        node.classList.add( classname );
+                        if( innerHTML !== null ) {
+                                node.innerHTML = innerHTML;
+                        }
+                        container.appendChild( node );
+                }
+                return node;
+
+        }
+
+// From https://github.com/hakimel/reveal.js/pull/56
+function slidenumber(event){
+  var current_slide = 0;
+
+  var horizontal_slides = document.querySelectorAll( '.reveal .slides>section' );
+  for (var i = 0; i < event.indexh; i++) {
+    // get subslides
+    var subslides = horizontal_slides[i].querySelectorAll('section');
+
+    // if subslides.length is 0, add 1 for horizontal slide, else add subslides.length
+    current_slide += (subslides.length === 0) ? 1 : subslides.length;
+  }
+
+  current_slide += event.indexv+1;
+  return current_slide.toString();
+}
+
+function setSlideNb(event) {
+  var dom = createSingletonNode(document.querySelector(".controls"), "div", "slideNb");
+  dom.innerHTML = event.indexh ? event.indexh : '';
+}
+
+Reveal.addEventListener('slidechanged', setSlideNb);
+Reveal.addEventListener('ready', setSlideNb);
+
+		</script>
+
+	</body>
+</html>
