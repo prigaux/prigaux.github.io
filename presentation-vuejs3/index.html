@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="plugin/highlight/default.min.css">
 
 <style> 
-body {
+body, .force-non-code {
   font-family: Arial;
 }
 .footer {
@@ -122,6 +122,9 @@ body {
 
 .reveal pre {
   width: 100%;
+}
+.reveal table pre {
+    margin: 0;
 }
 
 table.valign-middle td { vertical-align: middle; }
@@ -272,32 +275,205 @@ Exemple : esup-smsu
 <!-------------------------------------------------->
 <section>
     <h2>Javascript récent</h2>
-    <h3>Tendances Javascript dév</h3>
+
+    <small style="display: block; float: right; width: 14rem; border-left: 1px dashed gray; padding-left: 1rem">
+        « standard pas toujours respecté » par les navigateurs ? FAUX
+        <br><br>« class » disponible dans Javascript, pas que Typescript
+        <br><br>« { addresse } au lieu de { address: address } » disponible dans Javascript, pas que Typescript
+    </small>
+      
+    <code style="Xfont-size: 100%">
     <ul>
-        <li>utilisation de Typescript</li>
-        <li>utilisation de babel/esbuild/tsc pour écrire du Javascript récent qui tourne sur des vieux navigateurs</li>
-        <ul>
-            <li>permet d'utiliser dès maintenant des trucs super : 
-                <a href="http://es6-features.org/#ExpressionBodies">arrow functions</a>,
-                <a href="http://es6-features.org/#StringInterpolation">template literals</a>,
-                <a href="http://es6-features.org/#ObjectMatchingShorthandNotation">destructuring</a>,
-                <a href="http://es6-features.org/#MethodProperties">method properties</a>,
-                <a href="http://es6-features.org/#ValueExportImport">modules import/export</a>,
-                <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/async_function">async/await</a>
-                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">rest/spread properties</a>,
-                <small><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining">optional chaining</a> (récent)</small>
-                <br><small>NB : standard sur la grande majorité des navigateurs (presque plus de Safari 9 ou de IE)</small>
-                </li>
-            </li>
-        </ul>
-        <li>utilisation de Webpack/Rollup/esbuild pour bundle/minify/cache-buster
-    </ul>
-    ➡ mais on peut faire sans, notamment pour des petits projets</li>
+        <li><a href="http://es6-features.org/#ClassDefinition">class Meat</a></li>
+        <li><a href="http://es6-features.org/#ValueExportImport">import { foo } from 'ma_lib.js'</a></li>
+        <li><a href="http://es6-features.org/#ExpressionBodies">(e) => e+1</a></li>
+        <li><a href="http://es6-features.org/#StringInterpolation">`Hello ${name}`</a></li>
+        <li><a href="http://es6-features.org/#PropertyShorthand">return { x, y }</a></li>
+        <li><a href="http://es6-features.org/#ObjectMatchingShorthandNotation">const { x, y } = position()</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">{ x, ...pos }</a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining">pos?.x</a> <span style="font-family: Arial; font-size: 70%">(récent)</span></li>
+        <li><a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/async_function">async, await</a></li>
+  </ul>
+  </code>
+  <br>
+  <ul>
+    <li><small><a href="http://es6-features.org/#MethodProperties">method properties</a></small></li>
+  </ul>
+  <p></p>
+  Standard on most browsers (except Safari 9 or IE)
 </section>
-        
+
 <!-------------------------------------------------->
 <section>
-    <h2>jQuery</h2>
+    <h2>Javascript récent</h2>
+    <h3>Classes & this</h3>
+
+    <pre><code class="data-trim javascript">
+class Meal {
+    constructor(food) {
+        this.food = food
+    }
+    
+    eat() {
+        const food = this.food
+        this.food = null
+        return food
+    }
+}       
+    </code></pre>
+
+    ⚠ <code>this</code> n'est <b>pas</b> optionnel en Javascript.
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+    <h2>Javascript récent</h2>
+    <h3>Classes vs closures</h3>
+
+Javascript n'avait pas de classes avant ES6... mais il a une alternative :
+    <table class="with-border">
+        <tr><th>Classes</th><th>Method properties</th><th>Le couteau suisse</th></tr>
+        <tr><td>
+    <pre><code class="data-trim javascript">
+class Meal {
+  constructor(food) {
+    this.food = food
+  }
+  
+  eat() {
+    const food = this.food
+    this.food = null
+    return food
+  }
+}       
+    </code></pre>
+
+    </td><td>
+    <pre><code class="data-trim javascript">
+const Meal =
+ (food) => ({
+
+
+
+  eat() {
+    const food_ = food
+    food = null
+    return food_
+  }
+})
+    </code></pre>
+    </td><td>
+    <pre><code class="data-trim javascript">
+const Meal =
+ (food) => {   
+
+
+
+  const eat = () => {
+    const food_ = food
+    food = null
+    return food_
+  }
+  return { eat }
+}       
+    </code></pre>
+    </td></tr>
+</table>
+
+Ces closures sont plus couteuses en mémoire, mais sont très maniables.
+<br>
+C'est la méthode recommandée pour composer les 
+
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+    <h2>Javascript récent</h2>
+    <h3>Classes & arrow functions</h3>
+
+    <table>
+        <tr><td>
+        <pre><code class="data-trim javascript">
+ class Meal {
+     constructor(food) {
+         this.food = food
+     }
+   
+     eat() {
+         setTimeout(function () {
+             this.food = null // ERROR 
+         }, 1000)
+         return this.food
+     }
+ }
+ </code></pre>
+    </td><td>
+
+    <pre><code class="data-trim javascript">
+ class Meal {
+     constructor(food) {
+         this.food = food
+     }
+     
+     eat() {
+         setTimeout(() => {
+             this.food = null // OK 
+         }, 1000)
+         return this.food
+     }
+ }
+ </code></pre>
+    </td></tr></table>
+
+    Les arrow functions sont très utiles.
+    <br>
+    Limite : ne pas les utiliser pour définir des méthodes
+    
+</section>
+
+<!-------------------------------------------------->
+<section>
+    <h2>Javascript récent</h2>
+
+    <p>
+        <img src="img/callback-hell.png" width="400px" style="vertical-align: middle; margin: 0 1rem 0">
+        <span style="display: inline-block;">
+            Callback hell ? <br>
+            résolu avec async/await !
+            </span>
+</p>
+
+    <table class="with-border">
+        <tr><th>Javascript</th><th>Kotlin</th></tr>
+        <tr><td><pre><code class="javascript">Promise&lt;T&gt;</code></pre></td>
+            <td><pre><code class="java">Deferred&lt;T&gt;</code></pre></td></tr>
+        <tr><td><pre><code class="javascript">async function myAsyncF(...) { ... }</code></td>
+            <td><pre><code class="java">suspend fun myAsyncF(...) { ... }</code></pre></td></tr>
+        <tr><td><pre><code class="javascript">await myAsyncF(...)</code></td>
+            <td><pre><code class="java">myAsyncF(...)</code></pre></td></tr>
+        <tr><td><pre><code class="javascript">myAsyncF(...)</code></td>
+            <td><pre><code class="java">async { myAsyncF(...) }</code></pre></td></tr>
+    </table>
+    <small><a href="https://medium.com/@joffrey.bion/kotlins-suspend-functions-are-not-javascript-s-async-they-are-javascript-s-await-f95aae4b3fd9">Ref</a></small>
+</section>
+
+<!-------------------------------------------------->
+<section>
+    <h2>Javascript récent</h2>
+    <h3>Tendances</h3>
+    <ul>
+        <li>utilisation de Webpack/Rollup/esbuild pour bundle/minify/cache-buster</li>
+        <li>utilisation de Typescript</li>
+        <li><small>utilisation de babel/esbuild/tsc pour écrire du Javascript récent qui tourne sur des vieux navigateurs</small></li>
+    </ul>
+</section>
+
+<!-------------------------------------------------->
+<section>
+    <h2>Vue.js</h2>
+    <h3>jQuery</h3>
 
     <h5>Surcouche aplanissant les différences entre les navigateurs
     <span class="fragment blue">: moins utile depuis que les vieux IE sont morts</span>
@@ -308,12 +484,13 @@ Exemple : esup-smsu
         <span class="fragment blue"><br>à la main ou moteur de template</span>
     </li>
     <li>requêtes Ajax
-        <span class="fragment blue"><br>à la main ou librairie « axios »</span>
+        <span class="fragment blue"><br><a href="https://developer.mozilla.org/docs/Web/API/Fetch_API/Using_Fetch">fetch</a> ou librairie « axios »</span>
     </li>
     <li>utilitaires (each, map, extend...)
         <span class="fragment blue">
-            <br>ES5 pour les Array
-            <br>pour le reste librairie « lodash » et/ou ES2018
+            <br>standard pour les Array
+            <br>standard avec Spread syntax pour les Objects
+            <br>pour le reste librairie <a href="https://lodash.com/docs/">lodash</a>
         </span>
     </li>
 </ul>
@@ -583,7 +760,11 @@ A prendre avec des pincettes !
 			{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
 
 			// Syntax highlight for <code> elements
-		        { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+		        { src: 'plugin/highlight/highlight.js', async: true, callback: function() { 
+                    hljs.LANGUAGES.javascript.k += " async await class constructor let const"
+                    hljs.LANGUAGES.java.k += " fun async suspend"
+                    hljs.initHighlightingOnLoad(); 
+                } }
 
 			],
 });
