@@ -11,7 +11,7 @@
 		<link rel="stylesheet" href="css/reveal.min.css">
 		<link rel="stylesheet" href="css/theme/simple.css" id="theme"> 
 
-		<link rel="stylesheet" href="plugin/highlight/default.min.css">
+		<link rel="stylesheet" href="plugin/highlight/github.min.css">
 
 <style> 
 body, .force-non-code {
@@ -124,7 +124,7 @@ body, .force-non-code {
   width: 100%;
 }
 .reveal table pre {
-    margin: 0;
+    margin: 6px;
 }
 
 table.valign-middle td { vertical-align: middle; }
@@ -135,6 +135,9 @@ table.with-border.title-on-left tr td:first-child { border-left: none; border-to
 table.with-border tr:last-child td { border-bottom-color: #000; }
 table.with-border td.light-border-right { border-right-color: #ccc; border-right-style: dashed; }
 table.with-border td.light-border-left { border-left-color: #ccc; border-left-style: dashed; }
+
+table.fake-border th { text-align: center; }
+table.fake-border { width: 100%; }
 
 table.title-on-left {
   width: 100%;
@@ -276,31 +279,35 @@ Exemple : esup-smsu
 <section>
     <h2>Javascript récent</h2>
 
+    Standard on most browsers (except Safari 9 or IE)
+    <br>
+
     <small style="display: block; float: right; width: 14rem; border-left: 1px dashed gray; padding-left: 1rem">
         « standard pas toujours respecté » par les navigateurs ? FAUX
         <br><br>« class » disponible dans Javascript, pas que Typescript
         <br><br>« { addresse } au lieu de { address: address } » disponible dans Javascript, pas que Typescript
     </small>
-      
-    <code style="Xfont-size: 100%">
-    <ul>
-        <li><a href="http://es6-features.org/#ClassDefinition">class Meat</a></li>
-        <li><a href="http://es6-features.org/#ValueExportImport">import { foo } from 'ma_lib.js'</a></li>
-        <li><a href="http://es6-features.org/#ExpressionBodies">(e) => e+1</a></li>
-        <li><a href="http://es6-features.org/#StringInterpolation">`Hello ${name}`</a></li>
-        <li><a href="http://es6-features.org/#PropertyShorthand">return { x, y }</a></li>
-        <li><a href="http://es6-features.org/#ObjectMatchingShorthandNotation">const { x, y } = position()</a></li>
-        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">{ x, ...pos }</a></li>
-        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining">pos?.x</a> <span style="font-family: Arial; font-size: 70%">(récent)</span></li>
-        <li><a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/async_function">async, await</a></li>
+
+    
+    <style>
+        li pre code.hljs { padding: 3px }
+    </style>
+    <ul style="list-style: none;">
+        <li><a href="http://es6-features.org/#ClassDefinition"><pre><code class="data-trim">class Meal { … }</code></pre></a></li>
+        <li><a href="http://es6-features.org/#ValueExportImport"><pre><code>import { foo } from 'ma_lib.js'</code></pre></a></li>
+        <li><a href="http://es6-features.org/#ExpressionBodies"><pre><code>(e) => e+1</code></pre></a></li>
+        <li><a href="http://es6-features.org/#StringInterpolation"><pre><code>`Hello ${name}`</code></pre></a></li>
+        <li><a href="http://es6-features.org/#PropertyShorthand"><pre><code>return { x, y }</code></pre></a></li>
+        <li><a href="http://es6-features.org/#ObjectMatchingShorthandNotation"><pre><code>const { x, y } = position()</code></pre></a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax"><pre><code>{ x, ...pos }</code></pre></a></li>
+    </ul>
+    <br>Plus récent :
+    <br>
+    <ul style="list-style: none;">
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining"><pre><code>pos?.x</code></pre></a></li>
+        <li><a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/async_function"><pre><code>async, await</code></pre></a></li>
+        <li><a href="http://es6-features.org/#MethodProperties"><pre><code>return { foo() {} }</code></pre></a></small></li>
   </ul>
-  </code>
-  <br>
-  <ul>
-    <li><small><a href="http://es6-features.org/#MethodProperties">method properties</a></small></li>
-  </ul>
-  <p></p>
-  Standard on most browsers (except Safari 9 or IE)
 </section>
 
 <!-------------------------------------------------->
@@ -308,8 +315,7 @@ Exemple : esup-smsu
     <h2>Javascript récent</h2>
     <h3>Classes & this</h3>
 
-    <pre><code class="data-trim javascript">
-class Meal {
+    <pre><code class="data-trim javascript">class Meal {
     constructor(food) {
         this.food = food
     }
@@ -319,72 +325,9 @@ class Meal {
         this.food = null
         return food
     }
-}       
-    </code></pre>
+}</code></pre>
 
     ⚠ <code>this</code> n'est <b>pas</b> optionnel en Javascript.
-
-</section>
-
-<!-------------------------------------------------->
-<section>
-    <h2>Javascript récent</h2>
-    <h3>Classes vs closures</h3>
-
-Javascript n'avait pas de classes avant ES6... mais il a une alternative :
-    <table class="with-border">
-        <tr><th>Classes</th><th>Method properties</th><th>Le couteau suisse</th></tr>
-        <tr><td>
-    <pre><code class="data-trim javascript">
-class Meal {
-  constructor(food) {
-    this.food = food
-  }
-  
-  eat() {
-    const food = this.food
-    this.food = null
-    return food
-  }
-}       
-    </code></pre>
-
-    </td><td>
-    <pre><code class="data-trim javascript">
-const Meal =
- (food) => ({
-
-
-
-  eat() {
-    const food_ = food
-    food = null
-    return food_
-  }
-})
-    </code></pre>
-    </td><td>
-    <pre><code class="data-trim javascript">
-const Meal =
- (food) => {   
-
-
-
-  const eat = () => {
-    const food_ = food
-    food = null
-    return food_
-  }
-  return { eat }
-}       
-    </code></pre>
-    </td></tr>
-</table>
-
-Ces closures sont plus couteuses en mémoire, mais sont très maniables.
-<br>
-C'est la méthode recommandée pour composer les 
-
 
 </section>
 
@@ -395,35 +338,32 @@ C'est la méthode recommandée pour composer les
 
     <table>
         <tr><td>
-        <pre><code class="data-trim javascript">
- class Meal {
-     constructor(food) {
-         this.food = food
-     }
-   
-     eat() {
-         setTimeout(function () {
-             this.food = null // ERROR 
-         }, 1000)
-         return this.food
-     }
- }
- </code></pre>
+        <pre><code class="data-trim javascript">class Meal {
+    constructor(food) {
+        this.food = food
+    }
+
+    eat() {
+        setTimeout(function () {
+            this.food = null // ERROR 
+        }, 1000)
+        return this.food
+    }
+}</code></pre>
     </td><td>
 
-    <pre><code class="data-trim javascript">
- class Meal {
-     constructor(food) {
-         this.food = food
-     }
-     
-     eat() {
-         setTimeout(() => {
-             this.food = null // OK 
-         }, 1000)
-         return this.food
-     }
- }
+    <pre><code class="data-trim javascript">class Meal {
+    constructor(food) {
+        this.food = food
+    }
+    
+    eat() {
+        setTimeout(() => {
+            this.food = null // OK 
+        }, 1000)
+        return this.food
+    }
+}
  </code></pre>
     </td></tr></table>
 
@@ -431,6 +371,63 @@ C'est la méthode recommandée pour composer les
     <br>
     Limite : ne pas les utiliser pour définir des méthodes
     
+</section>
+
+<!-------------------------------------------------->
+<section>
+    <h2>Javascript récent</h2>
+
+L'alternative aux classes :
+    <table class="fake-border">
+        <tr><th>Classes</th><th>Method properties</th><th>Le couteau suisse</th></tr>
+        <tr><td>
+    <pre><code class="data-trim javascript">class Meal {
+  constructor(food) {
+    this.food = food
+  }
+  
+  eat() {
+    const food = this.food
+    this.food = null
+    return food
+  }
+}</code></pre>
+
+    </td><td>
+    <pre><code class="data-trim javascript">const Meal =
+ (food) => ({
+
+
+
+  eat() {
+    const food_ = food
+    food = null
+    return food_
+  }
+})</code></pre>
+    </td><td>
+    <pre><code class="data-trim javascript">const Meal =
+ (food) => {   
+
+
+  const eat = () => {
+    const food_ = food
+    food = null
+    return food_
+  }
+  return { eat }
+}</code></pre>
+    </td></tr>
+</table>
+
+Ces closures sont plus couteuses en mémoire, mais sont très « composables » :
+<br>
+<ul>
+    <li>utilisé par la <a href="https://v3.vuejs.org/guide/composition-api-introduction.html">Composition API de Vue 3</a></li>
+    <li>utilisé pour les React Hooks (<a href="https://usehooks.com/useAsync/">exemple</a>)</li>
+</ul>
+
+
 </section>
 
 <!-------------------------------------------------->
@@ -445,16 +442,16 @@ C'est la méthode recommandée pour composer les
             </span>
 </p>
 
-    <table class="with-border">
+    <table class="fake-border">
         <tr><th>Javascript</th><th>Kotlin</th></tr>
         <tr><td><pre><code class="javascript">Promise&lt;T&gt;</code></pre></td>
-            <td><pre><code class="java">Deferred&lt;T&gt;</code></pre></td></tr>
-        <tr><td><pre><code class="javascript">async function myAsyncF(...) { ... }</code></td>
-            <td><pre><code class="java">suspend fun myAsyncF(...) { ... }</code></pre></td></tr>
-        <tr><td><pre><code class="javascript">await myAsyncF(...)</code></td>
-            <td><pre><code class="java">myAsyncF(...)</code></pre></td></tr>
-        <tr><td><pre><code class="javascript">myAsyncF(...)</code></td>
-            <td><pre><code class="java">async { myAsyncF(...) }</code></pre></td></tr>
+            <td><pre><code class="kotlin">Deferred&lt;T&gt;</code></pre></td></tr>
+        <tr><td><pre><code class="javascript">async function myAsyncF(…) { … }</code></td>
+            <td><pre><code class="kotlin">suspend fun myAsyncF(…) { … }</code></pre></td></tr>
+        <tr><td><pre><code class="javascript">await myAsyncF(…)</code></td>
+            <td><pre><code class="kotlin">myAsyncF(…)</code></pre></td></tr>
+        <tr><td><pre><code class="javascript">myAsyncF(…)</code></td>
+            <td><pre><code class="kotlin">async { myAsyncF(…) }</code></pre></td></tr>
     </table>
     <small><a href="https://medium.com/@joffrey.bion/kotlins-suspend-functions-are-not-javascript-s-async-they-are-javascript-s-await-f95aae4b3fd9">Ref</a></small>
 </section>
@@ -466,8 +463,59 @@ C'est la méthode recommandée pour composer les
     <ul>
         <li>utilisation de Webpack/Rollup/esbuild pour bundle/minify/cache-buster</li>
         <li>utilisation de Typescript</li>
-        <li><small>utilisation de babel/esbuild/tsc pour écrire du Javascript récent qui tourne sur des vieux navigateurs</small></li>
+        <li>utilisation de babel/esbuild/tsc pour écrire du Javascript récent qui tourne sur des vieux navigateurs</li>
     </ul>
+</section>
+
+<!-------------------------------------------------->
+<section>
+    <h2>Typescript</h2>
+
+    <ul>
+        <li>won over Dart/Flow (Google abandonne AngularDart, mais au profit de Flutter)</li>
+        <li>de plus en plus de librairies sont en Typescript, d'autres fournissent leurs types (fichiers .d.ts) ou sont fournis sur <a href="https://github.com/DefinitelyTyped/DefinitelyTyped">DefinitelyTyped</a></li>
+        <li>qques fonctionnalités en plus de Javascript, notamment les <a href="https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties">parameter properties</a>
+        <li>biggest gradual typing success (see also "dynamic" in C#/kotlin)</li>
+        <li>vérifié à la compilation, mais ignoré à l'exécution</li>
+    </ul>
+</section>
+
+<!-------------------------------------------------->
+<section>
+    <h2>Typescript</h2>
+
+<h3>Permissif !</h3>
+
+<pre><code class="typescript">"" + 1
+"" + (() => 1)
+(1 as any)[0]</code></pre>
+
+<a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any"><code>any</code></a> is hell 🤮 but useful 🤫
+<br>toujours utiliser <a href="https://www.typescriptlang.org/tsconfig#strict">strict</a> qui implique <a href="https://www.typescriptlang.org/tsconfig#noImplicitAny">noImplicitAny</a>
+<br><small>(mais peut-être désactiver "strictNullChecks" et "useUnknownInCatchVariables")</small>
+
+<h3 style="margin-top: 2rem">Précis</h3>
+
+<pre><code class="typescript">[1,0,1] as (0|1)[]</code></pre>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+    <h2>npm</h2>
+    <h3 style="font-size: 140%;">Le gestionnaire de paquets de node.js</h3>
+
+<ul>
+<li>utilisé pour les outils (create-react-app, vue-cli, vite, webpack...)
+    <ul>
+    <li>ces outils sont en Javascript/Typescript, mais on commence à en voir en Go (esbuild) (binaires statiques)</li>
+    <li>gèrent notamment le transpiling, mais attention aux besoins en <a href="https://stackoverflow.com/questions/43756211/best-way-to-polyfill-es6-features-in-react-app-that-uses-create-react-app">polyfills</a> pour les vieux navigateurs</li>
+    </ul></li>
+<li>utilisé pour télécharger les librairies client-side<br>(react, vue, axios, lodash...)
+    <small> car <a href="https://bower.io/blog/2017/how-to-migrate-away-from-bower/">Bower a perdu la course</a></small>
+</li>
+<li>semver et package-lock.json <small>(ou yarn.lock)</small></li>
+</ul>
 </section>
 
 <!-------------------------------------------------->
@@ -505,10 +553,10 @@ C'est la méthode recommandée pour composer les
     </div>
     <table class="fragment"><tr>
 <td><pre><code data-trim class="html">
-<div>
-  <button id="button">Afficher</button>
-  <div id="content">Long texte...</div>
-</div>
+&lt;div&gt;
+  &lt;button id="button"&gt;Afficher&lt;/button&gt;
+  &lt;div id="content"&gt;Long texte...&lt;/div&gt;
+&lt;/div&gt;
 
 &lt;script&gt;  
 $('#content').hide();
@@ -519,10 +567,10 @@ $('#button').click(function() {
 </code></pre></td>
 
 <td><pre><code data-trim class="html">
-<div id="app">
-  <button @click="visible = true">Afficher</button>
-  <div v-if="visible">Long texte...</div>
-</div>
+&lt;div id="app"&gt;
+  &lt;button @click="visible = true"&gt;Afficher&gt;/button&gt;
+  &lt;div v-if="visible"&gt;Long texte...&gt;/div&gt;
+&lt;/div&gt;
         
 &lt;script&gt;  
 new Vue({
@@ -548,10 +596,10 @@ new Vue({
     </div>
     <table class="fragment"><tr>
 <td><pre><code data-trim class="html">
-<div>
-  <button id="button">Afficher</button>
-  <div id="content">Long texte...</div>
-</div>
+&lt;div&gt;
+  &lt;button id="button"&gt;Afficher&lt;/button&gt;
+  &lt;div id="content"&gt;Long texte...&lt;/div&gt;
+&lt;/div&gt;
 
 &lt;script&gt;  
 $('#content').hide();
@@ -565,12 +613,12 @@ $('#button').click(function() {
 </code></pre></td>
 
 <td><pre><code data-trim class="html">
-<div id="app">
-    <button @click="visible = !visible">
+&lt;div id="app"&gt;
+    &lt;button @click="visible = !visible"&gt;
         {{visible ? 'Cacher' : 'Afficher'}}
-    </button>
-    <div v-if="visible">Long texte...</div>
-</div>
+    &lt;/button&gt;
+    &lt;div v-if="visible"&gt;Long texte...&lt;/div&gt;
+&lt;/div&gt;
         
 &lt;script&gt;  
 new Vue({
@@ -760,10 +808,9 @@ A prendre avec des pincettes !
 			{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
 
 			// Syntax highlight for <code> elements
-		        { src: 'plugin/highlight/highlight.js', async: true, callback: function() { 
-                    hljs.LANGUAGES.javascript.k += " async await class constructor let const"
-                    hljs.LANGUAGES.java.k += " fun async suspend"
-                    hljs.initHighlightingOnLoad(); 
+		        { src: 'plugin/highlight/highlight.min.js', async: true, callback: function() { 
+                    hljs.getLanguage("kotlin").keywords.keyword += " async"
+                    hljs.highlightAll(); 
                 } }
 
 			],
