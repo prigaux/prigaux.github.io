@@ -209,7 +209,7 @@ table.title-on-left td {
     Standard on most browsers (except Safari 9 or IE)
     <br>
 
-    <small style="display: block; float: right; width: 14rem; border-left: 1px dashed gray; padding-left: 1rem">
+    <small class="fragment blue" style="display: block; float: right; width: 14rem; border-left: 1px dashed gray; padding-left: 1rem">
         « standard pas toujours respecté » par les navigateurs ? FAUX
         <br><br>« class » disponible dans Javascript, pas que Typescript
         <br><br>« { addresse } au lieu de { address: address } » disponible dans Javascript, pas que Typescript
@@ -388,7 +388,7 @@ Ces closures sont plus couteuses en mémoire, mais sont très « composables » 
     <h2>Javascript récent</h2>
     <h3>Tendances</h3>
     <ul>
-        <li>utilisation de Webpack/Rollup/esbuild pour bundle/minify/cache-buster</li>
+        <li>utilisation de Webpack/Rollup/esbuild pour bundle/minify/cache-buster <small>(<a target="_blank" href="https://annuaire.univ-paris1.fr/">exemple</a>)</small></li>
         <li>utilisation de Typescript</li>
         <li>utilisation de babel/esbuild/tsc pour écrire du Javascript récent qui tourne sur des vieux navigateurs</li>
     </ul>
@@ -570,10 +570,10 @@ Exemple : esup-smsu
 
 <li>templates transformés en javascript exécuté dans le navigateur
 
-<li>routage avec URLs 
+<li>routage avec URLs (grâce à <a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API/Working_with_the_History_API">History API</a>)
 
-<li>les données de navigation sont conservées en mémoire dans le navigateur
-<li>la session java ne stocke que le login ! re-log transparent
+<li>données de navigation conservées en mémoire dans le navigateur
+<li>la session serveur ne stocke que le login ! re-log transparent
 <li>debug facile dans le navigateur (<small>instruction <code>debugger</code></small>)
 
 </ul>
@@ -605,7 +605,8 @@ Exemple : esup-smsu
 
 <!-------------------------------------------------->
 <section>
-<h2>Inconvénients SPA Javascript</h2>
+<h2>SPA Javascript</h2>
+<h4>inconvénients</h4>
 <ul>
 <li>plus gourmand qu'une page web sans JS, notamment si utilisation de beaucoup de libraires ! <small>(mais possibilité de charger dynamiquement les libs uniquement pour certaines URLs)</small>
 <li>indexation plus compliquée (pour les moteurs de recherche)&nbsp;: peut nécessiter SSR
@@ -613,8 +614,10 @@ Exemple : esup-smsu
 <li><small>nécessiter un navigateur récent (pas de MSIE avec Vue 3)</small>
 </ul>
 
-</section>
+<h4 style="padding-top: 1rem">sécurité et mises à jour</h4>
+IMO pas un vrai sujet car tourne dans le navigateur
 
+</section>
 
 <!-------------------------------------------------------------------------->
 <section>
@@ -630,7 +633,7 @@ Exemple : esup-smsu
             </ul>
             <small>NB : React et Angular sont à égalité pour les demandes de jobs sur linkedin</small></li>
         </td><td>
-            <small style="width: 14rem; border-left: 1px dashed gray; padding-left: 1rem">
+            <small class="fragment blue" style="width: 14rem; border-left: 1px dashed gray; padding-left: 1rem">
                 Angular « sur le marché depuis plus longtemps » ?? FAUX : React (2013) profité du temps de dev de Angular >= 2 (2016) pour percer
                 <p></p>
                 Angular a « bien plus d'outils et librairies compatibles » ?? pas sûr, écosystème React très riche</li>
@@ -904,13 +907,47 @@ Vue.js supporte aussi JSX/TSX. <a href="https://areknawo.com/vue-with-tsx-the-pe
 
 <!-------------------------------------------------->
 <section>
-    <h2>Outils</h2>
+    <h2>Vue.js tooling</h2>
     <ul>
-    <li><a href='https://vitejs.dev/guide/'>vite</a> de preference
+ <li>vue-cli : comparable à create-react-app (mais plus customisable sans "eject") ou à Angular CLI</li>
+ <li>mieux : 😍 <a href='https://vitejs.dev/guide/'>Vite</a><ul>
+  <li>super performant en dev : <ul>
+    <li>esbuild pour les librairies</li>
+    <li>pas de bundling pour les sources, utilisation directe de l'import des modules</li>
+    <li>out-of-band typescript type checking</li>
+    </ul></li>
+  <li>compatible React</li>
+  <li><a href="https://github.com/angular/angular/issues/43131">envié par Angular</a></li>
+</ul></li>
+
     </ul>
     
     </section>
     
+<!-------------------------------------------------->
+<section>
+    <h2>Vue.js tooling</h2>
+    <ul>
+<li><a href="https://v3.vuejs.org/guide/migration/introduction.html#ide-support">IDE recommandé pour Vue 3</a> : VSCode avec Volar</li>
+<li>😍 <a href="https://devtools.vuejs.org/guide/installation.html">Vue Devtools</a> pour Chrome/Firefox</li>
+<li>Vuex, equivalent de Redux / NgRx. Pratique avec plugin navigateur : permet le retour dans le passé</li>
+<li>Vue Router</li>
+<li>Component Testing avec <a href="https://v3.vuejs.org/guide/testing.html">Vue Test Utils</a></li>
+<li>SSR pour SEO : possible mais je ne connais pas</li>
+    </ul>
+    
+    </section>
+
+<!-------------------------------------------------->
+<section>
+    <h2>The end!</h2>
+
+    Demo ?
+
+    <p></p>
+    Questions ?
+</section>
+
 <!-------------------------------------------------------------------------->
 			</div>
 		</div>
