@@ -174,10 +174,10 @@ table.title-on-left td {
         <li>Mes expériences</li>
         <li>Contexte</li>
         <ul>
-            <li>Single Page Application ?</li>
             <li>Javascript récent</li>
             <li>Typescript</li>
             <li>npm</li>
+            <li>Single Page Application</li>
         </ul>
         <li>Vue.js</li>
         <ul>
@@ -200,79 +200,6 @@ table.title-on-left td {
         <li>2017 : plusieurs projets migrés de AngularJS à Vue.js</li>
         <li>2021 : petits projets migrés de Vue 2 en Vue 3</li>
     </ul>
-</section>
-
-<!-------------------------------------------------->
-<section data-transition="fade">
-<h2>Single Page Application ?</h2>
-<h3>Page web classique</h3>
-<div class="center">
-  <img src="img/page.png">
-</div>
-</section>
-
-<!-------------------------------------------------->
-<section data-transition="fade">
-<h2>Single Page Application ?</h2>
-<h3>Page web classique</h3>
-<div class="center">
-  <img src="img/page-with-simple-js.png">
-</div>
-</section>
-
-<!-------------------------------------------------->
-<section data-transition="fade">
-<h2>Single Page Application ?</h2>
-<h3>Partial updates</h3>
-<div class="center">
-  <img src="img/partial-html.png">
-</div>
-Exemple : grouper lite UI
-</section>
-
-<!-------------------------------------------------->
-<section data-transition="fade">
-<h2>Single Page Application ?</h2>
-<h3>Mixte</h3>
-<div class="center">
-  <img src="img/mixte.png">
-</div>
-Exemple : esup-filemanager
-</section>
-
-<!-------------------------------------------------->
-<section data-transition="fade">
-<h2>Single Page Application ?</h2>
-<h3>Single Page Application</h3>
-<div class="center">
-  <img src="img/SPA.png">
-</div>
-Exemple : esup-smsu
-</section>
-
-<!-------------------------------------------------->
-<section>
-<h2>Single Page Application</h2>
-
-<ul>
-
-<li>toute la navigation est faite en Ajax
-<li>toutes les actions sont faites en Ajax :
-<br> &#10145; on s'abstrait des contraintes des &lt;form&gt; HTML
-<br> &#10145; les données client-&gt;serveur peuvent être complexes
-
-<li>templates transformés en javascript exécuté dans le navigateur &#10145; cache
-
-<li>routage avec URLs 
-
-<li>les données de navigation sont conservées en mémoire dans le navigateur
-<li>la session java ne stocke que le login ! re-log transparent
-<li>debug facile dans le navigateur
-
-</ul>
-
-⚠ programmation asynchrone !
-
 </section>
 
 <!-------------------------------------------------->
@@ -474,9 +401,10 @@ Ces closures sont plus couteuses en mémoire, mais sont très « composables » 
     <ul>
         <li>won over Dart/Flow (Google abandonne AngularDart, mais au profit de Flutter)</li>
         <li>de plus en plus de librairies sont en Typescript, d'autres fournissent leurs types (fichiers .d.ts) ou sont fournis sur <a href="https://github.com/DefinitelyTyped/DefinitelyTyped">DefinitelyTyped</a></li>
-        <li>qques fonctionnalités en plus de Javascript, notamment les <a href="https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties">parameter properties</a>
+        <li>qques fonctionnalités en plus de Javascript, notamment les <a href="https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties">parameter properties</a>, <a href="https://www.typescriptlang.org/docs/handbook/decorators.html">decorators</a> <small>(expérimental)</small>, JSX
         <li>biggest gradual typing success (see also "dynamic" in C#/kotlin)</li>
         <li>vérifié à la compilation, mais ignoré à l'exécution</li>
+        <li>les navigateurs gèrent des js.map pour les msgs console, pour le débogueur...</li>
     </ul>
 </section>
 
@@ -579,6 +507,139 @@ capable de gérer : <a href="https://www.typescriptlang.org/play#example/union-a
 </li>
 <li>semver et package-lock.json <small>(ou yarn.lock)</small></li>
 </ul>
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+<h2>Single Page Application ?</h2>
+<h3>Page web classique</h3>
+<div class="center">
+  <img src="img/page.png">
+</div>
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+<h2>Single Page Application ?</h2>
+<h3>Page web classique</h3>
+<div class="center">
+  <img src="img/page-with-simple-js.png">
+</div>
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+<h2>Single Page Application ?</h2>
+<h3>Partial updates</h3>
+<div class="center">
+  <img src="img/partial-html.png">
+</div>
+Exemple : grouper lite UI
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+<h2>Single Page Application ?</h2>
+<h3>Mixte</h3>
+<div class="center">
+  <img src="img/mixte.png">
+</div>
+Exemple : esup-filemanager
+</section>
+
+<!-------------------------------------------------->
+<section data-transition="fade">
+<h2>Single Page Application ?</h2>
+<h3>Single Page Application</h3>
+<div class="center">
+  <img src="img/SPA.png">
+</div>
+Exemple : esup-smsu
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Single Page Application</h2>
+
+<ul>
+
+<li>toute la navigation est faite en Ajax
+<li>toutes les actions sont faites en Ajax :
+<br> &#10145; on s'abstrait des contraintes des &lt;form&gt; HTML
+<br> &#10145; les données client-&gt;serveur peuvent être complexes
+
+<li>templates transformés en javascript exécuté dans le navigateur
+
+<li>routage avec URLs 
+
+<li>les données de navigation sont conservées en mémoire dans le navigateur
+<li>la session java ne stocke que le login ! re-log transparent
+<li>debug facile dans le navigateur (<small>instruction <code>debugger</code></small>)
+
+</ul>
+
+⚠ programmation asynchrone !
+
+</section>
+
+<!-------------------------------------------------->
+<section style="font-size: 95%">
+<h2>SPA Javascript vs JSF</h2>
+
+<h4>inconvénients de Vue/React/Angular</h4>
+<ul>
+<li>le code serveur doit être plus fiable, le spoofing des paramètres d'entrée étant facile
+<li>validateurs souvent dupliqués côté client
+<li>rôles vérifiés côté client et côté serveur
+<li>traductions côté client et un peu côté serveur <small>(pour l'envoi de mails par exemple)</small>
+</ul>
+<p>
+<h4>avantages</h4>
+<ul>
+<li>réactivité de l'interface
+<li>bonne intégration avec le javascript :)
+<li>simple de faire des composants UI réutilisables
+<li>plugins navigateur facilitant l'inspection des composants & état</li>
+</ul>
+</section>
+
+<!-------------------------------------------------->
+<section>
+<h2>Inconvénients SPA Javascript</h2>
+<ul>
+<li>plus gourmand qu'une page web sans JS, notamment si utilisation de beaucoup de libraires ! <small>(mais possibilité de charger dynamiquement les libs uniquement pour certaines URLs)</small>
+<li>indexation plus compliquée (pour les moteurs de recherche)&nbsp;: peut nécessiter SSR
+<li>prévenir les clics doublés pendant l'attente
+<li><small>nécessiter un navigateur récent (pas de MSIE avec Vue 3)</small>
+</ul>
+
+</section>
+
+
+<!-------------------------------------------------------------------------->
+<section>
+    <h2>Présentation de Vue.js</h2>
+
+    <table>
+        <tr><td>
+            <ul>
+                <li>Vue.js est l'héritier de AngularJS</li>
+                <li>Se situe entre React et Angular</li>
+                <li>Vue 3 sorti en 2020 avec meilleur support Typescript et la Composition API</li>
+                <li><a href="https://github.com/vuejs/petite-vue">petite-vue</a> : projet séparé spécialisé pour les cas d'usage de jQuery</li>
+            </ul>
+            <small>NB : React et Angular sont à égalité pour les demandes de jobs sur linkedin</small></li>
+        </td><td>
+            <small style="width: 14rem; border-left: 1px dashed gray; padding-left: 1rem">
+                Angular « sur le marché depuis plus longtemps » ?? FAUX : React (2013) profité du temps de dev de Angular >= 2 (2016) pour percer
+                <p></p>
+                Angular a « bien plus d'outils et librairies compatibles » ?? pas sûr, écosystème React très riche</li>
+                <p></p>
+                performance : Angular n'est PAS plus performant (<a target="_blank" href="img/js-framework-benchmark.png">comparaison</a>)
+            </small>
+        </td></tr>
+    </table>
+    
 </section>
 
 <!-------------------------------------------------->
@@ -698,49 +759,6 @@ new Vue({
 
 <!-------------------------------------------------------------------------->
 <section>
-        <h2>A la découverte de Vue.js</h2>
-
-        Pour découvrir Vue.js, nous allons continuer avec 
-        <br>
-        <a target="_blank" href="https://fr.slideshare.net/BrunoBonnin/a-la-dcouverte-de-vuejs">une présentation de Bruno Bonnin</a>.
-
-</section>
-
-<!-------------------------------------------------->
-<section>
-<h2>Vue.js vs JSF</h2>
-
-<h4>inconvénients de Vue.js</h4>
-<ul>
-<li>le code serveur doit être plus fiable, le spoofing des paramètres d'entrée étant facile
-<li>validateurs souvent dupliqués côté client
-<li>rôles vérifiés côté client et côté serveur
-<li>traductions côté client et un peu côté serveur <small>(pour l'envoi de mails par exemple)</small>
-</ul>
-<p>
-<h4>avantages de Vue.js</h4>
-<ul>
-<li>réactivité de l'interface
-<li>facile, léger
-<li>bonne intégration avec le javascript :)
-<li>simple de faire des composants UI réutilisables
-</ul>
-</section>
-
-<!-------------------------------------------------->
-<section>
-<h2>Inconvénients</h2>
-<ul>
-<li>plus gourmand qu'une page web sans JS
-<li>indexation plus compliquée (pour les moteurs de recherche)
-<li>nécessite navigateur récent (pas de MSIE avec Vue 3)
-<li>prévenir les clics doublés pendant l'attente
-</ul>
-
-</section>
-
-<!-------------------------------------------------------------------------->
-<section>
     <h2>Éléments de choix</h2>
 <table style="font-size: 70%" class="title-on-left with-border">
 	<tr>
@@ -752,13 +770,13 @@ new Vue({
 	<tr>
 		<td>documentation</td>
 		<td></td>
-		<td><a href="https://v3.vuejs.org/guide/">superbe</a></td>
+		<td><a href="https://v3.vuejs.org/guide/">bonne</a></td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>apprentissage</td>
-		<td>court</td>
-		<td>court</td>
+		<td>moyen</td>
+		<td>moyen</td>
 		<td>long</td>
 	</tr>
 	<tr>
@@ -768,27 +786,21 @@ new Vue({
 		<td>framework complet</td>
 	</tr>
 	<tr>
-		<td>écosystème</td>
-		<td>grand</td>
-		<td></td>
-		<td></td>
+		<td>poids</td>
+		<td>moyen</td>
+		<td>léger</td>
+		<td>moyen/gros</td>
     </tr>
 	<tr>
-		<td>compatilibité ES5</td>
-		<td>moyen</td>
-		<td>oui</td>
-		<td>non</td>
-	</tr>
-	<tr>
 		<td>compilation</td>
-		<td>pour ES6 &amp; JSX</td>
-		<td>non, sauf pour single file component</td>
+		<td>pour JSX</td>
+		<td>optionnel <small>(nécessaire pour les Single File Component)</small></td>
 		<td>pour Typescript</td>
 	</tr>
 	<tr>
 		<td>vérification de types</td>
 		<td>possibilité d’utiliser Typescript</td>
-		<td>possibilité d’utiliser Typescript, mais moyen</td>
+		<td>possibilité d’utiliser Typescript <small>mais pas complètement mature dans IDE</small></td>
 		<td>Typescript</td>
 	</tr>
 </table>
@@ -798,7 +810,7 @@ new Vue({
 <section>
     <h2>Éléments de choix</h2>
 
-A prendre avec des pincettes !
+(à prendre avec des pincettes !)
 <p></p>
 <table style="font-size: 70%" class="title-on-left with-border">
 	<tr>
@@ -815,7 +827,7 @@ A prendre avec des pincettes !
 	</tr>
 	<tr>
 		<td>taille application</td>
-		<td>moyenne ou grande avec Redux/MobX</td>
+		<td>moyenne ou grande avec Redux</td>
 		<td>petite</td>
 		<td>grande</td>
 	</tr>
@@ -832,6 +844,62 @@ A prendre avec des pincettes !
 		<td>Google, Microsoft, Deutsche Bank, Forbes, PayPal, Samsung</td>
 	</tr>
 </table>
+</section>
+
+<!-------------------------------------------------------------------------->
+<section>
+    <h2>Vue.js comparé à React</h2>
+
+    Vue.js a plus de fonctionnalités que React :
+<ul>
+  <li>automatic dependency tracking (using proxy)</li>
+  <li>two way data-binding using events</li>
+  <li>moteur de template. En React danger d'avoir du HTML disséminé au milieu du code</li>
+  <li>scoped css fourni avec SFC</li>
+</ul>
+
+<p></p>    
+⚠ support templates / SFC encore peu mature dans VSCode, notamment avec support Typescript.
+<p></p>
+Vue.js supporte aussi JSX/TSX. <a href="https://areknawo.com/vue-with-tsx-the-perfect-duo/">Choix intéressant ?</a>
+
+</section>
+
+<!-------------------------------------------------------------------------->
+<section>
+    <h2>Vue.js comparé à Angular</h2>
+
+    <ul>
+        <li>templating un peu similaire (mais Angular manque v-else)</li>
+        <li>props/events similaire à @Input/@Output</li>
+    </ul>
+    <p></p>    
+    Vue.js moins structuré que Angular :
+<ul>
+  <li>utilisation des classes + décoration optionnelles</li>
+  <li>pas de lib HTTP<br>Angular a les Observables... souvent trop complexes !</li>
+  <li>pas de dependency injection (mais axios-mock-adapter)</li>
+</ul>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+    <h2>Vue.js 3</h2>
+
+    <ul>
+        <li>sorti en 2020 mais support migration en 2021</li>
+        <li>écrit en Typescript, comme Angular</li>
+        <li>meilleur support typescript</li>
+        <li>Composition API, alternative à l'Options API
+            <ul>
+                <li>inspiré des React Hooks alternative aux Class Components (<a href="https://dev.to/subdeveloper/migrating-from-class-components-to-react-hooks-4lp3">exemple</a>) sortis en 2019</li>
+                <li>NB : différences importantes</li>
+            </ul>
+        </li>
+        <li>pas compatible Internet Explorer</li>        
+    </ul>
+
 </section>
 
 <!-------------------------------------------------->
