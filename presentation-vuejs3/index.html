@@ -388,7 +388,7 @@ L'alternative aux classes :
   
   eat() {
     const food = this.food
-    this.food = null
+    this.food = undefined
     return food
   }
 }</code></pre>
@@ -401,7 +401,7 @@ L'alternative aux classes :
 
   eat() {
     const food_ = food
-    food = null
+    food = undefined
     return food_
   }
 })</code></pre>
@@ -412,7 +412,7 @@ L'alternative aux classes :
 
   const eat = () => {
     const food_ = food
-    food = null
+    food = undefined
     return food_
   }
   return { eat }
@@ -483,8 +483,10 @@ Ces closures sont plus couteuses en mémoire, mais sont très « composables » 
 <!-------------------------------------------------->
 <section>
     <h2>Typescript</h2>
+    <h3>Adapté à Javascript</h3>
 
-<h3>Permissif !</h3>
+    <ul>
+        <li>Permissif !</li>
 
 <pre><code class="typescript">"" + 1
 "" + (() => 1)
@@ -494,10 +496,71 @@ Ces closures sont plus couteuses en mémoire, mais sont très « composables » 
 <br>toujours utiliser <a href="https://www.typescriptlang.org/tsconfig#strict">strict</a> qui implique <a href="https://www.typescriptlang.org/tsconfig#noImplicitAny">noImplicitAny</a>
 <br><small>(mais peut-être désactiver "strictNullChecks" et "useUnknownInCatchVariables")</small>
 
-<h3 style="margin-top: 2rem">Précis</h3>
+</ul>
+</section>
 
-<pre><code class="typescript">[1,0,1] as (0|1)[]</code></pre>
+<!-------------------------------------------------->
+<section>
+    <h2>Typescript</h2>
+    <h3>Adapté à Javascript</h3>
 
+    <ul>
+<li>Puissant
+
+<pre><code class="typescript">type StringOrNumber = string | number;
+type ProcessStates = "open" | "closed";
+type OddNumbersUnderTen = 1 | 3 | 5 | 7 | 9;</code></pre>
+capable de gérer : <a href="https://www.typescriptlang.org/play#example/union-and-intersection-types">Union & Intersection types</a>, <a href="https://www.typescriptlang.org/play?#code/MYGwhgzhAEAKYCcEHsAu0DeAoavoWQFcA7AE2gF5oAiCAR0LAHcBragbiwF8tRIYAIoWAtMOPARLkq1BmBEdxuCEwCWAWwAUASmx590YMmIEQAUwB0IZAHNN1AOLJVxG9ABmyBNDDRSqgAcAQmptTn0eHiMTdADEFHQqYjMmOHi0HU5oiHRSYVEklOghEUycXmMc6BBKaABtaDikNAAaP3zoAF0Kk2RzK1tNEAt1MADNXwoAPh8LSTJtbR7TS2s7YdHxyZmwObUtRe0gA">Duck Typing</a>, anonymous object types...
+</li>
+</ul>
+
+</section>
+
+<!-------------------------------------------------->
+<section>
+    <h2>Typescript</h2>
+    Suffisament puissant pour typer l'alternative aux classes :
+
+    <table class="fake-border">
+        <tr><th>Classes</th><th>Method properties</th><th>Le couteau suisse</th></tr>
+        <tr><td>
+    <pre><code class="data-trim javascript">class Meal {
+  constructor(private food?: string) {}
+  
+  eat() {
+    const food = this.food
+    this.food = undefined
+    return food
+  }
+}</code></pre>
+
+    </td><td>
+    <pre><code class="data-trim javascript">const Meal =
+ (food?: string) => ({
+
+  eat() {
+    const food_ = food
+    food = undefined
+    return food_
+  }
+})</code></pre>
+    </td><td>
+    <pre><code class="data-trim javascript">const Meal =
+ (food?: string) => {   
+
+  const eat = () => {
+    const food_ = food
+    food = undefined
+    return food_
+  }
+  return { eat }
+}</code></pre>
+    </td></tr>
+</table>
+<a target="_blank" href="https://www.typescriptlang.org/play?#code/MYGwhgzhAECyCmYTQN4ChrWAewHYQBcAnAV2AOyIAoAHIgSwDcwD5oAzbbAEwH4AuaIQa4A5gEpUAXwzRZiAlUnpMmHPgIcu3aAF5oBABb0IAOk49ZmIyfPa90Erm7x29XPG5XoReARJEuFqWmDIyaOqEcIggAEx6GFQWfILC7hJ6AHzQVOjyLEqo3pGayQD6DsneyQ5OLm4eXqo+fgFB5bJh4mgReFEISADMCTnJAkLE6ZK62SiqPWp9mgoOhTNFzSXB3BX6Vc01+nWu7p7evv6B22WdshdtqNArYT1bFpj6HgDu0UhUAEQWf7dN5ceL6AZxAEWWLA3oaYLDCExQbQriDOFbZD6ADawQANMFYoSLMMALpoEB2IgAUTAwEMVDY60i2BA8FMIGwoiZpgUSnE3SAA">Test it</a>
+
+<p></p>
+<small>Notez l'utilisation des "parameter properties" dans le constructeur</small>
 </section>
 
 <!-------------------------------------------------->
