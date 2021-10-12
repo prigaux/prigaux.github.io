@@ -563,7 +563,6 @@ Exemple : esup-smsu
 
 <ul>
 
-<li>toute la navigation est faite en Ajax
 <li>toutes les actions sont faites en Ajax :
 <br> &#10145; on s'abstrait des contraintes des &lt;form&gt; HTML
 <br> &#10145; les données client-&gt;serveur peuvent être complexes
@@ -575,6 +574,7 @@ Exemple : esup-smsu
 <li>données de navigation conservées en mémoire dans le navigateur
 <li>la session serveur ne stocke que le login ! re-log transparent
 <li>debug facile dans le navigateur (<small>instruction <code>debugger</code></small>)
+<li>"Save as cURL" pour débugger l'API</li>
 
 </ul>
 
@@ -869,12 +869,13 @@ new Vue({
 
     Vue.js a plus de fonctionnalités que React :
 <ul>
-  <li>automatic dependency tracking (using proxy)</li>
-  <li>two way data-binding using events</li>
+  <li>automatic change detection (using Proxy) <small>(mais un <a href="https://www.reddit.com/r/vuejs/comments/msfuyr/how_to_prevent_vue3_to_keep_printing_proxy_to/">peu galère dans le debugger</a>)</small></li>
+  <li>two way data-binding using events : v-model</li>
   <li>moteur de template. En React danger d'avoir du HTML disséminé au milieu du code</li>
-  <li>scoped css fourni avec SFC</li>
+  <li>scoped CSS fourni avec SFC</li>
 </ul>
-
+<p></p>
+Vue 2 a adopté la technique Virtual DOM popularisée par React : envoyer les diffs au real DOM.
 <p></p>    
 ⚠ support templates / SFC encore peu mature dans VSCode, notamment avec support Typescript.
 <p></p>
@@ -887,8 +888,11 @@ Vue.js supporte aussi JSX/TSX. <a href="https://areknawo.com/vue-with-tsx-the-pe
     <h2>Vue.js comparé à Angular</h2>
 
     <ul>
-        <li>templating un peu similaire (mais Angular manque v-else)</li>
+        <li>templating un peu similaire <small>(mais Angular manque v-else)</small></li>
         <li>props/events similaire à @Input/@Output</li>
+        <li>change detection plus performant que Zone.js <small>(<a href="https://github.com/angular/angular/issues/28958">lien</a>, <a href="https://hackmd.io/@mhevery/BkDUxaW84/%2FK7MLVYSDQKKaMKJXW_KZAw">lien</a>, <a href="https://stackoverflow.com/questions/67739262/why-does-angulars-change-detector-not-use-proxy-objects">lien</a>)</small></li>
+        <li>"computed" sans réel équivalent <small>(<a href="https://github.com/angular/angular/issues/20472">lien</a>)</small></li>
+        <li>Virtual DOM vs <a href="https://blog.bitsrc.io/incremental-vs-virtual-dom-eb7157e43dca">Incremental DOM</a></li>
     </ul>
     <p></p>    
     Vue.js moins structuré que Angular :
@@ -914,6 +918,7 @@ Vue.js supporte aussi JSX/TSX. <a href="https://areknawo.com/vue-with-tsx-the-pe
                 <li>NB : différences importantes</li>
             </ul>
         </li>
+        <li>Change detection via Proxy : résout <a href="https://v3.vuejs.org/guide/change-detection.html#async-update-queue">pbs de Vue 2</a> <small>(avec un <a href="https://v3.vuejs.org/guide/reactivity.html#proxy-vs-original-identity">petit inconvénient</a>)</small></li>
         <li>pas compatible Internet Explorer</li>        
     </ul>
 
@@ -944,7 +949,7 @@ Vue.js supporte aussi JSX/TSX. <a href="https://areknawo.com/vue-with-tsx-the-pe
     <ul>
 <li><a href="https://v3.vuejs.org/guide/migration/introduction.html#ide-support">IDE recommandé pour Vue 3</a> : VSCode avec Volar</li>
 <li>😍 <a href="https://devtools.vuejs.org/guide/installation.html">Vue Devtools</a> pour Chrome/Firefox</li>
-<li>Vuex, equivalent de Redux / NgRx. Pratique avec plugin navigateur : permet le retour dans le passé</li>
+<li>Vuex, equivalent de Redux / NgRx. Pratique avec plugin navigateur : permet le voyage dans le temps</li>
 <li>Vue Router</li>
 <li>Component Testing avec <a href="https://v3.vuejs.org/guide/testing.html">Vue Test Utils</a></li>
 <li>Components library : <a href="https://blog.logrocket.com/the-best-ui-frameworks-for-vue-3/">comparatif</a> (<a href="https://element-plus.org/en-US/">Element</a>, <a href="https://next.vuetifyjs.com/en/">Vuetify</a>...)</li>
