@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta http-equiv="Content-type" content="text/html;charset=UTF-8" >
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <style>
+    html { font-family: Arial, sans-serif; font-size: 160%; margin: 1rem; }
+    small { font-size: 60%; }
+    ul { margin-top: 0; }    
+    h4 { margin-bottom: 0.1rem; }
+    h2 { border-bottom: 1px solid #0a71b4; }
+    li { padding: 0.5rem 0 0; }
+    pre { margin: 0; }
+    li pre code.hljs { padding-left: 0; padding-right: 0; }
+    i { color: #005cc5; }
+    li::marker { color: #e30f47; }
+   </style>
+  </head>
+<body>
+
+<h1>HTTP Cache : Last-Modified, cache-busting</h1>
+
+<script>
+    document.title = document.querySelector('h1').innerText;
+</script>
+
+En résumé : forcez un cache court ou faites du cache-busting
+
+
+<h2>Préambule : recharger une page ?</h2> <!-------------------------------------------------------->
+
+Bouton ↻
+<ul>
+    <li>Firefox : revalidations de chaque ressource <small>(request headers "<code>Cache-control: max-age=0</code>" + <code>If-Modified-Since</code> + <code>If-None-Match</code>)</small>
+        <small><br>⇒ pour éviter le reload des ressources, utilisez "<code>Cache-Control: immutable, ...</code>" (<a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#immutable'>doc</a>, <a href="https://hacks.mozilla.org/2017/01/using-immutable-caching-to-speed-up-the-web/">raison</a>)</small>
+    </li>
+    <li>Chromium : revalidation de la page html principale
+        <small>
+        (ce changement de comportement date de 2017 :
+            <a href="https://stackoverflow.com/questions/45829055/why-doesnt-chrome-re-validate-in-memory-cache-when-doing-a-normal-reload/57281076#57281076">résumé et liens</a>,
+             <a href="https://blog.chromium.org/2017/01/reload-reloaded-faster-and-leaner-page_26.html">annonce officielle</a>,
+             <a href="https://engineering.fb.com/2017/01/26/web/this-browser-tweak-saved-60-of-requests-to-facebook/?utm_source=codedot_rss_feed">détails par Facebook</a>,
+             <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=611416">issue à propos de "immutable"</a>).
+        </small>
+        <br>⇒ pas de revalidation des images/CSS/JS !!
+    </li>
+</ul>
+Force-reload
+<ul>
+    <li>ignore le cache <small>(request header "<code>Cache-Control: no-cache</code>")</small></li>
+    <li>uniquement accessible via un raccourci clavier : Ctrl-Shift-R ou Ctrl-F5 <small>(aussi Shift-F5 sur Chrome)</small></li>
+</ul>
+
+<p></p>
+NB : les requêtes asynchrones (notamment Ajax) sont toujours prises en cache.
+
+
+<h2>Cache HTTP</h2> <!-------------------------------------------------------->
+
+Avec <code>Cache-Control</code>, tout est clair ! <small>(remplace <code>Pragma</code> et <code>Expires</code>)</small>
+
+<p></p>
+... mais en l'absence de <code>Cache-Control</code> <small>(et de <code>Expires</code>)</small> ?
+<ul>
+    <li>si <code>Last-Modified</code>, heuristique 10% <small>(<a href="https://stackoverflow.com/questions/14345898/what-heuristics-do-browsers-use-to-cache-resources-not-explicitly-set-to-be-cach/31852117#31852117">détails</a>)</small>
+        <small>(avec un max à 7 jours pour Firefox : <a href="https://paulcalvano.com/2018-03-14-http-heuristic-caching-missing-cache-control-and-expires-headers-explained/">explications</a>, <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=277813">upstream issue</a>)</small>
+    </li>
+    <li>sinon pas de mise en cache <small>(ou plutôt mise en cache... avec expiration immédiate, sauf <a href="https://stackoverflow.com/questions/32261000/how-to-avoid-ajax-caching-in-internet-explorer-11-when-additional-query-string-p">XHR avec MSIE</a>, <a href="https://github.com/owncloud/core/issues/26922">issue</a>)</small></li>
+</ul>
+
+<h4>Heuristique 10% par l'exemple</h4>
+
+<br>Renater utilise le logo « <img width="100px" src="https://www.renater.fr/sites/default/files/inline-images/logo_RENATER-2.svg"> » sur son site principal.
+Il peut aussi l'utiliser sur d'autres sites pour espérer centraliser cette resource.
+<p></p>
+<ul>
+<li>
+le navigateur fait une requête :
+
+<pre><code class="hljs language-nolanguage"><i>GET</i> https://www.renater.fr/sites/default/files/inline-images/logo_RENATER-2.svg
+<i>HTTP/1.1 200 OK</i>
+<i>Date</i>: Mon, 29 Nov <mark>2021</mark> 16:18:18 GMT
+<i>Server</i>: Apache/2.4.18 (Ubuntu)
+<i>Last-Modified</i>: Thu, 29 Nov <mark>2018</mark> 14:53:24 GMT
+</code></pre>
+
+⇒ le fichier est vieux de 3 ans
+<br>⇒ le navigateur va mettre en cache 10% de 3 ans = ~3 mois.
+</li>
+<li>mi-décembre, Renater modifie le fichier.
+    <br><big>⚠</big> les requêtes vers cette URL vont renvoyer le fichier en cache.</li>
+</ul>
+
+Solutions :
+<ul>
+<li>demandez à vos utilisateurs de faire un Ctrl-Shift-R 🤪</li>
+<li>modifiez l'URL dans les pages Web : mettre <code>logo_RENATER-2.svg<mark>?v=3</mark></code> 🥱</li>
+<li>abandonnez, mais s'assurer de forcer un temps de mise en cache pour la prochaine fois 😷</li>
+</ul>
+
+<h2>Fichiers statiques</h2> <!-------------------------------------------------------->
+
+Dans la majorité des cas, <code>Last-Modified</code> est renvoyé, sans permettre de configurer un temps de cache 😢
+<ul>
+    <li>Apache <small>(cf default_handler() > ap_set_last_modified() )</small>
+        <br>
+      <big>⚠</big> mais aussi avec mod_auth_cas/mod_shib ⇒ mis en cache (navigateur, proxies...)</li>
+    <li>Nginx <small>(cf ngx_http_header_filter() qui renvoie "last_modified_time" set par ngx_http_static_handler())</small></li>
+    <li>Java Tomcat <small>(<a href="https://tomcat.apache.org/tomcat-9.0-doc/default-servlet.html">doc</a>, <a href="https://github.com/apache/tomcat/blob/d1405b289f8c62f6fc8e4ddd815643471473e762/Java/org/apache/catalina/servlets/DefaultServlet.Java#L988">code</a>)</small></li>
+    <li><small>Python Django (déconseillé de l'utiliser en prod, <a href="https://github.com/django/django/blob/main/django/views/static.py#L51">code</a>)</small></li>
+    <li>Rappel : PHP & Python utilisent Apache/Nginx pour les fichiers statiques</li>
+</ul>
+
+Certains font des choix par défaut intéressant
+<ul>
+    <li>Java Vaadin : <a href="https://github.com/vaadin/framework/blob/063402a80793bbded1035bc662b589d71f5aa3f5/server/src/main/java/com/vaadin/server/VaadinServlet.java#L941-L961">code</a></li>
+</ul>
+D'autres framework laissent le programmeur choisir
+<ul>
+    <li>Node.js Express.js : <a href="http://expressjs.com/en/resources/middleware/serve-static.html">API</a></li>
+    <li>Spring Web MVC : <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-config-static-resources">API</a></li>
+</ul>
+
+
+<h2>Contenu dynamique</h2> <!-------------------------------------------------------->
+<ul>
+    <li>PHP : cache désactivé dès que <code>session_start</code> <small>(<a href="https://www.php.net/manual/fr/function.session-cache-limiter.php">ref</a>)</small></li>
+    <li>Node.js Express : aucun header de cache par défaut</li>
+    <li>Java Servlet : aucun header de cache par défaut
+        <ul>
+            <li>Spring Web MVC : rien par défaut, <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-caching-cachecontrol">configurable</a></li>
+            <li>Spring Security : <a href="https://docs.spring.io/spring-security/reference/features/exploits/headers.html#headers-cache-control">désactive le cache</a></li>
+        </ul>
+    </li>
+</ul>
+
+
+<h2>Solution #1 : forcez un cache faible</h2> <!-------------------------------------------------------->
+
+<big>⚠</big> avec les directives "expires" de Nginx/Apache, il y a le risque de forcer le cache pour une réponse qui ne serait pas caché sans cela.
+<p></p>
+<ul>
+<li>solution générique Apache
+<pre><code class="language-apache">Header setifempty Cache-Control "max-age=3600" "expr=-n resp('Last-Modified') && -z resp('Expires')"</code></pre>
+</li>
+<li>solution générique Nginx
+<pre><code class="language-nginx">header_filter_by_lua_block {
+    if (not ngx.header["Cache-Control"] and not ngx.header["Expires"] and ngx.header["Last-Modified"]) then
+        ngx.header["Cache-Control"] = "max-age=3600"
+    end
+}</code></pre>
+</li></ul>
+
+<h2>Solution #2 : cache-busting</h2> <!-------------------------------------------------------->
+
+<h4>Exemples</h4>
+
+<ul style="list-style: none;">
+    <li><code>logo_RENATER-2.svg<mark>?v=3</mark></code></li>
+    <li><code>/js/GlobalUi.js<mark>?version=1.15.3-SNAPSHOT</mark></code></li>
+    <li><code>/webjars/pdfjs-dist/<mark>2.9.359</mark>/build/pdf.js</code></li>
+    <li><code>/assets/index<mark>.dd791d5c</mark>.js</code></li>
+</ul>
+
+<h4>Solutions techniques</h4>
+
+<ul>
+    <li>à la main : <a href="https://github.com/EsupPortail/Esup-Pod/search?q=ver+extension:html">Esup-Pod</a>, esup-signature (<a href="https://github.com/EsupPortail/esup-signature/search?q=version+extension:html">html</a>, <a href="https://github.com/EsupPortail/esup-signature/commit/f6bb63c5de614b224a76db8f461bca1df0a3754a">js</a>)</li>
+    <li>spring-webmvc :  mécanisme de cache-buster, notamment avec JSP ou thymeleaf (<a href="https://dzone.com/articles/2-step-resource-versioning-with-spring-mvc">exemple</a>)</li>
+    <li>webpack/vite/... : cache-buster + bundler + minify
+
+    <p></p>exemple le <a href="https://github.com/UnivParis1/annuaire/blob/master/index.html#L8-L9">index.html</a> suivant :
+    
+    <pre><code class="language-html">&lt;link rel="stylesheet" href="./src/assets/lib.css"&gt;
+&lt;link rel="stylesheet" href="./src/assets/app.css"&gt;
+...
+&lt;script type="module" src="/src/main.js"&gt;&lt;/script&gt;</code></pre>
+
+devient 
+
+<pre><code class="language-nolanguage hljs"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"module"</span> <span class="hljs-attr">crossorigin</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"/assets/index.<mark>dd791d5c</mark>.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"modulepreload"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"/assets/vendor.<mark>00faadaa</mark>.js"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"/assets/index.<mark>0c658012</mark>.css"</span>&gt;</span></code></pre>
+    </li>
+    <li>vaadin : css géré spécifiquement avec cache-buster (thème)</li>
+</ul>
+
+<a href="https://css-tricks.com/strategies-for-cache-busting-css/">Détails</a>
+
+
+<h2>Divers</h2> <!-------------------------------------------------------->
+
+Pas évoqué :
+<ul>
+    <li>rev-proxy caching, notamment avec <code>Vary</code>
+        <ul>
+            <li>https://jakearchibald.com/2014/browser-cache-vary-broken/</li>
+            <li>difficile sur drupal car "Cache-control: max-age=1800, private" et "Vary: Cookie,Accept-Encoding"</li>
+        </ul>
+    </li>
+    <li>"<code>Clear-Site-Data: cache</code>" bof comme solution! (et ne marche pas sur Safari)</li>
+</ul>
+
+Réfs :
+<ul>
+    <li><a href="https://developer.mozilla.org/fr/docs/Web/HTTP/Caching">https://developer.mozilla.org/fr/docs/Web/HTTP/Caching</a></li>
+    <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</a></li>
+</ul>
+
+
+<h2>Conclusion</h2> <!-------------------------------------------------------->
+
+Forcez un cache court 
+<p></p>
+Faites du cache-busting
+
+
+<link rel="stylesheet" href="highlight/styles/github.min.css">
+<script src="highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+
+
+</body></html>
