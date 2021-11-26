@@ -32,6 +32,7 @@ En résumé : forcez un cache court ou faites du cache-busting
 Bouton ↻
 <ul>
     <li>Firefox : revalidations de chaque ressource <small>(request headers "<code>Cache-control: max-age=0</code>" + <code>If-Modified-Since</code> + <code>If-None-Match</code>)</small>
+        <br>sauf le CSS depuis 2000 !! <small>(depuis <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/79#css">Firefox 79</a>, et c'est un effet de bord, pas un choix)</small>
         <small><br>⇒ pour éviter le reload des ressources, utilisez "<code>Cache-Control: immutable, ...</code>" (<a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control#immutable'>doc</a>, <a href="https://hacks.mozilla.org/2017/01/using-immutable-caching-to-speed-up-the-web/">raison</a>)</small>
     </li>
     <li>Chromium : revalidation de la page html principale
@@ -49,6 +50,7 @@ Force-reload
 <ul>
     <li>ignore le cache <small>(request header "<code>Cache-Control: no-cache</code>")</small></li>
     <li>uniquement accessible via un raccourci clavier : Ctrl-Shift-R ou Ctrl-F5 <small>(aussi Shift-F5 sur Chrome)</small></li>
+    <li><small>Firefox perd la position du scroll en cours</small></li>
 </ul>
 
 <p></p>
@@ -229,7 +231,7 @@ Réfs :
 
 <h2>Conclusion</h2> <!-------------------------------------------------------->
 
-Forcez un cache court 
+Forcez une durée de mise en cache 
 <p></p>
 Faites du cache-busting
 
