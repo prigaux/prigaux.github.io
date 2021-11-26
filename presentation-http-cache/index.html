@@ -57,7 +57,11 @@ NB : les requêtes asynchrones (notamment Ajax) sont toujours prises en cache.
 
 <h2>Cache HTTP</h2> <!-------------------------------------------------------->
 
-Avec <code>Cache-Control</code>, tout est clair ! <small>(remplace <code>Pragma</code> et <code>Expires</code>)</small>
+Avec <code>Cache-Control</code>, c'est globalement clair <small>(NB : remplace <code>Pragma</code> et <code>Expires</code>)</small> :
+<ul>
+    <li><code>Cache-Control: max-age=3600</code> : mettre en cache 1h</li>
+    <li><code>Cache-Control: no-store, no-cache</code> : ne pas mettre en cache</li>
+</ul>
 
 <p></p>
 ... mais en l'absence de <code>Cache-Control</code> <small>(et de <code>Expires</code>)</small> ?
@@ -68,7 +72,23 @@ Avec <code>Cache-Control</code>, tout est clair ! <small>(remplace <code>Pragma<
     <li>sinon pas de mise en cache <small>(ou plutôt mise en cache... avec expiration immédiate, sauf <a href="https://stackoverflow.com/questions/32261000/how-to-avoid-ajax-caching-in-internet-explorer-11-when-additional-query-string-p">XHR avec MSIE</a>, <a href="https://github.com/owncloud/core/issues/26922">issue</a>)</small></li>
 </ul>
 
-<h4>Heuristique 10% par l'exemple</h4>
+
+<h2>Contenu dynamique</h2> <!-------------------------------------------------------->
+<ul>
+    <li>PHP : cache désactivé dès que <code>session_start</code> <small>(<a href="https://www.php.net/manual/fr/function.session-cache-limiter.php">ref</a>)</small></li>
+    <li>Node.js Express : aucun header de cache par défaut</li>
+    <li>Java Servlet : aucun header de cache par défaut
+        <ul>
+            <li>Spring Web MVC : rien par défaut, <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-caching-cachecontrol">configurable</a></li>
+            <li>Spring Security : <a href="https://docs.spring.io/spring-security/reference/features/exploits/headers.html#headers-cache-control">désactive le cache</a></li>
+        </ul>
+    </li>
+</ul>
+
+Possibilité bien sûr d'ajouter des headers <code>Cache-Control</code>.
+
+
+<h2>Last-Modified et heuristique 10% par l'exemple</h2> <!-------------------------------------------------------->
 
 Renater utilise le logo « <img width="100px" src="https://www.renater.fr/sites/default/files/inline-images/logo_RENATER-2.svg"> » sur son site principal.
 Il peut aussi l'utiliser sur d'autres sites pour espérer centraliser cette resource.
@@ -122,21 +142,7 @@ D'autres framework laissent le programmeur choisir
 </ul>
 
 
-<h2>Contenu dynamique</h2> <!-------------------------------------------------------->
-<ul>
-    <li>PHP : cache désactivé dès que <code>session_start</code> <small>(<a href="https://www.php.net/manual/fr/function.session-cache-limiter.php">ref</a>)</small></li>
-    <li>Node.js Express : aucun header de cache par défaut</li>
-    <li>Java Servlet : aucun header de cache par défaut
-        <ul>
-            <li>Spring Web MVC : rien par défaut, <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-caching-cachecontrol">configurable</a></li>
-            <li>Spring Security : <a href="https://docs.spring.io/spring-security/reference/features/exploits/headers.html#headers-cache-control">désactive le cache</a></li>
-        </ul>
-    </li>
-</ul>
-
-Possibilité bien sûr d'ajouter des headers <code>Cache-Control</code>.
-
-<h2>Solution #1 : forcez un cache faible</h2> <!-------------------------------------------------------->
+<h2>Forcez une durée de mise en cache !</h2> <!-------------------------------------------------------->
 
 <big>⚠</big> avec les directives "expires" de Nginx/Apache, il y a le risque de forcer le cache pour une réponse qui ne serait pas caché sans cela.
 <p></p>
@@ -152,7 +158,8 @@ Possibilité bien sûr d'ajouter des headers <code>Cache-Control</code>.
 }</code></pre>
 </li></ul>
 
-<h2>Solution #2 : cache-busting</h2> <!-------------------------------------------------------->
+
+<h2>Faites du cache-busting !</h2> <!-------------------------------------------------------->
 
 <h4>Exemples</h4>
 
