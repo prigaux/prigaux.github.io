@@ -7,9 +7,9 @@
     html { font-family: Arial, sans-serif; font-size: 160%; margin: 1rem; }
     small { font-size: 60%; }
     ul { margin-top: 0; }    
-    h4 { margin-bottom: 0.1rem; }
+    h4 { margin-bottom: 1rem; }
     h2 { border-bottom: 1px solid #0a71b4; }
-    li { padding: 0.5rem 0 0; }
+    li { margin: 0.5rem 0 0; }
     pre { margin: 0; }
     li pre code.hljs { padding-left: 0; padding-right: 0; }
     i { color: #005cc5; }
@@ -70,7 +70,7 @@ Avec <code>Cache-Control</code>, tout est clair ! <small>(remplace <code>Pragma<
 
 <h4>Heuristique 10% par l'exemple</h4>
 
-<br>Renater utilise le logo « <img width="100px" src="https://www.renater.fr/sites/default/files/inline-images/logo_RENATER-2.svg"> » sur son site principal.
+Renater utilise le logo « <img width="100px" src="https://www.renater.fr/sites/default/files/inline-images/logo_RENATER-2.svg"> » sur son site principal.
 Il peut aussi l'utiliser sur d'autres sites pour espérer centraliser cette resource.
 <p></p>
 <ul>
@@ -108,7 +108,7 @@ Dans la majorité des cas, <code>Last-Modified</code> est renvoyé, sans permett
     <li>Nginx <small>(cf ngx_http_header_filter() qui renvoie "last_modified_time" set par ngx_http_static_handler())</small></li>
     <li>Java Tomcat <small>(<a href="https://tomcat.apache.org/tomcat-9.0-doc/default-servlet.html">doc</a>, <a href="https://github.com/apache/tomcat/blob/d1405b289f8c62f6fc8e4ddd815643471473e762/Java/org/apache/catalina/servlets/DefaultServlet.Java#L988">code</a>)</small></li>
     <li><small>Python Django (déconseillé de l'utiliser en prod, <a href="https://github.com/django/django/blob/main/django/views/static.py#L51">code</a>)</small></li>
-    <li>Rappel : PHP & Python utilisent Apache/Nginx pour les fichiers statiques</li>
+    <li>Rappel : PHP & Python utilisent Apache/Nginx pour les fichiers statiques (mais peuvent aussi les servir dynamiquement)</li>
 </ul>
 
 Certains font des choix par défaut intéressant
@@ -134,6 +134,7 @@ D'autres framework laissent le programmeur choisir
     </li>
 </ul>
 
+Possibilité bien sûr d'ajouter des headers <code>Cache-Control</code>.
 
 <h2>Solution #1 : forcez un cache faible</h2> <!-------------------------------------------------------->
 
@@ -165,9 +166,11 @@ D'autres framework laissent le programmeur choisir
 <h4>Solutions techniques</h4>
 
 <ul>
-    <li>à la main : <a href="https://github.com/EsupPortail/Esup-Pod/search?q=ver+extension:html">Esup-Pod</a>, esup-signature (<a href="https://github.com/EsupPortail/esup-signature/search?q=version+extension:html">html</a>, <a href="https://github.com/EsupPortail/esup-signature/commit/f6bb63c5de614b224a76db8f461bca1df0a3754a">js</a>)</li>
-    <li>spring-webmvc :  mécanisme de cache-buster, notamment avec JSP ou thymeleaf (<a href="https://dzone.com/articles/2-step-resource-versioning-with-spring-mvc">exemple</a>)</li>
-    <li>webpack/vite/... : cache-buster + bundler + minify
+    <li>à la main : <a href="https://github.com/EsupPortail/Esup-Pod/search?q=ver+extension:html">Esup-Pod</a>, esup-signature (<a href="https://github.com/EsupPortail/esup-signature/search?q=version+extension:html">html</a>, <a href="https://github.com/EsupPortail/esup-signature/commit/f6bb63c5de614b224a76db8f461bca1df0a3754a">js</a>)
+    moodle (<a href="https://github.com/moodle/moodle/blob/18b2af60f5de26a3826fdf12584b073cf1c8eed0/lib/outputlib.php#L917">css</a>, <a href="https://github.com/moodle/moodle/blob/18b2af60f5de26a3826fdf12584b073cf1c8eed0/lib/outputrequirementslib.php#L736-L743">js</a>, <a href="https://github.com/moodle/moodle/blob/18b2af60f5de26a3826fdf12584b073cf1c8eed0/theme/yui_combo.php">combo</a>)
+    </li>
+    <li>spring-webmvc :  mécanisme de cache-buster, notamment avec JSP ou thymeleaf (<a href="https://dzone.com/articles/2-step-resource-versioning-with-spring-mvc">exemple</a>, <a href="https://github.com/apereo/cas/pull/5265">utilisé dans CAS</a>)</li>
+    <li>webpack/vite/... : cache-buster + bundler + minify, phase de compilation
 
     <p></p>exemple le <a href="https://github.com/UnivParis1/annuaire/blob/master/index.html#L8-L9">index.html</a> suivant :
     
@@ -178,6 +181,7 @@ D'autres framework laissent le programmeur choisir
 
 devient 
 
+<!-- highlight.js déjà appliqué pour permettre d'ajouter des <mark> -->
 <pre><code class="language-nolanguage hljs"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"module"</span> <span class="hljs-attr">crossorigin</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"/assets/index.<mark>dd791d5c</mark>.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"modulepreload"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"/assets/vendor.<mark>00faadaa</mark>.js"</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"/assets/index.<mark>0c658012</mark>.css"</span>&gt;</span></code></pre>
@@ -190,7 +194,15 @@ devient
 
 <h2>Divers</h2> <!-------------------------------------------------------->
 
-Pas évoqué :
+<h4>Cache serveur</h4>
+
+Apache/Nginx/HAProxy/Træfik/Envoy/... permettent la mise en cache. 
+<ul>
+    <li>Cela fonctionne facilement... si le header <code>Cache-Control</code> est bien positionné.</li>
+    <li>Dans le cas inverse, il est possible de forcer des choses, mais c'est relativement compliqué (<a href="https://www.esup-portail.org/wiki/display/DOC/nginx#nginx-Cache">ex pour Nginx</a>)</li>
+</ul>
+
+<h4>Pas évoqué</h4>
 <ul>
     <li>rev-proxy caching, notamment avec <code>Vary</code>
         <ul>
