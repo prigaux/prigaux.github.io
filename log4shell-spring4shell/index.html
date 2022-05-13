@@ -193,7 +193,7 @@ Exemple avec Spring4shell :
 
 
 
-<h2>Prévention</h2>
+<h2>Prévention 😷</h2>
 
 <ul>
     <li>gardez vos applications à jour <small>(ou pas /o\)</small></li>
@@ -201,6 +201,8 @@ Exemple avec Spring4shell :
         <br><small>« You need separate accounts. The container can't run as the owner of the files » (Scott Cantor sur la liste users@shibboleth.net)</small>
     </li>
     <li>empêchez les requêtes sortantes du serveur <small>(faire un "REJECT" et pas un "DROP" sinon le RCE devient un DoS)</small></li>
+    <li>Elasticsearch n'est pas impacté par Log4shell grâce au Security Manager... qui va être supprimé en Java 18 🤪</li>
+    <li>seccomp / apparmor / docker ?</li>
     <li>...?</li>
 </ul>
 
